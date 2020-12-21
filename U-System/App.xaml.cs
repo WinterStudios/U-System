@@ -6,6 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
+using U_System;
+using U_System.API;
+
 namespace U_System
 {
     /// <summary>
@@ -13,5 +16,28 @@ namespace U_System
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            //base.OnStartup(e);
+
+            
+
+            MainWindow window = new MainWindow();
+            window.Loaded += (sender, arg) => LoadAPI();
+            window.Show();
+            
+
+            
+
+            //API.Plugins.PluginSystem.InitializeComponent();
+            
+
+
+        }
+
+        private void LoadAPI()
+        {
+            API.Navigation.MenuBar.Add("File>D", null);
+        }
     }
 }

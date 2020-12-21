@@ -13,6 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using U_System.API;
+using U_System.API.Navigation;
+using U_System.API.Plugins;
+
+
 namespace U_System
 {
     /// <summary>
@@ -23,6 +28,9 @@ namespace U_System
         public MainWindow()
         {
             InitializeComponent();
+            MenuBar.MainMenu = this.W_MainMenuBar;
+
+
         }
     }
 }

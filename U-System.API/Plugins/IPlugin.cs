@@ -10,7 +10,8 @@ namespace U_System.API.Plugins
         /// Name of the Plugin
         /// </summary>
         string Name { get; }
-        string Discreption { get; }
+        string Description { get; }
         SemVersion Version { get; }
+        Module[] Modules { get;}
     }
 }
