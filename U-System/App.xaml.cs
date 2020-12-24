@@ -19,24 +19,25 @@ namespace U_System
         protected override void OnStartup(StartupEventArgs e)
         {
             //base.OnStartup(e);
-
-            
-
-            MainWindow window = new MainWindow();
-            window.Loaded += (sender, arg) => LoadAPI();
-            window.Show();
-            
-
-            
-
+            API.Paths.StorageFolder = Paths.Storage.AppDataLocation;
             //API.Plugins.PluginSystem.InitializeComponent();
+
+            //API.Paths.Settings.CreateDirectory();
+            MainWindow window = new MainWindow();
+            //window.Loaded += (sender, arg) => LoadAPI();
+            window.Show();
+
             
+
+
+
 
 
         }
 
         private void LoadAPI()
         {
+            API.Plugins.PluginSystem.InitializeComponent();
             API.Navigation.MenuBar.Add("File>D", null);
         }
     }

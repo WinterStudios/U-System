@@ -12,12 +12,14 @@ namespace U_System.API.Navigation
     {
         public static Menu MainMenu { get; set; }
 
+        //public static void I
+
 
         public static void AddPluginAction(Plugins.Module module)
         {
             Type typePlugin = Type.GetType(module.Type);
         }
-        public static void Add(string path, Action action)
+        public static MenuItem Add(string path, Action action)
         {
             string[] hierarchy = path.Split('>');
             int level = 0;
@@ -29,15 +31,31 @@ namespace U_System.API.Navigation
                 if (level >= hierarchy.Length)
                     break;
 
-                if ((item[i].Items.Count > 0) && ((string)item[i].Header == hierarchy[level]))
+                if (item.Length == 0)
+                {
+                    if (level == 0)
+                    {
+                        MenuItem menuItem = Create(hierarchy[level]);
+                        MainMenu.Items.Add(menuItem);
+                        parent = menuItem;
+                    }
+                    else
+                    {
+                        MenuItem menuItem = Create(hierarchy[level]);
+                        parent.Items.Add(menuItem);
+                        parent = menuItem;
+                    }
+                    i = -1;
+                    level++;
+                }
+                if ((string)item[i].Header == hierarchy[level])
                 {
                     parent = item[i];
                     item = item[i].Items.Cast<MenuItem>().ToArray();
                     i = -1;
-                    level++;
-                    
+                    level++;                 
                 }
-                else
+                if(i == (item.Length - 1))
                 {
                     if (level == 0)
                     {
@@ -55,6 +73,8 @@ namespace U_System.API.Navigation
                     level++;
                 }
             }
+
+            return parent;
         }
         public static MenuItem Create(string header)
         {

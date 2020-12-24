@@ -32,5 +32,18 @@ namespace U_System
 
 
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            string tag = ((MenuItem)sender).Tag.ToString();
+            if(tag == "PLUGIN_MANAGER")
+            {
+                Window window = new Window();
+                Pages.Preferences.PluginManager manager = new Pages.Preferences.PluginManager();
+
+                window.Content = manager;
+                window.Show();
+            }
+        }
     }
 }

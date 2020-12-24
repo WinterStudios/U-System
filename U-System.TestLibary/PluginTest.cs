@@ -18,13 +18,13 @@ namespace U_System.TestLibary
             new Module() { 
                 Name = "A1", 
                 Type = typeof(PluginSomething).FullName, 
-                Path = "Ferramentas/Teste", 
+                Path = "Ferramentas>Encomendas Escolares", 
                 PluginType = PluginType.Tab 
             },
             new Module() {
                 Name = "A2",
                 Type = typeof(PluginSomething).FullName,
-                Path = "Ferramentas/Teste2",
+                Path = "Ferramentas>Gerador de Codigos de Bar",
                 PluginType = PluginType.Tab
             }
         };
