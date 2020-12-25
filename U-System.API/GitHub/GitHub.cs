@@ -15,37 +15,7 @@ namespace U_System.API.GitHub
     {
         private static string _TOKEN { get => Paths.GITHUB.ACCESS_TOKEN; }
         private static string _URL_API_GITHUB { get => "https://api.github.com/"; }
-        //public static Repository[] GetRepositories(string user)
-        //{
-            
-            //HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
-            //webRequest.Method = "GET";
-            //webRequest.UserAgent = "U-System.APP";
-            //webRequest.Accept = "application/vnd.github.v3.raw";
-            //webRequest.ServicePoint.Expect100Continue = false;
-            //webRequest.Headers.Add(HttpRequestHeader.Authorization, string.Concat("token ", _TOKEN));
 
-            //HttpWebResponse webResponse = null;
-            //try
-            //{
-            //    webResponse = (HttpWebResponse)webRequest.GetResponse();
-
-            //    StreamReader streamReader = new StreamReader(webResponse.GetResponseStream());
-
-            //    string json = streamReader.ReadToEnd();
-            //    JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
-            //    {
-            //        IgnoreNullValues = true,
-            //        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            //    };
-            //    object d = JsonSerializer.Deserialize<Repository[]>(json, jsonSerializerOptions);
-            //    return (Repository[])d;
-            //}
-            //catch
-            //{
-            //    return null;
-            //}
-        //}
 
         public static async Task<Repository[]> GetRepositoriesAsync(string user)
         {
@@ -86,6 +56,25 @@ namespace U_System.API.GitHub
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
             return JsonSerializer.Deserialize<Repository>(response, jsonSerializerOptions);
+        }
+
+        public static async Task<Release[]> GetReleasesAsync(Repository repository)
+        {
+            string url = string.Format("{0}repos/{1}/{2}/releases", _URL_API_GITHUB, repository.Author.Name, repository.Name);
+
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "U-System.APP");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3.raw"));
+            client.DefaultRequestHeaders.Add("Authorization", string.Concat("token ", _TOKEN));
+            
+            string response = await client.GetStringAsync(url);
+
+            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
+            {
+                IgnoreNullValues = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+            return JsonSerializer.Deserialize<Release[]>(response, jsonSerializerOptions);
         }
     }
 }

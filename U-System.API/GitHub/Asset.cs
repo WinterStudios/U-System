@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace U_System.API.GitHub
 {
-    public class Release
+    public class Asset
     {
         public string Name { get; set; }
-        public string Tag { get; set; }
-        public Asset[] Assets { get; set; }
     }
 }

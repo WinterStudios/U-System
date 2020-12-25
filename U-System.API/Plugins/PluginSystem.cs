@@ -64,18 +64,31 @@ namespace U_System.API.Plugins
             Save();
         }
 
+        public static void DownloadPlugin(Plugin plugin)
+        {
+            
+        }
+
         public static void EnablePlugin(Plugin plugin)
         {
-            List<MenuItem> menus = new List<MenuItem>();
-            for (int i = 0; i < plugin.Modules.Length; i++)
+            AssemblyLoadContext temp = new AssemblyLoadContext(plugin.Name, true);
+            temp.Unloading += (alc) =>
             {
-                Module module = plugin.Modules[i];
-                if(module.PluginType == PluginType.Tab)
-                {
-                    menus.Add(Navigation.MenuBar.Add(module.Path, null));
-                }
-            }
-            plugin.MenuItems = menus.ToArray();
+                GC.Collect();
+            };
+            Assembly assembly = temp.LoadFromAssemblyPath(plugin.FileLocation);
+
+
+            //List<MenuItem> menus = new List<MenuItem>();
+            //for (int i = 0; i < plugin.Modules.Length; i++)
+            //{
+            //    Module module = plugin.Modules[i];
+            //    if(module.PluginType == PluginType.Tab)
+            //    {
+            //        menus.Add(Navigation.MenuBar.Add(module.Path, null));
+            //    }
+            //}
+            //plugin.MenuItems = menus.ToArray();
         }
         private static void Save()
         {

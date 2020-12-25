@@ -13,9 +13,4 @@ namespace U_System.API.Plugins
         public string Path { get; set; }
         public PluginType PluginType { get; set; }
     }
-    public enum TypeD
-    {
-        Window,
-        Passive
-    }
 }
