@@ -26,7 +26,7 @@ namespace U_System.Pages.Preferences
         public PluginManager()
         {
             InitializeComponent();
-            
+            UC_ListBox_Plugins.ItemsSource = PluginSystem.Plugins;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -40,6 +40,7 @@ namespace U_System.Pages.Preferences
                 {
                      
                 }
+                UC_ListBox_Plugins.Items.Refresh();
             }
 
         }

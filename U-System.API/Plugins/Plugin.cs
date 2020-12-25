@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -18,6 +20,7 @@ namespace U_System.API.Plugins
         public SemVersion Version { get; set; }
         public Module[] Modules { get; set; }
         internal MenuItem[] MenuItems { get; set; } 
-        public Repository GitHub { get; set; }
+        public Repository GitHub_Repository { get; set; }
+
     }
 }

@@ -22,7 +22,15 @@ namespace U_System.API
         /// Where the everthing is store
         /// </summary>
         /// <value>Default Value: Setting.AppDataLocation</value>
-        public static Storage StorageFolder { get; set; } = Storage.AppDataLocation;
+        public static Storage StorageFolder { 
+            get {
+                return _StorageFolder; }
+            set {
+                _StorageFolder = value;
+                if (!Directory.Exists(STORAGE_DIRECTORY))
+                    Directory.CreateDirectory(STORAGE_DIRECTORY);
+            } }
+        private static Storage _StorageFolder = Storage.AppDataLocation;
         public static string STORAGE_DIRECTORY { 
             get {
                 switch (StorageFolder)

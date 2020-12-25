@@ -20,7 +20,7 @@ namespace U_System
         {
             //base.OnStartup(e);
             API.Paths.StorageFolder = Paths.Storage.AppDataLocation;
-            //API.Plugins.PluginSystem.InitializeComponent();
+            API.Plugins.PluginSystem.InitializeComponent();
 
             //API.Paths.Settings.CreateDirectory();
             MainWindow window = new MainWindow();

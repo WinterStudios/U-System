@@ -19,18 +19,14 @@ namespace U_System.API.Plugins
         public static void InitializeComponent()
         {
             Plugins = new List<Plugin>();
-            //LoadPluginsInfo();
+            Load();
             //LoadPlugins();
-            string path = Paths.PLUGINS.PLUGIN_DIRECTORY + "U-System.TestLibary.dll";
-            GetPlugin(path);
+            //string path = Paths.PLUGINS.PLUGIN_DIRECTORY + "U-System.TestLibary.dll";
+            //GetPlugin(path);
         }
         public static void AddPlugin(string file)
         {
             Plugin plugin = new Plugin();
-            
-
-
-
         }
 
         private static void GetPlugin(string file)
@@ -62,7 +58,10 @@ namespace U_System.API.Plugins
 
         public static void AddPlugin(Repository output)
         {
-            throw new NotImplementedException();
+            Plugin m_plugin = new Plugin();
+            m_plugin.GitHub_Repository = output;
+            Plugins.Add(m_plugin);
+            Save();
         }
 
         public static void EnablePlugin(Plugin plugin)
@@ -78,10 +77,20 @@ namespace U_System.API.Plugins
             }
             plugin.MenuItems = menus.ToArray();
         }
-        public static void Save()
+        private static void Save()
         {
             JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true };
-            File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "plugin.json",JsonSerializer.Serialize(Plugins, options));
+            File.WriteAllText(Paths.SETTINGS.PLUGINS_SETTINGS, JsonSerializer.Serialize(Plugins, options));
+        }
+        private static void Load()
+        {
+            if (!File.Exists(Paths.SETTINGS.PLUGINS_SETTINGS))
+                return;
+
+            string json = File.ReadAllText(Paths.SETTINGS.PLUGINS_SETTINGS);
+            JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true };
+            Plugins = JsonSerializer.Deserialize<Plugin[]>(json, options).ToList();
+
         }
         //public static void LoadPluginsInfo()
         //{
