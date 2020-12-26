@@ -31,7 +31,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <CheckBox Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding GitHub_Repository.Name}" FontSize="18px" FontWeight="Normal"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding GitHub_Repository.Name}" FontSize="14px" FontWeight="Normal"/>
                             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding GitHub_Repository.Name}" FontSize="12px" FontWeight="Light"/>
                             <Grid Grid.Row="2" Grid.Column="1">
                                 <Grid.ColumnDefinitions>
@@ -39,11 +39,17 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                                    <Button Content="Install" Padding="12,4,12,4"/>
+                                    <Button x:Name="btn_Install" Content="Install" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="PLUGIN_INSTALL"/>
+                                    <Button x:Name="btn_Enable" Content="Enable" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="Enable"/>
                                 </StackPanel>
                             </Grid>
                         </Grid>
                     </Border>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Installed}" Value="False">
+                            <Setter Property="IsEnabled" TargetName="btn_Install" Value="False"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

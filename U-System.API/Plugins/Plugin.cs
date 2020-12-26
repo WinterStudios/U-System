@@ -20,6 +20,7 @@ namespace U_System.API.Plugins
         public bool Enable { get; set; }
 
         public bool AutomaticUpdates { get; set; }
+        public bool IsInstalled { get; set; }
 
         public Repository GitHub_Repository { get; set; }
 

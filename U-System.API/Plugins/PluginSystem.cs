@@ -56,6 +56,7 @@ namespace U_System.API.Plugins
             //plugin.FileLocation = "../WinterStudios/U-System.TestLibary.dll";
         }
 
+
         public static void AddPlugin(Repository output)
         {
             Plugin m_plugin = new Plugin();
@@ -69,6 +70,19 @@ namespace U_System.API.Plugins
             
         }
 
+        public static void InstallPlugin(Plugin plugin)
+        {
+            if (File.Exists(plugin.FileLocation))
+            {
+                plugin.IsInstalled = true;
+                CheckPluginUpdates(plugin);
+            }
+        }
+
+        public static void CheckPluginUpdates(Plugin plugin)
+        {
+
+        }
         public static void EnablePlugin(Plugin plugin)
         {
             AssemblyLoadContext temp = new AssemblyLoadContext(plugin.Name, true);

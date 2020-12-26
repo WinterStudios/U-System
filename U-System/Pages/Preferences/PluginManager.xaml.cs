@@ -33,16 +33,26 @@ namespace U_System.Pages.Preferences
         {
             string _tag = (string)((Button)sender).Tag;
 
-            if(_tag == "ADD_PLUGIN")
+            if (_tag == "ADD_PLUGIN")
             {
                 PluginManager_Add _w_p_add = new PluginManager_Add();
-                if(_w_p_add.ShowDialog() == true) 
+                if (_w_p_add.ShowDialog() == true)
                 {
-                     
+
                 }
                 UC_ListBox_Plugins.Items.Refresh();
             }
+        }
+        private void PluginsListBoxItem_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            Plugin plugin = (Plugin)button.DataContext;
 
+            string _tag = button.Tag.ToString();
+            if(_tag == "PLUGIN_INSTALL")
+            {
+                API.Plugins.PluginSystem.InstallPlugin(plugin);
+            }
         }
     }
 }
