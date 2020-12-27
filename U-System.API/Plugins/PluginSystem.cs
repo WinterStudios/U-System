@@ -65,9 +65,14 @@ namespace U_System.API.Plugins
             Save();
         }
 
-        public static void DownloadPlugin(Repository repository, PluginState state = PluginState.Stable)
+        public static async Task DownloadPlugin(Repository repository, PluginState state = PluginState.Stable)
         {
-            Stream stream = 
+            if(state == PluginState.Stable)
+            {
+                Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(repository.Releases[0].Assets.FirstOrDefault(x => x.Name.EndsWith(".zip")).DownloadURL);
+                string path = "c:users/hugo/appdata/local/y-system/downloads/";
+                File.SaveStreamToFile(stream, path);
+            }
         }
 
         public static void InstallPlugin(Plugin plugin)
