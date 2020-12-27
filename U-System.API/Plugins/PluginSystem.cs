@@ -65,26 +65,28 @@ namespace U_System.API.Plugins
             Save();
         }
 
-        public static void DownloadPlugin(Plugin plugin)
+        public static void DownloadPlugin(Repository repository, PluginState state = PluginState.Stable)
         {
-            
+            Stream stream = 
         }
 
         public static void InstallPlugin(Plugin plugin)
         {
-            if (File.Exists(plugin.FileLocation))
-            {
-                plugin.IsInstalled = true;
-                CheckPluginUpdates(plugin);
-            }
+            
         }
 
-        public static void CheckPluginUpdates(Plugin plugin)
+        public static async void CheckPlugin(Plugin plugin)
         {
-
+            if(!plugin.IsInstalled)
+            {
+                plugin.GitHub_Repository.Releases = await GitHub.GitHub.GetReleasesAsync(plugin.GitHub_Repository);
+                DownloadPlugin(plugin.GitHub_Repository, PluginState.Stable);
+            }
         }
         public static void EnablePlugin(Plugin plugin)
         {
+            CheckPlugin(plugin);
+
             AssemblyLoadContext temp = new AssemblyLoadContext(plugin.Name, true);
             temp.Unloading += (alc) =>
             {

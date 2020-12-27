@@ -28,7 +28,7 @@ namespace U_System.API.GitHub
             //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(string.Concat("token ", _TOKEN));
             Console.WriteLine("dd");
             string response = await client.GetStringAsync(url);
-
+            
             JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
             {
                 IgnoreNullValues = true,
@@ -75,6 +75,17 @@ namespace U_System.API.GitHub
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
             return JsonSerializer.Deserialize<Release[]>(response, jsonSerializerOptions);
+        }
+
+        public static async Task<Stream> GetReleaseAssetAsync(string url)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "U-System.APP");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3.raw"));
+            client.DefaultRequestHeaders.Add("Authorization", string.Concat("token ", _TOKEN));
+
+            Stream stream = await client.GetStreamAsync(url);
+            return stream;
         }
     }
 }

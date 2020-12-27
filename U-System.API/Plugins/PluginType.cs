@@ -12,4 +12,9 @@ namespace U_System.API.Plugins
         Window = 1,
         Service = 2
     }
+    public enum PluginState
+    {
+        Stable = 0,
+        Preview = 1
+    }
 }
