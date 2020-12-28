@@ -14,6 +14,7 @@ namespace U_System.API.Plugins
 {
     public class Plugin
     {
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string FileLocation { get; set; }

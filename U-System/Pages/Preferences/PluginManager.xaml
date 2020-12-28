@@ -46,8 +46,9 @@
                         </Grid>
                     </Border>
                     <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Installed}" Value="False">
-                            <Setter Property="IsEnabled" TargetName="btn_Install" Value="False"/>
+                        <DataTrigger Binding="{Binding IsInstalled}" Value="False">
+                            <Setter Property="IsEnabled" TargetName="btn_Install" Value="True"/>
+                            <Setter Property="IsEnabled" TargetName="btn_Enable" Value="False"/>
                         </DataTrigger>
                     </DataTemplate.Triggers>
                 </DataTemplate>

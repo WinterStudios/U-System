@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace U_System.API
 {
-    public class File
+    public class FileSystem
     {
         public static void SaveStreamToFile(Stream stream, string pathToSave)
         {
@@ -20,6 +20,7 @@ namespace U_System.API
             {
                 fileStream.Write(buffer, 0, read);
             }
+            fileStream.Close();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
@@ -57,27 +58,44 @@ namespace U_System.API.Plugins
         }
 
 
-        public static void AddPlugin(Repository output)
+        public static async void AddPlugin(Repository output)
         {
             Plugin m_plugin = new Plugin();
+            m_plugin.ID = Plugins.Count;
             m_plugin.GitHub_Repository = output;
+            m_plugin.GitHub_Repository.Releases = await GitHub.GitHub.GetReleasesAsync(output);
             Plugins.Add(m_plugin);
             Save();
+            
+            DownloadPlugin(output, PluginState.Stable);
         }
 
-        public static async Task DownloadPlugin(Repository repository, PluginState state = PluginState.Stable)
+        public static async Task<string> DownloadPlugin(Repository repository, PluginState state = PluginState.Stable)
         {
             if(state == PluginState.Stable)
             {
-                Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(repository.Releases[0].Assets.FirstOrDefault(x => x.Name.EndsWith(".zip")).DownloadURL);
-                string path = "c:users/hugo/appdata/local/y-system/downloads/";
-                File.SaveStreamToFile(stream, path);
+                Release lastReleaseStable = repository.Releases.First(x => x.PreRelease == false);
+                Asset pluginAsset = lastReleaseStable.Assets.First(x => x.Name == "Release.zip");
+                Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(pluginAsset.URL);
+                string pluginPath = Paths.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", repository.Name, lastReleaseStable.Tag);
+                FileSystem.SaveStreamToFile(stream, pluginPath);
+                return pluginPath;
             }
+            if(state == PluginState.Preview)
+            {
+                Release lastReleaseStable = repository.Releases.First(x => x.PreRelease == true);
+                Asset pluginAsset = lastReleaseStable.Assets.First(x => x.Name == "Release.zip");
+                Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(pluginAsset.URL);
+                string pluginPath = Paths.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", repository.Name, lastReleaseStable.Tag);
+                FileSystem.SaveStreamToFile(stream, pluginPath);
+                return pluginPath;
+            }
+            return null;
         }
 
         public static void InstallPlugin(Plugin plugin)
         {
-            
+            CheckPlugin(plugin);
         }
 
         public static async void CheckPlugin(Plugin plugin)
@@ -85,7 +103,15 @@ namespace U_System.API.Plugins
             if(!plugin.IsInstalled)
             {
                 plugin.GitHub_Repository.Releases = await GitHub.GitHub.GetReleasesAsync(plugin.GitHub_Repository);
-                DownloadPlugin(plugin.GitHub_Repository, PluginState.Stable);
+                string location = await DownloadPlugin(plugin.GitHub_Repository, PluginState.Stable);
+
+                ZipArchive zip = ZipFile.OpenRead(location);
+                string name = zip.Entries.First(x => x.Name.EndsWith(".dll")).Name;
+                zip.ExtractToDirectory(Paths.PLUGINS.PLUGIN_DIRECTORY, true);
+                plugin.IsInstalled = true;
+                plugin.FileLocation = Paths.PLUGINS.PLUGIN_DIRECTORY + name;
+
+                Save(plugin);
             }
         }
         public static void EnablePlugin(Plugin plugin)
@@ -115,6 +141,11 @@ namespace U_System.API.Plugins
         {
             JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true };
             File.WriteAllText(Paths.SETTINGS.PLUGINS_SETTINGS, JsonSerializer.Serialize(Plugins, options));
+        }
+        private static void Save(Plugin plugin)
+        {
+            Plugins[plugin.ID] = plugin;
+            Save();
         }
         private static void Load()
         {

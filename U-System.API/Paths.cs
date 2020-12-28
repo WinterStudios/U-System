@@ -44,6 +44,14 @@ namespace U_System.API
                 }
             } }
 
+        public static string STORAGE_DOWNLOADS { 
+            get {
+                string path = STORAGE_DIRECTORY + "Downloads\\";
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+                return path;
+            } }
+
         public static class SETTINGS
         {
             /// <summary>

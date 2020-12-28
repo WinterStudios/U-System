@@ -81,10 +81,11 @@ namespace U_System.API.GitHub
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "U-System.APP");
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3.raw"));
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/octet-stream"));
             client.DefaultRequestHeaders.Add("Authorization", string.Concat("token ", _TOKEN));
 
-            Stream stream = await client.GetStreamAsync(url);
+            byte[] content = await client.GetByteArrayAsync(url);
+            Stream stream = new MemoryStream(content);
             return stream;
         }
     }
