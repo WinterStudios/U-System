@@ -27,6 +27,7 @@ namespace U_System.Pages.Preferences
         {
             InitializeComponent();
             UC_ListBox_Plugins.ItemsSource = PluginSystem.Plugins;
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -38,9 +39,13 @@ namespace U_System.Pages.Preferences
                 PluginManager_Add _w_p_add = new PluginManager_Add();
                 if (_w_p_add.ShowDialog() == true)
                 {
+                    PluginSystem.AddPlugin(_w_p_add._output);
+                    UC_ListBox_Plugins.Items.Refresh();
+                    if (API.Properties.Settings.AutomaticInstallPlugins)
+                    {
 
+                    }
                 }
-                UC_ListBox_Plugins.Items.Refresh();
             }
         }
         private void PluginsListBoxItem_Button_Click(object sender, RoutedEventArgs e)
@@ -54,5 +59,7 @@ namespace U_System.Pages.Preferences
                 API.Plugins.PluginSystem.InstallPlugin(plugin);
             }
         }
+
+
     }
 }

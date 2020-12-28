@@ -48,7 +48,7 @@ namespace U_System.Pages.Preferences
         private void AddPlugin()
         {
             _output = (Repository)W_ListBox_Repositories.SelectedItem;
-            PluginSystem.AddPlugin(_output);
+            DialogResult = true;
             Close();
         }
     }

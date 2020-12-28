@@ -8,5 +8,6 @@ namespace U_System.API.Properties
 {
     public class Settings
     {
+        public static bool AutomaticInstallPlugins { get; set; } = true;
     }
 }

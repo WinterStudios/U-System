@@ -58,16 +58,16 @@ namespace U_System.API.Plugins
         }
 
 
-        public static async void AddPlugin(Repository output)
+        public static void AddPlugin(Repository output)
         {
             Plugin m_plugin = new Plugin();
             m_plugin.ID = Plugins.Count;
             m_plugin.GitHub_Repository = output;
-            m_plugin.GitHub_Repository.Releases = await GitHub.GitHub.GetReleasesAsync(output);
             Plugins.Add(m_plugin);
-            Save();
+
+            //Save();
             
-            DownloadPlugin(output, PluginState.Stable);
+            //DownloadPlugin(output, PluginState.Stable);
         }
 
         public static async Task<string> DownloadPlugin(Repository repository, PluginState state = PluginState.Stable)
