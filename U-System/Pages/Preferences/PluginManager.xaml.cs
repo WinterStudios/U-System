@@ -56,7 +56,13 @@ namespace U_System.Pages.Preferences
             string _tag = button.Tag.ToString();
             if(_tag == "PLUGIN_INSTALL")
             {
-                API.Plugins.PluginSystem.InstallPlugin(plugin);
+                plugin.IsDoingStuff = true;
+                PluginSystem.InstallPlugin(plugin);
+
+            }
+            if(_tag == "PLUGIN_ENABEL")
+            {
+                plugin.IsDoingStuff = !plugin.IsDoingStuff;
             }
         }
 

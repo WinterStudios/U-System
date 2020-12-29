@@ -14,5 +14,26 @@ namespace U_System.API.GitHub
         public string Tag { get; set; }
         public bool PreRelease { get; set; }
         public Asset[] Assets { get; set; }
+
+    }
+   
+}
+namespace U_System.API.GitHub.Extensions
+{
+    internal static class ReleaseExtensios
+    {
+        internal async static Task<Release[]> GetReleases(this Repository repository)
+        {
+            return await GitHub.GetReleasesAsync(repository);
+        }
+        internal static string[] GetTags(this Release[] releases)
+        {
+            string[] tags = new string[releases.Length];
+            for (int i = 0; i < releases.Length; i++)
+            {
+                tags[i] = releases[i].Tag;
+            }
+            return tags;
+        }
     }
 }

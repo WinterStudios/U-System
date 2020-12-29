@@ -5,7 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:U_System.Pages.Preferences"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="350" d:DesignWidth="600">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/ComboBoxStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,36 +26,53 @@
         <ListBox x:Name="UC_ListBox_Plugins" Grid.Row="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="4" Padding="8">
-                        <Grid Height="96" MinWidth="480" HorizontalAlignment="Stretch">
+                    <Border Margin="4" Padding="8" Width="480">
+                        <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <CheckBox Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding GitHub_Repository.Name}" FontSize="14px" FontWeight="Normal"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding GitHub_Repository.Name}" FontSize="12px" FontWeight="Light"/>
-                            <Grid Grid.Row="2" Grid.Column="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                                    <Button x:Name="btn_Install" Content="Install" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="PLUGIN_INSTALL"/>
-                                    <Button x:Name="btn_Enable" Content="Enable" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="Enable"/>
-                                </StackPanel>
-                            </Grid>
+                            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+                                <TextBlock Text="{Binding GitHub_Repository.Name}" FontSize="14px" FontWeight="Normal"/>
+                                <TextBlock Text="{Binding GitHub_Repository.Name}" FontSize="12px" FontWeight="Light"/>
+                            </StackPanel>
+                            <Border Name="border" Grid.Column="1" VerticalAlignment="Bottom" Background="Red">
+                                <Grid>
+                                    <TextBlock Text="{Binding ActiveReleaseTag}">
+                                        <TextBlock.Style>
+                                            <Style>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="TextBlock.Foreground" Value="Green"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <ComboBox Style="{DynamicResource PluginComboBox}" >
+                                        
+                                    </ComboBox>
+                                </Grid>
+                            </Border>
+                            <ProgressBar x:Name="progressBar" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,12,0,12" Height="2"/>
+                            <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Button x:Name="btn_Install" Content="Install" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="PLUGIN_INSTALL"/>
+                                <Button x:Name="btn_Enable" Content="Enable" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="PLUGIN_ENABEL"/>
+                            </StackPanel>
                         </Grid>
                     </Border>
                     <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding IsInstalled}" Value="False">
                             <Setter Property="IsEnabled" TargetName="btn_Install" Value="True"/>
                             <Setter Property="IsEnabled" TargetName="btn_Enable" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsDoingStuff}" Value="True">
+                            <Setter Property="IsIndeterminate" TargetName="progressBar" Value="True"/>
                         </DataTrigger>
                     </DataTemplate.Triggers>
                 </DataTemplate>

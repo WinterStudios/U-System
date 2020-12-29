@@ -9,7 +9,12 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+
+
 using U_System.API.GitHub;
+using U_System.API.GitHub.Extensions;
+
+
 
 namespace U_System.API.Plugins
 {
@@ -44,7 +49,7 @@ namespace U_System.API.Plugins
             IPlugin PluginInfo = (IPlugin)Activator.CreateInstance(IPlugin);
 
             Plugin plugin = new Plugin();
-            plugin.FileLocation = assembly.Location.Replace("\\","/");
+            //plugin.FileLocation = assembly.Location.Replace("\\","/");
             plugin.Name = PluginInfo.Name;
             plugin.Description = PluginInfo.Description;
             plugin.Version = PluginInfo.Version;
@@ -93,9 +98,22 @@ namespace U_System.API.Plugins
             return null;
         }
 
+        public static async void UpdatePlugin(Plugin plugin)
+        {
+            plugin.IsDoingStuff = true;
+            if (!plugin.IsInstalled)
+            {
+                plugin.GitHub_Repository.Releases = await GitHub.GitHub.GetReleasesAsync(plugin.GitHub_Repository);
+                plugin.ReleasesTags = plugin.GitHub_Repository.Releases.GetTags();
+                plugin.ActiveReleaseTag = plugin.GitHub_Repository.Releases[0].Tag;
+                //DownloadPlugin(plugin.GitHub_Repository);
+            }
+            plugin.IsDoingStuff = false;
+        }
+
         public static void InstallPlugin(Plugin plugin)
         {
-            CheckPlugin(plugin);
+            UpdatePlugin(plugin);
         }
 
         public static async void CheckPlugin(Plugin plugin)
@@ -109,7 +127,12 @@ namespace U_System.API.Plugins
                 string name = zip.Entries.First(x => x.Name.EndsWith(".dll")).Name;
                 zip.ExtractToDirectory(Paths.PLUGINS.PLUGIN_DIRECTORY, true);
                 plugin.IsInstalled = true;
-                plugin.FileLocation = Paths.PLUGINS.PLUGIN_DIRECTORY + name;
+                string[] files = new string[zip.Entries.Count];
+                for (int i = 0; i < files.Length; i++)
+                {
+                    files[i] = Paths.PLUGINS.PLUGIN_DIRECTORY.Replace("\\", "/") + zip.Entries[i].FullName;
+                }
+                plugin.Files = files;
 
                 Save(plugin);
             }
@@ -123,7 +146,7 @@ namespace U_System.API.Plugins
             {
                 GC.Collect();
             };
-            Assembly assembly = temp.LoadFromAssemblyPath(plugin.FileLocation);
+            Assembly assembly = temp.LoadFromAssemblyPath(plugin.Files.First(x => x.EndsWith(".dll")));
 
 
             //List<MenuItem> menus = new List<MenuItem>();
