@@ -41,23 +41,10 @@
                                 <TextBlock Text="{Binding GitHub_Repository.Name}" FontSize="14px" FontWeight="Normal"/>
                                 <TextBlock Text="{Binding GitHub_Repository.Name}" FontSize="12px" FontWeight="Light"/>
                             </StackPanel>
-                            <Border Name="border" Grid.Column="1" VerticalAlignment="Bottom" Background="Red">
-                                <Grid>
-                                    <TextBlock Text="{Binding ActiveReleaseTag}">
-                                        <TextBlock.Style>
-                                            <Style>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=IsMouseOver}" Value="True">
-                                                        <Setter Property="TextBlock.Foreground" Value="Green"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                    <ComboBox Style="{DynamicResource PluginComboBox}" >
-                                        
-                                    </ComboBox>
-                                </Grid>
+                            <Border Name="border" Grid.Column="1" VerticalAlignment="Bottom" Background="Transparent">
+                                <ComboBox Style="{DynamicResource PluginComboBox}" ItemsSource="{Binding ReleasesTags}" >
+
+                                </ComboBox>
                             </Border>
                             <ProgressBar x:Name="progressBar" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,12,0,12" Height="2"/>
                             <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
@@ -77,6 +64,43 @@
                     </DataTemplate.Triggers>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="SnapsToDevicePixels" Value="true" />
+                    <Setter Property="OverridesDefaultStyle" Value="true" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border x:Name="Border" Padding="2" SnapsToDevicePixels="true">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="Transparent" />
+                                    </Border.Background>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="SelectionStates">
+                                            <VisualState x:Name="Unselected" />
+                                            <VisualState x:Name="Selected">
+                                                <Storyboard>
+                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                        <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource SelectedBackgroundColor}" />
+                                                    </ColorAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="SelectedUnfocused">
+                                                <Storyboard>
+                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                        <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource SelectedUnfocusedColor}" />
+                                                    </ColorAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <ContentPresenter HorizontalAlignment="Stretch" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
         </ListBox>
     </Grid>
 </UserControl>

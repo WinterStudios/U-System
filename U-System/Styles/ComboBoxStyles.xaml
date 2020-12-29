@@ -14,7 +14,7 @@
                     <VisualState x:Name="MouseOver">
                         <Storyboard>
                             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="Border">
-                                <EasingColorKeyFrame KeyTime="0" Value="Green" />
+                                <EasingColorKeyFrame KeyTime="0" Value="MediumVioletRed" />
                             </ColorAnimationUsingKeyFrames>
                         </Storyboard>
                     </VisualState>
@@ -48,8 +48,8 @@
             <Border x:Name="Border" Grid.ColumnSpan="2" CornerRadius="2" BorderThickness="1">
                 <Border.BorderBrush>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                        <GradientStop Color="{DynamicResource BorderLightColor}" Offset="0" />
-                        <GradientStop Color="{DynamicResource BorderDarkColor}" Offset="1" />
+                        <GradientStop Color="Pink" Offset="0" />
+                        <GradientStop Color="DeepPink" Offset="1" />
                     </LinearGradientBrush>
                 </Border.BorderBrush>
                 <Border.Background>
