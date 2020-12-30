@@ -64,5 +64,14 @@ namespace U_System.Pages.Preferences
                 PluginSystem.UpdatePlugin(plugin);
             }
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox box = (ComboBox)sender;
+            Plugin plugin = (Plugin)box.DataContext;
+
+            PluginSystem.PluginChangeVersion(plugin, box.SelectedIndex);
+
+        }
     }
 }

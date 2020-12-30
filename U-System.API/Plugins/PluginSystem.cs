@@ -69,6 +69,7 @@ namespace U_System.API.Plugins
             Plugin m_plugin = new Plugin();
             m_plugin.ID = Plugins.Count;
             m_plugin.GitHub_Repository = output;
+            m_plugin.ActiveRelease = -1;
             m_plugin.IsDoingStuff = true;
             Plugins.Add(m_plugin);
             
@@ -77,6 +78,12 @@ namespace U_System.API.Plugins
             //Save();
 
             //DownloadPlugin(output, PluginState.Stable);
+        }
+
+        public static void PluginChangeVersion(Plugin plugin, int NewIndex)
+        {
+            plugin.ActiveRelease = NewIndex;
+            Save(plugin);
         }
 
         public async static void InstallRelease(Plugin plugin)
@@ -104,8 +111,11 @@ namespace U_System.API.Plugins
                 files[i] = Paths.PLUGINS.PLUGIN_DIRECTORY.Replace("\\", "/") + zip.Entries[i].FullName;
             }
             lastReleaseStable.filesLocations = files;
-            Save();
+            EnablePlugin(plugin);
+            lastReleaseStable.IsInstall = true;
+            plugin.IsInstalled = true;
             plugin.IsDoingStuff = false;
+            Save();
         }
         public static async Task<string> DownloadPlugin(Repository repository, PluginState state = PluginState.Stable)
         {
@@ -144,12 +154,12 @@ namespace U_System.API.Plugins
         {
             //CheckPlugin(plugin);
 
-            AssemblyLoadContext temp = new AssemblyLoadContext(plugin.Name, true);
-            temp.Unloading += (alc) =>
-            {
-                GC.Collect();
-            };
-            Assembly assembly = temp.LoadFromAssemblyPath(plugin.Files.First(x => x.EndsWith(".dll")));
+            //AssemblyLoadContext temp = new AssemblyLoadContext(plugin.Name, true);
+            //temp.Unloading += (alc) =>
+            //{
+                //GC.Collect();
+            //};
+            //Assembly assembly = temp.LoadFromAssemblyPath(plugin.Files.First(x => x.EndsWith(".dll")));
 
 
             //List<MenuItem> menus = new List<MenuItem>();
@@ -200,7 +210,7 @@ namespace U_System.API.Plugins
         //}
         internal static int GetIndexOfRelease(Release[] releases, Release release)
         {
-            if (releases == null)
+            if (releases == null || release == null)
                 return -1;
             for (int i = 0; i < releases.Length; i++)
             {

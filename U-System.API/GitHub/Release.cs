@@ -22,7 +22,6 @@ namespace U_System.API.GitHub
 
         public string[] filesLocations { get; set; }
         public string LocalZipFile { get; set; }
-        
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
