@@ -12,12 +12,13 @@ namespace U_System.API.Plugins
     {
         public string ReleaseTag { get; set; }
         public string ReleaseID { get; set; }
-        public string Files { get; set; }
+        public string ZipFile { get; set; }
+        public string[] Files { get; set; }
         public string Version { get; set; }
 
         public override string ToString()
         {
-            return Version;
+            return ReleaseTag;
         }
     }
 }

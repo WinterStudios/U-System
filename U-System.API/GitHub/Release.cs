@@ -1,20 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace U_System.API.GitHub
 {
-    public class Release
+    public class Release : INotifyPropertyChanged
     {
+        public int ID { get; set; }
         public string Name { get; set; }
         [JsonPropertyName("tag_name")]
         public string Tag { get; set; }
         public bool PreRelease { get; set; }
         public Asset[] Assets { get; set; }
 
+        public bool IsInstall { get; set; }
+
+        public string[] filesLocations { get; set; }
+        public string LocalZipFile { get; set; }
+        
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
    
 }

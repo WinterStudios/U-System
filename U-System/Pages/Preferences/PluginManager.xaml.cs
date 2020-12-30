@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 
 using U_System.API.Plugins;
 
-
 namespace U_System.Pages.Preferences
 {
     /// <summary>
@@ -41,10 +40,6 @@ namespace U_System.Pages.Preferences
                 {
                     PluginSystem.AddPlugin(_w_p_add._output);
                     UC_ListBox_Plugins.Items.Refresh();
-                    if (API.Properties.Settings.AutomaticInstallPlugins)
-                    {
-
-                    }
                 }
             }
         }
@@ -56,16 +51,18 @@ namespace U_System.Pages.Preferences
             string _tag = button.Tag.ToString();
             if(_tag == "PLUGIN_INSTALL")
             {
-                plugin.IsDoingStuff = true;
-                PluginSystem.InstallPlugin(plugin);
+                //plugin.IsDoingStuff = true;
+                //PluginSystem.InstallPlugin(plugin);
 
             }
             if(_tag == "PLUGIN_ENABEL")
             {
                 plugin.IsDoingStuff = !plugin.IsDoingStuff;
             }
+            if(_tag == "PLUGIN_UPDATE")
+            {
+                PluginSystem.UpdatePlugin(plugin);
+            }
         }
-
-
     }
 }

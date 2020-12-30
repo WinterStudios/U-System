@@ -23,20 +23,18 @@ namespace U_System.API.Plugins
         public bool AutomaticUpdates { get; set; }
         public bool IsInstalled { get => isInstalled; set { isInstalled = value; NotifyPropertyChanged(); } }
         public bool IsDoingStuff { get => isDoingStuff; set { isDoingStuff = value; NotifyPropertyChanged(); } }
-        public Repository GitHub_Repository { get; set; }
-        public PluginRelease ReleaseEnable { get; set; }
-        public PluginRelease[] ReleasesInstalled { get; set; }     
-        public string ActiveReleaseTag { get => activeReleaseTag; set { activeReleaseTag = value; NotifyPropertyChanged(); } }
-
+        public Repository GitHub_Repository { get => repository; set { repository = value; NotifyPropertyChanged(); } }
+        public int ActiveRelease { get => PluginSystem.GetIndexOfRelease(GitHub_Repository.Releases, activeRelease); set { activeRelease = GitHub_Repository.Releases[value]; } }
         public SemVersion Version { get; set; }
+
+
 
         internal Module[] Modules { get; set; }
         internal MenuItem[] MenuItems { get; set; }         
         internal AssemblyLoadContext Assembly { get; set; }
-        public string[] ReleasesTags { get => releasesTags; set { releasesTags = value; NotifyPropertyChanged(); } }
 
-        private string activeReleaseTag;
-        private string[] releasesTags;
+        private Repository repository;
+        private Release activeRelease;
         private bool isInstalled;
         private bool isDoingStuff;
 
@@ -46,5 +44,6 @@ namespace U_System.API.Plugins
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }

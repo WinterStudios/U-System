@@ -26,11 +26,11 @@
         <ListBox x:Name="UC_ListBox_Plugins" Grid.Row="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="4" Padding="8" Width="480">
+                    <Border Margin="4" Padding="8">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -41,15 +41,29 @@
                                 <TextBlock Text="{Binding GitHub_Repository.Name}" FontSize="14px" FontWeight="Normal"/>
                                 <TextBlock Text="{Binding GitHub_Repository.Name}" FontSize="12px" FontWeight="Light"/>
                             </StackPanel>
-                            <Border Name="border" Grid.Column="1" VerticalAlignment="Bottom" Background="Transparent">
-                                <ComboBox Style="{DynamicResource PluginComboBox}" ItemsSource="{Binding ReleasesTags}" >
-
-                                </ComboBox>
-                            </Border>
-                            <ProgressBar x:Name="progressBar" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,12,0,12" Height="2"/>
+                            <ComboBox Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" ItemsSource="{Binding GitHub_Repository.Releases}" SelectedIndex="{Binding ActiveRelease}" Style="{DynamicResource PluginComboBox}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="16"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Background="Green"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding Tag}"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,12,0,12">
+                                <ProgressBar x:Name="progressBar" Height="2"/>
+                            </DockPanel>
                             <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                                <Button x:Name="btn_Install" Content="Install" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="PLUGIN_INSTALL"/>
-                                <Button x:Name="btn_Enable" Content="Enable" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="PLUGIN_ENABEL"/>
+                                <Button x:Name="btn_Install" Content="Install" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="PLUGIN_INSTALL" />
+                                <Button x:Name="btn_Enable" Content="Activate" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="PLUGIN_ACTIVATE" />
+                                <Button x:Name="btn_Update" Content="Update" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="PLUGIN_UPDATE" />
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -59,6 +73,9 @@
                             <Setter Property="IsEnabled" TargetName="btn_Enable" Value="False"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsDoingStuff}" Value="True">
+                            <Setter Property="IsEnabled" TargetName="btn_Install" Value="False"/>
+                            <Setter Property="IsEnabled" TargetName="btn_Enable" Value="False"/>
+                            <Setter Property="IsEnabled" TargetName="btn_Update" Value="False"/>
                             <Setter Property="IsIndeterminate" TargetName="progressBar" Value="True"/>
                         </DataTrigger>
                     </DataTemplate.Triggers>
