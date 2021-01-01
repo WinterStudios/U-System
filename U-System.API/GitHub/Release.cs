@@ -18,6 +18,9 @@ namespace U_System.API.GitHub
         public bool PreRelease { get; set; }
         public Asset[] Assets { get; set; }
 
+
+        #region Outside of GitHub
+
         public bool IsInstall { get; set; }
 
         public string[] filesLocations { get; set; }
@@ -28,8 +31,10 @@ namespace U_System.API.GitHub
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
     }
-   
+
 }
 namespace U_System.API.GitHub.Extensions
 {

@@ -38,7 +38,8 @@ namespace U_System.Pages.Preferences
                 PluginManager_Add _w_p_add = new PluginManager_Add();
                 if (_w_p_add.ShowDialog() == true)
                 {
-                    PluginSystem.AddPlugin(_w_p_add._output);
+                    bool install = false;
+                    PluginSystem.AddPlugin(_w_p_add._output, install);
                     UC_ListBox_Plugins.Items.Refresh();
                 }
             }
@@ -52,12 +53,12 @@ namespace U_System.Pages.Preferences
             if(_tag == "PLUGIN_INSTALL")
             {
                 //plugin.IsDoingStuff = true;
-                //PluginSystem.InstallPlugin(plugin);
+                PluginSystem.InstallRelease(plugin);
 
             }
-            if(_tag == "PLUGIN_ENABEL")
+            if(_tag == "PLUGIN_ACTIVATE")
             {
-                plugin.IsDoingStuff = !plugin.IsDoingStuff;
+                PluginSystem.EnablePlugin(plugin);
             }
             if(_tag == "PLUGIN_UPDATE")
             {

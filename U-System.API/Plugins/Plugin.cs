@@ -15,14 +15,17 @@ namespace U_System.API.Plugins
     public class Plugin : INotifyPropertyChanged
     {
         public int ID { get; set; }
-        public string Name { get; set; }
+        public string Name { get => GitHub_Repository.Name; }
         public string Description { get; set; }
         public string[] Files { get; set; }
-        public bool Enable { get; set; }
-
+        
         public bool AutomaticUpdates { get; set; }
-        public bool IsInstalled { get => GitHub_Repository.Releases[ActiveRelease].IsInstall; set { isInstall = value; NotifyPropertyChanged(); } }
+        public bool IsEnable { get => isEnable; set { isEnable = value; NotifyPropertyChanged(); } }
+        public bool IsInstalled { get => isInstall; set { isInstall = value; NotifyPropertyChanged(); } }
         public bool IsDoingStuff { get => isDoingStuff; set { isDoingStuff = value; NotifyPropertyChanged(); } }
+
+        public PluginInfoActive ActivePlugin { get; set; }
+
         public Repository GitHub_Repository { get => repository; set { repository = value; NotifyPropertyChanged(); } }
         public int ActiveRelease { get => PluginSystem.GetIndexOfRelease(GitHub_Repository.Releases, activeRelease);
             set {
@@ -44,10 +47,11 @@ namespace U_System.API.Plugins
         internal AssemblyLoadContext Assembly { get; set; }
 
         private Repository repository;
-        private Release? activeRelease;
+        internal Release? activeRelease;
 
         private bool isInstall;
         private bool isDoingStuff;
+        private bool isEnable;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

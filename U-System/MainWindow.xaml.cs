@@ -38,11 +38,12 @@ namespace U_System
             string tag = ((MenuItem)sender).Tag.ToString();
             if(tag == "PLUGIN_MANAGER")
             {
-                Window window = new Window();
+                TabItem tab = new TabItem();
                 Pages.Preferences.PluginManager manager = new Pages.Preferences.PluginManager();
 
-                window.Content = manager;
-                window.Show();
+                tab.Content = manager;
+                tab.Header = "Plugin Manager";
+                W_TabControl.Items.Add(tab);
             }
         }
     }

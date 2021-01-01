@@ -6,9 +6,16 @@
         xmlns:local="clr-namespace:U_System"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/TabControlStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="28"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid x:Name="W_Grid_TopNav">
@@ -24,9 +31,17 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Help">
-                    
+
                 </MenuItem>
             </Menu>
         </Grid>
+        <TabControl Grid.Row="1" x:Name="W_TabControl" Style="{DynamicResource TabControlStyle}">
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
