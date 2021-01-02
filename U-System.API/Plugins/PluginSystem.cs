@@ -89,6 +89,7 @@ namespace U_System.API.Plugins
         public static void PluginChangeVersion(Plugin plugin, int NewIndex)
         {
             plugin.ActiveRelease = NewIndex;
+            DisablePlugin(plugin);
             Save(plugin);
         }
 
@@ -227,6 +228,21 @@ namespace U_System.API.Plugins
                 if(Plugins[i].IsEnable)
                     EnablePlugin(Plugins[i]);
             }
+        }
+
+        public static async void DisablePlugin(Plugin plugin)
+        {
+            if (!plugin.IsDoingStuff)
+                plugin.IsDoingStuff = true;
+
+            plugin.IsEnable = false;
+
+            Navigation.MenuBar.MainMenu.Items.Remove(plugin.MenuItems.First());
+
+            //Release release = plugin.GitHub_Repository.Releases[plugin.ActiveRelease];
+            //
+            //
+            //plugin.Assembly.Unload();
         }
         private static void Save()
         {
