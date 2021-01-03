@@ -26,7 +26,7 @@ namespace U_System
             MainWindow window = new MainWindow();
             //window.Loaded += (sender, arg) => LoadAPI();
             window.Show();
-            API.Plugins.PluginSystem.EnablePlugins();
+            //API.Plugins.PluginSystem.EnablePlugins();
             
 
 

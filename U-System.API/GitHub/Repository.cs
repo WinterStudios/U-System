@@ -12,19 +12,21 @@ namespace U_System.API.GitHub
     public class Repository: INotifyPropertyChanged
     {
         public string Name { get; set; }
-        public uint ID { get; set; }
+        public int ID { get; set; }
         public bool Private { get; set; }
         public string Description { get; set; }
+        
 
 
+        [JsonPropertyName("owner")] public Author Author { get; set; }
+        [JsonPropertyName("url")] public string URL { get; set; }
 
-        [JsonPropertyName("owner")]
-        public Author Author { get; set; }
-
-        public Release[] Releases { get => releases; set { releases = value; NotifyPropertyChanged(); } }
+        public Release[] Releases { get; set ; }
 
 
-        private Release[] releases;
+        private Repository repository;
+
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -33,5 +35,9 @@ namespace U_System.API.GitHub
         }
 
         internal void Update(Repository value) { }
+
+
+        
+
     }
 }

@@ -15,29 +15,25 @@ namespace U_System.API.Plugins
     public class Plugin : INotifyPropertyChanged
     {
         public int ID { get; set; }
-        public string Name { get => GitHub_Repository.Name; }
+        public int GitHubRepositoryID { get; set; }
+        public string GitHubRepositoryURL { get; set; }
+
+
+        public string Name { get; set; }
         public string Description { get; set; }
-        public string[] Files { get; set; }
-        
+
+        public int ReleaseActiveID { get => releaseActiveID; set { releaseActiveID = value; NotifyPropertyChanged(); } }
+        public PluginRelease ReleaseActive { get => releaseActive; set { releaseActive = value; NotifyPropertyChanged(); } }
+
         public bool AutomaticUpdates { get; set; }
         public bool IsEnable { get => isEnable; set { isEnable = value; NotifyPropertyChanged(); } }
         public bool IsInstalled { get => isInstall; set { isInstall = value; NotifyPropertyChanged(); } }
         public bool IsDoingStuff { get => isDoingStuff; set { isDoingStuff = value; NotifyPropertyChanged(); } }
 
-        public PluginInfoActive ActivePlugin { get; set; }
+        public PluginRelease[] PluginReleases { get => pluginReleases; set { pluginReleases = value; NotifyPropertyChanged(); } }
 
-        public Repository GitHub_Repository { get => repository; set { repository = value; NotifyPropertyChanged(); } }
-        public int ActiveRelease { get => PluginSystem.GetIndexOfRelease(GitHub_Repository.Releases, activeRelease);
-            set {
-                if (GitHub_Repository.Releases != null && value > -1)
-                {
-                    activeRelease = GitHub_Repository.Releases[value];
-                    IsInstalled = GitHub_Repository.Releases[ActiveRelease].IsInstall;
-                }
-                else 
-                    activeRelease = null; 
-                NotifyPropertyChanged(); 
-            } } 
+        internal Repository GitHubRepository { get; set; }
+
         public SemVersion Version { get; set; }
 
 
@@ -46,12 +42,18 @@ namespace U_System.API.Plugins
         internal MenuItem[] MenuItems { get; set; }         
         internal AssemblyLoadContext Assembly { get; set; }
 
+
         private Repository repository;
         internal Release? activeRelease;
 
         private bool isInstall;
         private bool isDoingStuff;
         private bool isEnable;
+
+
+        private PluginRelease[] pluginReleases;
+        private int releaseActiveID;
+        private PluginRelease releaseActive;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

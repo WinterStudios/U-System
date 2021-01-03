@@ -22,6 +22,7 @@ namespace U_System.API.Plugins
     public class PluginSystem
     {
         public static List<Plugin> Plugins { get; set; }
+       
 
         public static void InitializeComponent()
         {
@@ -32,219 +33,284 @@ namespace U_System.API.Plugins
             //string path = Paths.PLUGINS.PLUGIN_DIRECTORY + "U-System.TestLibary.dll";
             //GetPlugin(path);
         }
-        public static void AddPlugin(string file)
+
+        public static async void AddPlugin(Repository repository, bool install, UserControl control)
         {
             Plugin plugin = new Plugin();
-        }
-
-        private static void GetPlugin(string file)
-        {
-            AssemblyName assemblyInfo = AssemblyName.GetAssemblyName(file);
-            AssemblyLoadContext temp = new AssemblyLoadContext(assemblyInfo.Name, true);
-            temp.Unloading += (alc) =>
-            {
-                GC.Collect();
-            };
-            Assembly assembly = temp.LoadFromAssemblyPath(file);
-            
-            Type IPlugin = assembly.GetTypes().First(x => x.GetInterfaces().Contains(typeof(IPlugin)));
-            IPlugin PluginInfo = (IPlugin)Activator.CreateInstance(IPlugin);
-
-            Plugin plugin = new Plugin();
-            //plugin.FileLocation = assembly.Location.Replace("\\","/");
-            //plugin.Name = PluginInfo.Name;
-            plugin.Description = PluginInfo.Description;
-            plugin.Version = PluginInfo.Version;
-            plugin.Modules = PluginInfo.Modules;
-
-
+            plugin.ID = Plugins.Count;
+            plugin.GitHubRepositoryID = repository.ID;
+            plugin.GitHubRepositoryURL = repository.URL;
+            plugin.GitHubRepository = repository;
+            plugin.Name = repository.Name;
+            plugin.Description = repository.Description;
+            plugin.IsDoingStuff = true;
+            plugin.ReleaseActiveID = -1;
             Plugins.Add(plugin);
-            EnablePlugins();
-            //Save();
-            //plugin.FileLocation = "../WinterStudios/U-System.TestLibary.dll";
-        }
 
+            ListBox list = (ListBox)control.FindName("UC_ListBox_Plugins");
+            list.Items.Refresh();
+            plugin.GitHubRepository.Releases = await GitHub.GitHub.GetReleasesAsync(repository);
 
-        public static async void AddPlugin(Repository output, bool forceInstall)
-        {
-            Plugin m_plugin = new Plugin();
-            m_plugin.ID = Plugins.Count;
-            m_plugin.GitHub_Repository = output;
-            m_plugin.ActiveRelease = -1;
-            m_plugin.IsDoingStuff = true;
-            Plugins.Add(m_plugin);
-
-            if (forceInstall)
-                InstallFresh(m_plugin);
-            else
-            {
-                await UpdatePlugin(m_plugin);
-                m_plugin.ActiveRelease = 0;
-            }
-            Save();
-
-            //DownloadPlugin(output, PluginState.Stable);
-        }
-
-        public static void PluginChangeVersion(Plugin plugin, int NewIndex)
-        {
-            plugin.ActiveRelease = NewIndex;
-            DisablePlugin(plugin);
-            Save(plugin);
-        }
-
-        public async static void InstallFresh(Plugin plugin)
-        {
-            await Task.Run(() => Thread.Sleep(2000));
-
-            plugin.GitHub_Repository.Releases = await GitHub.GitHub.GetReleasesAsync(plugin.GitHub_Repository);
-
-            Release lastReleaseStable = plugin.GitHub_Repository.Releases.First(x => x.PreRelease == false);
-            plugin.ActiveRelease = GetIndexOfRelease(plugin.GitHub_Repository.Releases, lastReleaseStable);
-            Asset pluginAsset = lastReleaseStable.Assets.First(x => x.Name == "Release.zip");
-            Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(pluginAsset.URL);
-            string pluginPath = Paths.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", plugin.GitHub_Repository.Name, lastReleaseStable.Tag);
-            FileSystem.SaveStreamToFile(stream, pluginPath);
-
-
-            ZipArchive zip = ZipFile.OpenRead(pluginPath);
-            string name = zip.Entries.First(x => x.Name.EndsWith(".dll")).Name;
-            lastReleaseStable.LocalZipFile = pluginPath.Replace("\\", "/");
-            zip.ExtractToDirectory(Paths.PLUGINS.PLUGIN_DIRECTORY, true);
-            lastReleaseStable.IsInstall = true;
-            string[] files = new string[zip.Entries.Count];
-            for (int i = 0; i < files.Length; i++)
-            {
-                files[i] = Paths.PLUGINS.PLUGIN_DIRECTORY.Replace("\\", "/") + zip.Entries[i].FullName;
-            }
-            lastReleaseStable.filesLocations = files;
-            lastReleaseStable.IsInstall = true;
-            plugin.IsInstalled = true;
-            Save();
-            EnablePlugin(plugin);
-            
+            plugin.PluginReleases = plugin.GitHubRepository.Releases.GetReleases();
+            plugin.ReleaseActiveID = 0;
+            plugin.ReleaseActive = plugin.PluginReleases[0];
             plugin.IsDoingStuff = false;
-            Save();
+
+            if (install)
+            {
+                Install(plugin);
+            }
         }
-        public async static void InstallRelease(Plugin plugin)
+
+        public static async void Install(Plugin plugin)
         {
             plugin.IsDoingStuff = true;
-            Release release = plugin.GitHub_Repository.Releases[plugin.ActiveRelease];
+
+            await Task.Run(() => Thread.Sleep(1000));
+
+            Release release = plugin.GitHubRepository.Releases.First(x => x.ID == plugin.ReleaseActive.ReleaseID);
+
             Asset pluginAsset = release.Assets.First(x => x.Name == "Release.zip");
             Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(pluginAsset.URL);
-            string pluginPath = Paths.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", plugin.GitHub_Repository.Name, release.Tag);
+            string pluginPath = Paths.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", plugin.Name, release.Tag);
             FileSystem.SaveStreamToFile(stream, pluginPath);
 
 
             ZipArchive zip = ZipFile.OpenRead(pluginPath);
             string name = zip.Entries.First(x => x.Name.EndsWith(".dll")).Name;
-            release.LocalZipFile = pluginPath.Replace("\\", "/");
+            plugin.PluginReleases[plugin.ReleaseActiveID].ReleaseZipFile = pluginPath.Replace("\\", "/");
             zip.ExtractToDirectory(Paths.PLUGINS.PLUGIN_DIRECTORY, true);
-            release.IsInstall = true;
+            
             string[] files = new string[zip.Entries.Count];
             for (int i = 0; i < files.Length; i++)
             {
                 files[i] = Paths.PLUGINS.PLUGIN_DIRECTORY.Replace("\\", "/") + zip.Entries[i].FullName;
             }
-            release.filesLocations = files;
-            release.IsInstall = true;
-            plugin.IsInstalled = true;
+
+            plugin.PluginReleases[plugin.ReleaseActiveID].PluginFilesLocation = files;
+            plugin.PluginReleases[plugin.ReleaseActiveID].IsInstalled = true;
+
+            plugin.IsDoingStuff = false;
             Save();
-            plugin.IsDoingStuff = false;
         }
 
+        //public static void AddPlugin(string file)
+        //{
+        //    Plugin plugin = new Plugin();
+        //}
 
-        public static async Task<string> DownloadPlugin(Repository repository, PluginState state = PluginState.Stable)
-        {
-            if(state == PluginState.Stable)
-            {
-                Release lastReleaseStable = repository.Releases.First(x => x.PreRelease == false);
-                Asset pluginAsset = lastReleaseStable.Assets.First(x => x.Name == "Release.zip");
-                Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(pluginAsset.URL);
-                string pluginPath = Paths.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", repository.Name, lastReleaseStable.Tag);
-                FileSystem.SaveStreamToFile(stream, pluginPath);
-                return pluginPath;
-            }
-            if(state == PluginState.Preview)
-            {
-                Release lastReleaseStable = repository.Releases.First(x => x.PreRelease == true);
-                Asset pluginAsset = lastReleaseStable.Assets.First(x => x.Name == "Release.zip");
-                Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(pluginAsset.URL);
-                string pluginPath = Paths.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", repository.Name, lastReleaseStable.Tag);
-                FileSystem.SaveStreamToFile(stream, pluginPath);
-                return pluginPath;
-            }
-            return null;
-        }
+        //private static void GetPlugin(string file)
+        //{
+        //    AssemblyName assemblyInfo = AssemblyName.GetAssemblyName(file);
+        //    AssemblyLoadContext temp = new AssemblyLoadContext(assemblyInfo.Name, true);
+        //    temp.Unloading += (alc) =>
+        //    {
+        //        GC.Collect();
+        //    };
+        //    Assembly assembly = temp.LoadFromAssemblyPath(file);
 
-        public static async Task UpdatePlugin(Plugin plugin)
-        {
-            plugin.IsDoingStuff = true;
+        //    Type IPlugin = assembly.GetTypes().First(x => x.GetInterfaces().Contains(typeof(IPlugin)));
+        //    IPlugin PluginInfo = (IPlugin)Activator.CreateInstance(IPlugin);
 
-            plugin.GitHub_Repository.Releases = await GitHub.GitHub.GetReleasesAsync(plugin.GitHub_Repository);
+        //    Plugin plugin = new Plugin();
+        //    //plugin.FileLocation = assembly.Location.Replace("\\","/");
+        //    //plugin.Name = PluginInfo.Name;
+        //    plugin.Description = PluginInfo.Description;
+        //    plugin.Version = PluginInfo.Version;
+        //    plugin.Modules = PluginInfo.Modules;
 
-            plugin.IsDoingStuff = false;
-            
-        }
-        
-        public static async void EnablePlugin(Plugin plugin)
-        {
-            //CheckPlugin(plugin);
-            if (!plugin.IsDoingStuff)
-                plugin.IsDoingStuff = true;
 
-            Release release = plugin.GitHub_Repository.Releases[plugin.ActiveRelease];
+        //    Plugins.Add(plugin);
+        //    EnablePlugins();
+        //    //Save();
+        //    //plugin.FileLocation = "../WinterStudios/U-System.TestLibary.dll";
+        //}
 
-            AssemblyLoadContext temp = new AssemblyLoadContext(plugin.Name, true);
-            temp.Unloading += (alc) =>
-            {
-              GC.Collect();
-            };
-            Assembly assembly = temp.LoadFromAssemblyPath(plugin.activeRelease.filesLocations.First(x => x.EndsWith(".dll")));
-            plugin.Assembly = temp;
 
-            Type IPlugin = assembly.GetTypes().First(x => x.GetInterfaces().Contains(typeof(IPlugin)));
-            IPlugin PluginInfo = (IPlugin)Activator.CreateInstance(IPlugin);
+        //public static async void AddPlugin(Repository output, bool forceInstall)
+        //{
+        //    Plugin m_plugin = new Plugin();
+        //    m_plugin.ID = Plugins.Count;
+        //    m_plugin.GitHub_Repository = output;
+        //    m_plugin.ActiveRelease = -1;
+        //    m_plugin.IsDoingStuff = true;
+        //    Plugins.Add(m_plugin);
 
-            plugin.Modules = PluginInfo.Modules;
+        //    if (forceInstall)
+        //        InstallFresh(m_plugin);
+        //    else
+        //    {
+        //        await UpdatePlugin(m_plugin);
+        //        m_plugin.ActiveRelease = 0;
+        //    }
+        //    Save();
 
-            List<MenuItem> menus = new List<MenuItem>();
-            for (int i = 0; i < plugin.Modules.Length; i++)
-            {
-                Module module = plugin.Modules[i];
-                if(module.PluginType == PluginType.Tab)
-                {
-                    menus.Add(Navigation.MenuBar.Add(module.Path, null));
-                }
-            }
-            plugin.MenuItems = menus.ToArray();
-            plugin.IsEnable = true;
-            plugin.IsDoingStuff = false;
-        }
-        public static async void EnablePlugins()
-        {
-            for (int i = 0; i < Plugins.Count; i++)
-            {
-                if(Plugins[i].IsEnable)
-                    EnablePlugin(Plugins[i]);
-            }
-        }
+        //    //DownloadPlugin(output, PluginState.Stable);
+        //}
 
-        public static async void DisablePlugin(Plugin plugin)
-        {
-            if (!plugin.IsDoingStuff)
-                plugin.IsDoingStuff = true;
+        //public static void PluginChangeRelease(Plugin plugin, int NewIndex)
+        //{
+        //    plugin.ActiveRelease = NewIndex;
+        //    //DisablePlugin(plugin);
+        //    Save(plugin);
+        //}
 
-            plugin.IsEnable = false;
 
-            Navigation.MenuBar.MainMenu.Items.Remove(plugin.MenuItems.First());
 
-            //Release release = plugin.GitHub_Repository.Releases[plugin.ActiveRelease];
-            //
-            //
-            //plugin.Assembly.Unload();
-        }
-        private static void Save()
+        //public async static void InstallFresh(Plugin plugin)
+        //{
+        //    await Task.Run(() => Thread.Sleep(2000));
+
+        //    plugin.GitHub_Repository.Releases = await GitHub.GitHub.GetReleasesAsync(plugin.GitHub_Repository);
+
+        //    Release lastReleaseStable = plugin.GitHub_Repository.Releases.First(x => x.PreRelease == false);
+        //    plugin.ActiveRelease = GetIndexOfRelease(plugin.GitHub_Repository.Releases, lastReleaseStable);
+        //    Asset pluginAsset = lastReleaseStable.Assets.First(x => x.Name == "Release.zip");
+        //    Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(pluginAsset.URL);
+        //    string pluginPath = Paths.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", plugin.GitHub_Repository.Name, lastReleaseStable.Tag);
+        //    FileSystem.SaveStreamToFile(stream, pluginPath);
+
+
+        //    ZipArchive zip = ZipFile.OpenRead(pluginPath);
+        //    string name = zip.Entries.First(x => x.Name.EndsWith(".dll")).Name;
+        //    lastReleaseStable.LocalZipFile = pluginPath.Replace("\\", "/");
+        //    zip.ExtractToDirectory(Paths.PLUGINS.PLUGIN_DIRECTORY, true);
+        //    lastReleaseStable.IsInstall = true;
+        //    string[] files = new string[zip.Entries.Count];
+        //    for (int i = 0; i < files.Length; i++)
+        //    {
+        //        files[i] = Paths.PLUGINS.PLUGIN_DIRECTORY.Replace("\\", "/") + zip.Entries[i].FullName;
+        //    }
+        //    lastReleaseStable.filesLocations = files;
+        //    lastReleaseStable.IsInstall = true;
+        //    plugin.IsInstalled = true;
+        //    Save();
+        //    EnablePlugin(plugin);
+
+        //    plugin.IsDoingStuff = false;
+        //    Save();
+        //}
+        //public async static void InstallRelease(Plugin plugin)
+        //{
+        //    plugin.IsDoingStuff = true;
+        //    Release release = plugin.GitHub_Repository.Releases[plugin.ActiveRelease];
+        //    Asset pluginAsset = release.Assets.First(x => x.Name == "Release.zip");
+        //    Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(pluginAsset.URL);
+        //    string pluginPath = Paths.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", plugin.GitHub_Repository.Name, release.Tag);
+        //    FileSystem.SaveStreamToFile(stream, pluginPath);
+
+
+        //    ZipArchive zip = ZipFile.OpenRead(pluginPath);
+        //    string name = zip.Entries.First(x => x.Name.EndsWith(".dll")).Name;
+        //    release.LocalZipFile = pluginPath.Replace("\\", "/");
+        //    zip.ExtractToDirectory(Paths.PLUGINS.PLUGIN_DIRECTORY, true);
+        //    release.IsInstall = true;
+        //    string[] files = new string[zip.Entries.Count];
+        //    for (int i = 0; i < files.Length; i++)
+        //    {
+        //        files[i] = Paths.PLUGINS.PLUGIN_DIRECTORY.Replace("\\", "/") + zip.Entries[i].FullName;
+        //    }
+        //    release.filesLocations = files;
+        //    release.IsInstall = true;
+        //    plugin.IsInstalled = true;
+        //    Save();
+        //    plugin.IsDoingStuff = false;
+        //}
+
+
+        //public static async Task<string> DownloadPlugin(Repository repository, PluginState state = PluginState.Stable)
+        //{
+        //    if(state == PluginState.Stable)
+        //    {
+        //        Release lastReleaseStable = repository.Releases.First(x => x.PreRelease == false);
+        //        Asset pluginAsset = lastReleaseStable.Assets.First(x => x.Name == "Release.zip");
+        //        Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(pluginAsset.URL);
+        //        string pluginPath = Paths.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", repository.Name, lastReleaseStable.Tag);
+        //        FileSystem.SaveStreamToFile(stream, pluginPath);
+        //        return pluginPath;
+        //    }
+        //    if(state == PluginState.Preview)
+        //    {
+        //        Release lastReleaseStable = repository.Releases.First(x => x.PreRelease == true);
+        //        Asset pluginAsset = lastReleaseStable.Assets.First(x => x.Name == "Release.zip");
+        //        Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(pluginAsset.URL);
+        //        string pluginPath = Paths.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", repository.Name, lastReleaseStable.Tag);
+        //        FileSystem.SaveStreamToFile(stream, pluginPath);
+        //        return pluginPath;
+        //    }
+        //    return null;
+        //}
+
+        //public static async Task UpdatePlugin(Plugin plugin)
+        //{
+        //    plugin.IsDoingStuff = true;
+
+        //    plugin.GitHub_Repository.Releases = await GitHub.GitHub.GetReleasesAsync(plugin.GitHub_Repository);
+
+        //    plugin.IsDoingStuff = false;
+
+        //}
+
+        //public static async void EnablePlugin(Plugin plugin)
+        //{
+        //    //CheckPlugin(plugin);
+        //    if (!plugin.IsDoingStuff)
+        //        plugin.IsDoingStuff = true;
+
+        //    Release release = plugin.GitHub_Repository.Releases[plugin.ActiveRelease];
+
+        //    AssemblyLoadContext temp = new AssemblyLoadContext(plugin.Name, true);
+        //    temp.Unloading += (alc) =>
+        //    {
+        //      GC.Collect();
+        //    };
+        //    Assembly assembly = temp.LoadFromAssemblyPath(plugin.activeRelease.filesLocations.First(x => x.EndsWith(".dll")));
+        //    plugin.Assembly = temp;
+
+        //    Type IPlugin = assembly.GetTypes().First(x => x.GetInterfaces().Contains(typeof(IPlugin)));
+        //    IPlugin PluginInfo = (IPlugin)Activator.CreateInstance(IPlugin);
+
+        //    plugin.Modules = PluginInfo.Modules;
+
+        //    List<MenuItem> menus = new List<MenuItem>();
+        //    for (int i = 0; i < plugin.Modules.Length; i++)
+        //    {
+        //        Module module = plugin.Modules[i];
+        //        if(module.PluginType == PluginType.Tab)
+        //        {
+        //            menus.Add(Navigation.MenuBar.Add(module.Path, null));
+        //        }
+        //    }
+        //    plugin.MenuItems = menus.ToArray();
+        //    plugin.IsEnable = true;
+        //    plugin.IsDoingStuff = false;
+        //}
+        //public static async void EnablePlugins()
+        //{
+        //    for (int i = 0; i < Plugins.Count; i++)
+        //    {
+        //        if(Plugins[i].IsEnable)
+        //            EnablePlugin(Plugins[i]);
+        //    }
+        //}
+
+        //public static async void DisablePlugin(Plugin plugin)
+        //{
+        //    if (!plugin.IsDoingStuff)
+        //        plugin.IsDoingStuff = true;
+
+        //    plugin.IsEnable = false;
+
+        //    Navigation.MenuBar.MainMenu.Items.Remove(plugin.MenuItems.First());
+
+        //    //Release release = plugin.GitHub_Repository.Releases[plugin.ActiveRelease];
+        //    //
+        //    //
+        //    //plugin.Assembly.Unload();
+        //}
+
+
+        public static void Save()
         {
             JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true };
             File.WriteAllText(Paths.SETTINGS.PLUGINS_SETTINGS, JsonSerializer.Serialize(Plugins, options));

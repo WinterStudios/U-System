@@ -84,5 +84,28 @@ namespace U_System.API.Navigation
 
             return item;
         }
+
+        public static void Remove(string header)
+        {
+            MenuItem removedItem = null;
+            foreach (MenuItem item in MainMenu.Items)
+            {
+                if (item.Name == header)
+                {
+                    removedItem = item;
+                    break;
+                }
+            }
+
+            if (removedItem != null)
+            {
+                MainMenu.Items.Remove(removedItem);
+            }
+
+        }
+        public static void Remove(string path)
+        {
+            string[] header = path.Split('>');
+        }
     }
 }

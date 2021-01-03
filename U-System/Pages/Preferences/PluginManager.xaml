@@ -38,10 +38,10 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
-                                <TextBlock Text="{Binding GitHub_Repository.Name}" FontSize="14px" FontWeight="Normal"/>
-                                <TextBlock Text="{Binding GitHub_Repository.Name}" FontSize="12px" FontWeight="Light"/>
+                                <TextBlock Text="{Binding Name}" FontSize="14px" FontWeight="Normal"/>
+                                <TextBlock Text="{Binding Description}" FontSize="12px" FontWeight="Light"/>
                             </StackPanel>
-                            <ComboBox Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" ItemsSource="{Binding GitHub_Repository.Releases}" SelectedIndex="{Binding ActiveRelease}" Style="{DynamicResource PluginComboBox}" SelectionChanged="ComboBox_SelectionChanged">
+                            <ComboBox Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" ItemsSource="{Binding PluginReleases}" SelectedIndex="{Binding ReleaseActiveID}" Style="{DynamicResource PluginComboBox}" SelectionChanged="ComboBox_SelectionChanged">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <Border>
@@ -51,7 +51,7 @@
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Border Background="Green"/>
-                                                <TextBlock Grid.Column="1" Text="{Binding Tag}"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding ReleaseTag}"/>
                                             </Grid>
                                         </Border>
                                     </DataTemplate>
@@ -68,7 +68,11 @@
                         </Grid>
                     </Border>
                     <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsInstalled}" Value="True">
+                        <DataTrigger Binding="{Binding ReleaseActive.IsInstalled}" Value="False">
+                            <Setter Property="IsEnabled" TargetName="btn_Install" Value="True"/>
+                            <Setter Property="IsEnabled" TargetName="btn_Enable" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ReleaseActive.IsInstalled}" Value="True">
                             <Setter Property="IsEnabled" TargetName="btn_Install" Value="False"/>
                             <Setter Property="IsEnabled" TargetName="btn_Enable" Value="True"/>
                         </DataTrigger>

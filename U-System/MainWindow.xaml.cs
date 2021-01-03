@@ -44,6 +44,7 @@ namespace U_System
                 tab.Content = manager;
                 tab.Header = "Plugin Manager";
                 W_TabControl.Items.Add(tab);
+                W_TabControl.SelectedItem = tab;
             }
         }
     }

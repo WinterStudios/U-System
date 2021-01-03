@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace U_System.API.GitHub
 {
-    public class Release : INotifyPropertyChanged
+    public class Release
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -20,17 +20,6 @@ namespace U_System.API.GitHub
 
 
         #region Outside of GitHub
-
-        public bool IsInstall { get; set; }
-
-        public string[] filesLocations { get; set; }
-        public string LocalZipFile { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         #endregion
     }
@@ -53,5 +42,18 @@ namespace U_System.API.GitHub.Extensions
             }
             return tags;
         }
+        internal static Plugins.PluginRelease[] GetReleases(this Release[] releases)
+        {
+            Plugins.PluginRelease[] pluginReleases = new Plugins.PluginRelease[releases.Length];
+            for (int i = 0; i < releases.Length; i++)
+            {
+                pluginReleases[i] = new Plugins.PluginRelease();
+                pluginReleases[i].PreRelease = releases[i].PreRelease;
+                pluginReleases[i].ReleaseID = releases[i].ID;
+                pluginReleases[i].ReleaseTag = releases[i].Tag;
+            }
+            return pluginReleases;
+        }
     }
+    
 }

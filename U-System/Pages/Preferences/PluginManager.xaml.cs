@@ -22,9 +22,11 @@ namespace U_System.Pages.Preferences
     /// </summary>
     public partial class PluginManager : UserControl
     {
+
         public PluginManager()
         {
             InitializeComponent();
+
             UC_ListBox_Plugins.ItemsSource = PluginSystem.Plugins;
             
         }
@@ -39,7 +41,7 @@ namespace U_System.Pages.Preferences
                 if (_w_p_add.ShowDialog() == true)
                 {
                     bool install = false;
-                    PluginSystem.AddPlugin(_w_p_add._output, install);
+                    PluginSystem.AddPlugin(_w_p_add._output, install, this); ;
                     UC_ListBox_Plugins.Items.Refresh();
                 }
             }
@@ -52,17 +54,16 @@ namespace U_System.Pages.Preferences
             string _tag = button.Tag.ToString();
             if(_tag == "PLUGIN_INSTALL")
             {
-                //plugin.IsDoingStuff = true;
-                PluginSystem.InstallRelease(plugin);
+                PluginSystem.Install(plugin);
 
             }
             if(_tag == "PLUGIN_ACTIVATE")
             {
-                PluginSystem.EnablePlugin(plugin);
+                //PluginSystem.EnablePlugin(plugin);
             }
             if(_tag == "PLUGIN_UPDATE")
             {
-                PluginSystem.UpdatePlugin(plugin);
+                //PluginSystem.UpdatePlugin(plugin);
             }
         }
 
@@ -70,8 +71,10 @@ namespace U_System.Pages.Preferences
         {
             ComboBox box = (ComboBox)sender;
             Plugin plugin = (Plugin)box.DataContext;
-
-            PluginSystem.PluginChangeVersion(plugin, box.SelectedIndex);
+            plugin.ReleaseActiveID = box.SelectedIndex;
+            plugin.ReleaseActive = plugin.PluginReleases[plugin.ReleaseActiveID];
+            PluginSystem.Save();
+            //PluginSystem.PluginChangeVersion(plugin, box.SelectedIndex);
 
         }
     }
