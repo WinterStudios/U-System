@@ -23,14 +23,15 @@ namespace U_System.API.Plugins
         public string Description { get; set; }
 
         public int ReleaseActiveID { get => releaseActiveID; set { releaseActiveID = value; NotifyPropertyChanged(); } }
-        public PluginRelease ReleaseActive { get => releaseActive; set { releaseActive = value; NotifyPropertyChanged(); } }
+        public PluginRelease ReleaseActive { get { if (ReleaseActiveID > -1) return PluginReleases[ReleaseActiveID]; else return null; } set { if (ReleaseActiveID > -1 && PluginReleases != null) { PluginReleases[ReleaseActiveID] = value; NotifyPropertyChanged(); } } }
+        public PluginRelease[] PluginReleases { get => pluginReleases; set { pluginReleases = value; NotifyPropertyChanged(); } }
 
         public bool AutomaticUpdates { get; set; }
         public bool IsEnable { get => isEnable; set { isEnable = value; NotifyPropertyChanged(); } }
         public bool IsInstalled { get => isInstall; set { isInstall = value; NotifyPropertyChanged(); } }
         public bool IsDoingStuff { get => isDoingStuff; set { isDoingStuff = value; NotifyPropertyChanged(); } }
 
-        public PluginRelease[] PluginReleases { get => pluginReleases; set { pluginReleases = value; NotifyPropertyChanged(); } }
+        
 
         internal Repository GitHubRepository { get; set; }
 
@@ -40,6 +41,7 @@ namespace U_System.API.Plugins
 
         internal Module[] Modules { get; set; }
         internal MenuItem[] MenuItems { get; set; }         
+        internal TabItem[] Tabs { get; set; }
         internal AssemblyLoadContext Assembly { get; set; }
 
 
@@ -53,7 +55,7 @@ namespace U_System.API.Plugins
 
         private PluginRelease[] pluginReleases;
         private int releaseActiveID;
-        private PluginRelease releaseActive;
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

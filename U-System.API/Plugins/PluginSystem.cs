@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 
@@ -27,7 +28,7 @@ namespace U_System.API.Plugins
         public static void InitializeComponent()
         {
             Plugins = new List<Plugin>();
-            Load();
+            //Load();
             //EnablePlugins();
             //LoadPlugins();
             //string path = Paths.PLUGINS.PLUGIN_DIRECTORY + "U-System.TestLibary.dll";
@@ -53,7 +54,7 @@ namespace U_System.API.Plugins
 
             plugin.PluginReleases = plugin.GitHubRepository.Releases.GetReleases();
             plugin.ReleaseActiveID = 0;
-            plugin.ReleaseActive = plugin.PluginReleases[0];
+            //plugin.ReleaseActive = plugin.PluginReleases[0];
             plugin.IsDoingStuff = false;
 
             if (install)
@@ -91,6 +92,74 @@ namespace U_System.API.Plugins
             plugin.PluginReleases[plugin.ReleaseActiveID].IsInstalled = true;
 
             plugin.IsDoingStuff = false;
+            Save();
+        }
+
+        public async static void Enable(Plugin plugin)
+        {
+            AssemblyLoadContext temp = new AssemblyLoadContext(plugin.Name, true);
+            temp.Unloading += (alc) =>
+            {
+                GC.Collect();
+            };
+            Assembly assembly = temp.LoadFromAssemblyPath(plugin.ReleaseActive.PluginFilesLocation.First(x => x.EndsWith(".dll")));
+            plugin.Assembly = temp;
+
+            Type IPlugin = assembly.GetTypes().First(x => x.GetInterfaces().Contains(typeof(IPlugin)));
+            IPlugin PluginInfo = (IPlugin)Activator.CreateInstance(IPlugin);
+
+            plugin.Modules = PluginInfo.Modules;
+            plugin.Tabs = new TabItem[plugin.Modules.Length];
+            List<MenuItem> menus = new List<MenuItem>();
+            for (int i = 0; i < plugin.Modules.Length; i++)
+            {
+                Module module = plugin.Modules[i];
+                if (module.PluginType == PluginType.Tab)
+                {
+                    MenuItem item = Navigation.MenuBar.Add(module.Path);
+                    item.Click += (sender, arg) =>
+                    {
+                        if (plugin.Tabs[i] == null)
+                        {
+                            TabItem tab = new TabItem();
+                            tab.Header = module.Name;
+                            Type type = assembly.GetType(module.Type);
+                            object content = Activator.CreateInstance(type);
+                            tab.Content = content;
+                            plugin.Tabs[i] = tab;
+                            Navigation.TabSystem.Add(tab);
+                        }
+                        else
+                        {
+                            Navigation.TabSystem.Select(plugin.Tabs[i]);
+                        }
+                        
+                    };
+                    menus.Add(item);
+                }
+            }
+            plugin.MenuItems = menus.ToArray();
+            plugin.ReleaseActive.IsEnable = true;
+            plugin.IsDoingStuff = false;
+            Save();
+        }
+        public static async void EnablePlugins()
+        {
+            for (int i = 0; i < Plugins.Count; i++)
+            {
+                if (Plugins[i].ReleaseActive.IsEnable)
+                    Enable(Plugins[i]);
+            }
+
+        }
+        public async static void Disable(Plugin plugin)
+        {
+            Navigation.MenuBar.Remove(plugin.MenuItems);
+
+            plugin.Assembly.Unload();
+
+            plugin.ReleaseActive.IsEnable = false;
+
             Save();
         }
 
@@ -320,7 +389,7 @@ namespace U_System.API.Plugins
             Plugins[plugin.ID] = plugin;
             Save();
         }
-        private static void Load()
+        public static void Load()
         {
             if (!File.Exists(Paths.SETTINGS.PLUGINS_SETTINGS))
                 return;

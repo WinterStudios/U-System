@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:U_System.Pages.Preferences"
+             xmlns:plugin="clr-namespace:U_System.API.Plugins;assembly=U-System.API"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="600">
     <UserControl.Resources>
@@ -25,7 +26,7 @@
         </Border>
         <ListBox x:Name="UC_ListBox_Plugins" Grid.Row="1">
             <ListBox.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate  DataType="{x:Type plugin:Plugin}">
                     <Border Margin="4" Padding="8">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -68,16 +69,12 @@
                         </Grid>
                     </Border>
                     <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding ReleaseActive.IsInstalled}" Value="False">
-                            <Setter Property="IsEnabled" TargetName="btn_Install" Value="True"/>
-                            <Setter Property="IsEnabled" TargetName="btn_Enable" Value="False"/>
-                        </DataTrigger>
                         <DataTrigger Binding="{Binding ReleaseActive.IsInstalled}" Value="True">
                             <Setter Property="IsEnabled" TargetName="btn_Install" Value="False"/>
                             <Setter Property="IsEnabled" TargetName="btn_Enable" Value="True"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding IsEnable}" Value="True">
-                            <Setter Property="IsEnabled" TargetName="btn_Enable" Value="False"/>
+                        <DataTrigger Binding="{Binding ReleaseActive.IsEnable }" Value="True">
+                            <Setter Property="Content" TargetName="btn_Enable" Value="Disable"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsDoingStuff}" Value="True">
                             <Setter Property="IsEnabled" TargetName="btn_Install" Value="False"/>

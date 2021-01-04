@@ -59,7 +59,10 @@ namespace U_System.Pages.Preferences
             }
             if(_tag == "PLUGIN_ACTIVATE")
             {
-                //PluginSystem.EnablePlugin(plugin);
+                if(!plugin.ReleaseActive.IsEnable)
+                    PluginSystem.Enable(plugin);
+                else
+                    PluginSystem.Disable(plugin);
             }
             if(_tag == "PLUGIN_UPDATE")
             {

@@ -19,7 +19,7 @@ namespace U_System.API.Navigation
         {
             Type typePlugin = Type.GetType(module.Type);
         }
-        public static MenuItem Add(string path, Action action)
+        public static MenuItem Add(string path)
         {
             string[] hierarchy = path.Split('>');
             int level = 0;
@@ -55,14 +55,18 @@ namespace U_System.API.Navigation
                     i = -1;
                     level++;                 
                 }
+                /// -> cria os item quando não os encontra no parent actual
                 if(i == (item.Length - 1))
                 {
+                    /// --> Create the parent item on main menu
                     if (level == 0)
                     {
                         MenuItem menuItem = Create(hierarchy[level]);
                         MainMenu.Items.Add(menuItem);
                         parent = menuItem;
                     }
+
+                    /// --> Cria os item 
                     else
                     {
                         MenuItem menuItem = Create(hierarchy[level]);
@@ -80,32 +84,48 @@ namespace U_System.API.Navigation
         {
             MenuItem item = new MenuItem();
             item.Header = header;
-            //item.Click += eventHandler;
 
             return item;
         }
 
-        public static void Remove(string header)
-        {
-            MenuItem removedItem = null;
-            foreach (MenuItem item in MainMenu.Items)
-            {
-                if (item.Name == header)
-                {
-                    removedItem = item;
-                    break;
-                }
-            }
+        //public static void Remove(string header)
+        //{
+        //    MenuItem removedItem = null;
+        //    foreach (MenuItem item in MainMenu.Items)
+        //    {
+        //        if (item.Name == header)
+        //        {
+        //            removedItem = item;
+        //            break;
+        //        }
+        //    }
 
-            if (removedItem != null)
-            {
-                MainMenu.Items.Remove(removedItem);
-            }
+        //    if (removedItem != null)
+        //    {
+        //        MainMenu.Items.Remove(removedItem);
+        //    }
 
-        }
+        
         public static void Remove(string path)
         {
             string[] header = path.Split('>');
         }
+        public static void Remove(MenuItem[] items)
+        {
+            if (items == null || items.Length < 1)
+                return;
+
+            for (int i = 0; i < items.Length; i++)
+            {
+                MenuItem parent = (MenuItem)items[i].Parent;
+                parent.Items.Remove(items[i]);
+            } 
+        }
+        private static void Remove(MenuItem item)
+        {
+
+        }
+
+       
     }
 }

@@ -29,7 +29,7 @@ namespace U_System
         {
             InitializeComponent();
             MenuBar.MainMenu = this.W_MainMenuBar;
-
+            TabSystem.TabControl = this.W_TabControl;
 
         }
 
