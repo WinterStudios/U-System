@@ -114,24 +114,26 @@ namespace U_System.API.Plugins
             for (int i = 0; i < plugin.Modules.Length; i++)
             {
                 Module module = plugin.Modules[i];
+
+                int index = i;
                 if (module.PluginType == PluginType.Tab)
                 {
                     MenuItem item = Navigation.MenuBar.Add(module.Path);
                     item.Click += (sender, arg) =>
                     {
-                        if (plugin.Tabs[i] == null)
+                        if (plugin.Tabs[index] == null)
                         {
-                            TabItem tab = new TabItem();
-                            tab.Header = module.Name;
+                            plugin.Tabs[index] = new TabItem();
+                            plugin.Tabs[index].Header = module.Name;
                             Type type = assembly.GetType(module.Type);
                             object content = Activator.CreateInstance(type);
-                            tab.Content = content;
-                            plugin.Tabs[i] = tab;
-                            Navigation.TabSystem.Add(tab);
+                            plugin.Tabs[index].Content = content;
+                            plugin.Tabs[index].DataContext = new object[3] { "_PLUGIN" , plugin.ID, index };
+                            Navigation.TabSystem.Add(plugin.Tabs[index]);
                         }
                         else
                         {
-                            Navigation.TabSystem.Select(plugin.Tabs[i]);
+                            Navigation.TabSystem.Select(plugin.Tabs[index]);
                         }
                         
                     };
@@ -163,6 +165,7 @@ namespace U_System.API.Plugins
             Save();
         }
 
+        public static void RemoveTabFromPlugin(int pluginIndex, int moduloIndex) => Plugins[pluginIndex].Tabs[moduloIndex] = null;
         //public static void AddPlugin(string file)
         //{
         //    Plugin plugin = new Plugin();

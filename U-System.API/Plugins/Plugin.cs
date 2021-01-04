@@ -65,4 +65,16 @@ namespace U_System.API.Plugins
         }
 
     }
+
+    public static class Extensions
+    {
+        public static void Remove (this TabItem[] tabs, TabItem item)
+        {
+            for (int i = 0; i < tabs.Length; i++)
+            {
+                if (tabs[i] == item)
+                    tabs[i] = null;
+            }
+        }
+    }
 }

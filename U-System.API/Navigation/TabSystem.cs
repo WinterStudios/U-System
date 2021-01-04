@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
+using U_System.API.Plugins;
+
 namespace U_System.API.Navigation
 {
     public static class TabSystem
@@ -19,6 +21,11 @@ namespace U_System.API.Navigation
             TabControl.Items.Add(tab);
             TabControl.SelectedItem = tab;
             return true;
+        }
+
+        public static void Remove(TabItem tab)
+        {
+            TabControl.Items.Remove(tab);
         }
 
         internal static void Select(TabItem tabItem)

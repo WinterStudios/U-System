@@ -12,11 +12,22 @@ namespace U_System.Styles
     {
         private void tab_Close_Btn_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.Tag is TabItem item)
+            if(sender.GetType() == typeof(Button))
             {
-                var tabControl = (TabControl)item.Parent;
-                tabControl.Items.Remove(item);
-                Console.WriteLine("re");
+                Button button = (Button)sender;
+                TabItem tab = (TabItem)button.TemplatedParent;
+                API.Navigation.TabSystem.Remove(tab);
+
+                if (tab.DataContext != null)
+                {
+                    object[] data = (object[])tab.DataContext;
+                    if(data[0] != null && (string)data[0] == "_PLUGIN")
+                    {
+                        API.Plugins.PluginSystem.RemoveTabFromPlugin((int)data[1], (int)data[2]);
+                    }
+
+
+                }
             }
         }
 
