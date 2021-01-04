@@ -42,7 +42,8 @@
                                 <TextBlock Text="{Binding Name}" FontSize="14px" FontWeight="Normal"/>
                                 <TextBlock Text="{Binding Description}" FontSize="12px" FontWeight="Light"/>
                             </StackPanel>
-                            <ComboBox Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" ItemsSource="{Binding PluginReleases}" SelectedIndex="{Binding ReleaseActiveID}" Style="{DynamicResource PluginComboBox}" SelectionChanged="ComboBox_SelectionChanged">
+                            <TextBlock Text="{Binding CurrentRelease.ReleaseTag}" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+                            <!--<ComboBox Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" ItemsSource="{Binding PluginReleases}" SelectedIndex="{Binding ReleaseActiveID}" Style="{DynamicResource PluginComboBox}" SelectionChanged="ComboBox_SelectionChanged">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <Border>
@@ -57,7 +58,7 @@
                                         </Border>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
-                            </ComboBox>
+                            </ComboBox>-->
                             <DockPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,12,0,12">
                                 <ProgressBar x:Name="progressBar" Height="2"/>
                             </DockPanel>
@@ -69,11 +70,11 @@
                         </Grid>
                     </Border>
                     <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding ReleaseActive.IsInstalled}" Value="True">
+                        <DataTrigger Binding="{Binding CurrentRelease.IsInstalled}" Value="True">
                             <Setter Property="IsEnabled" TargetName="btn_Install" Value="False"/>
                             <Setter Property="IsEnabled" TargetName="btn_Enable" Value="True"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ReleaseActive.IsEnable }" Value="True">
+                        <DataTrigger Binding="{Binding CurrentRelease.IsEnable }" Value="True">
                             <Setter Property="Content" TargetName="btn_Enable" Value="Disable"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsDoingStuff}" Value="True">

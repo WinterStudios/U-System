@@ -17,6 +17,7 @@ namespace U_System.API.Plugins
         public bool IsEnable { get => isEnable; set { isEnable = value; NotifyPropertyChanged(); } }
 
 
+        public int AssetID { get; set; }
         public string ReleaseZipFile { get; set; }
         public string [] PluginFilesLocation { get; set; }
         
@@ -28,6 +29,7 @@ namespace U_System.API.Plugins
         private int releaseID;
         private bool preRelease;
         private bool isEnable;
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

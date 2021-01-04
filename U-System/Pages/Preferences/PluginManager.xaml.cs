@@ -59,26 +59,27 @@ namespace U_System.Pages.Preferences
             }
             if(_tag == "PLUGIN_ACTIVATE")
             {
-                if(!plugin.ReleaseActive.IsEnable)
+                if(!plugin.CurrentRelease.IsEnable)
                     PluginSystem.Enable(plugin);
                 else
                     PluginSystem.Disable(plugin);
             }
             if(_tag == "PLUGIN_UPDATE")
             {
-                //PluginSystem.UpdatePlugin(plugin);
+                PluginSystem.Update(plugin);
             }
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBox box = (ComboBox)sender;
-            Plugin plugin = (Plugin)box.DataContext;
-            plugin.ReleaseActiveID = box.SelectedIndex;
-            plugin.ReleaseActive = plugin.PluginReleases[plugin.ReleaseActiveID];
-            PluginSystem.Save();
-            //PluginSystem.PluginChangeVersion(plugin, box.SelectedIndex);
+        //private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    ComboBox box = (ComboBox)sender;
+        //    Plugin plugin = (Plugin)box.DataContext;
+        //    plugin.ReleaseActiveID = box.SelectedIndex;
+        //    if(plugin.ReleaseActiveID > -1)
+        //    plugin.ReleaseActive = plugin.PluginReleases[plugin.ReleaseActiveID];
+        //    PluginSystem.Save();
+        //    //PluginSystem.PluginChangeVersion(plugin, box.SelectedIndex);
 
-        }
+        //}
     }
 }

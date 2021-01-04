@@ -45,15 +45,19 @@ namespace U_System.API.Plugins
             plugin.Name = repository.Name;
             plugin.Description = repository.Description;
             plugin.IsDoingStuff = true;
-            plugin.ReleaseActiveID = -1;
+            plugin.CurrentRelease = new PluginRelease();
             Plugins.Add(plugin);
 
             ListBox list = (ListBox)control.FindName("UC_ListBox_Plugins");
             list.Items.Refresh();
-            plugin.GitHubRepository.Releases = await GitHub.GitHub.GetReleasesAsync(repository);
+            Release[] releases = await GitHub.GitHub.GetReleasesAsync(repository);
 
-            plugin.PluginReleases = plugin.GitHubRepository.Releases.GetReleases();
-            plugin.ReleaseActiveID = 0;
+            plugin.GitHubRepository.Releases = releases;
+
+            plugin.CurrentRelease = GetRelease(plugin);
+            
+
+
             //plugin.ReleaseActive = plugin.PluginReleases[0];
             plugin.IsDoingStuff = false;
 
@@ -63,13 +67,35 @@ namespace U_System.API.Plugins
             }
         }
 
+        public static PluginRelease GetRelease(Plugin plugin)
+        {
+            Release[] releases = plugin.GitHubRepository.Releases;
+            if (releases.Length < 1 || releases == null)
+                return null;
+
+
+            if (previewVersion)
+            {
+                Release release = releases.FirstOrDefault(x => x.PreRelease);
+                plugin.CurrentRelease.ReleaseTag = release.Tag;
+                plugin.CurrentRelease.ReleaseID = release.ID;
+            }
+        }
+
         public static async void Install(Plugin plugin)
         {
             plugin.IsDoingStuff = true;
 
             await Task.Run(() => Thread.Sleep(1000));
 
-            Release release = plugin.GitHubRepository.Releases.First(x => x.ID == plugin.ReleaseActive.ReleaseID);
+
+            Release release = new Release();
+            bool preview = false;
+
+            if (preview)
+                release = plugin.GitHubRepository.Releases.First(x => x.PreRelease);
+            else
+                release = plugin.GitHubRepository.Releases.First(x => !x.PreRelease);
 
             Asset pluginAsset = release.Assets.First(x => x.Name == "Release.zip");
             Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(pluginAsset.URL);
@@ -79,7 +105,8 @@ namespace U_System.API.Plugins
 
             ZipArchive zip = ZipFile.OpenRead(pluginPath);
             string name = zip.Entries.First(x => x.Name.EndsWith(".dll")).Name;
-            plugin.PluginReleases[plugin.ReleaseActiveID].ReleaseZipFile = pluginPath.Replace("\\", "/");
+            plugin.CurrentRelease.ReleaseZipFile = pluginPath.Replace("\\", "/");
+            plugin.CurrentRelease.AssetID = pluginAsset.ID;
             zip.ExtractToDirectory(Paths.PLUGINS.PLUGIN_DIRECTORY, true);
             
             string[] files = new string[zip.Entries.Count];
@@ -88,8 +115,8 @@ namespace U_System.API.Plugins
                 files[i] = Paths.PLUGINS.PLUGIN_DIRECTORY.Replace("\\", "/") + zip.Entries[i].FullName;
             }
 
-            plugin.PluginReleases[plugin.ReleaseActiveID].PluginFilesLocation = files;
-            plugin.PluginReleases[plugin.ReleaseActiveID].IsInstalled = true;
+            plugin.CurrentRelease.PluginFilesLocation = files;
+            plugin.CurrentRelease.IsInstalled = true;
 
             plugin.IsDoingStuff = false;
             Save();
@@ -102,7 +129,7 @@ namespace U_System.API.Plugins
             {
                 GC.Collect();
             };
-            Assembly assembly = temp.LoadFromAssemblyPath(plugin.ReleaseActive.PluginFilesLocation.First(x => x.EndsWith(".dll")));
+            Assembly assembly = temp.LoadFromAssemblyPath(plugin.CurrentRelease.PluginFilesLocation.First(x => x.EndsWith(".dll")));
             plugin.Assembly = temp;
 
             Type IPlugin = assembly.GetTypes().First(x => x.GetInterfaces().Contains(typeof(IPlugin)));
@@ -141,7 +168,7 @@ namespace U_System.API.Plugins
                 }
             }
             plugin.MenuItems = menus.ToArray();
-            plugin.ReleaseActive.IsEnable = true;
+            plugin.CurrentRelease.IsEnable = true;
             plugin.IsDoingStuff = false;
             Save();
         }
@@ -149,7 +176,7 @@ namespace U_System.API.Plugins
         {
             for (int i = 0; i < Plugins.Count; i++)
             {
-                if (Plugins[i].ReleaseActive.IsEnable)
+                if (Plugins[i].CurrentRelease.IsEnable)
                     Enable(Plugins[i]);
             }
 
@@ -160,12 +187,21 @@ namespace U_System.API.Plugins
 
             plugin.Assembly.Unload();
 
-            plugin.ReleaseActive.IsEnable = false;
+            plugin.CurrentRelease.IsEnable = false;
 
             Save();
         }
 
         public static void RemoveTabFromPlugin(int pluginIndex, int moduloIndex) => Plugins[pluginIndex].Tabs[moduloIndex] = null;
+
+
+        public static async void Update(Plugin plugin)
+        {
+            
+        }
+
+        
+
         //public static void AddPlugin(string file)
         //{
         //    Plugin plugin = new Plugin();

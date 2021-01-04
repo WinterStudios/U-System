@@ -51,8 +51,19 @@ namespace U_System.API.GitHub.Extensions
                 pluginReleases[i].PreRelease = releases[i].PreRelease;
                 pluginReleases[i].ReleaseID = releases[i].ID;
                 pluginReleases[i].ReleaseTag = releases[i].Tag;
+                //pluginReleases[i].AssetID = releases[i].Assets.FirstOrDefault(x => x.Name.EndsWith(".zip")).ID;
             }
             return pluginReleases;
+        }
+
+        internal static Plugins.PluginRelease ToPluginRelease(this Release release)
+        {
+            Plugins.PluginRelease pluginRelease = new Plugins.PluginRelease();
+            pluginRelease.PreRelease = release.PreRelease;
+            pluginRelease.ReleaseID = release.ID;
+            pluginRelease.ReleaseTag = release.Tag;
+
+            return pluginRelease;
         }
     }
     

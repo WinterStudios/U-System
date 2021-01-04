@@ -9,6 +9,7 @@ namespace U_System.API.GitHub
 {
     public class Asset
     {
+        public int ID { get; set; }
         [JsonPropertyName("url")]
         public string URL { get; set; }
         public string Name { get; set; }

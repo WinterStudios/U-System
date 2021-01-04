@@ -22,9 +22,8 @@ namespace U_System.API.Plugins
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public int ReleaseActiveID { get => releaseActiveID; set { releaseActiveID = value; NotifyPropertyChanged(); } }
-        public PluginRelease ReleaseActive { get { if (ReleaseActiveID > -1) return PluginReleases[ReleaseActiveID]; else return null; } set { if (ReleaseActiveID > -1 && PluginReleases != null) { PluginReleases[ReleaseActiveID] = value; NotifyPropertyChanged(); } } }
-        public PluginRelease[] PluginReleases { get => pluginReleases; set { pluginReleases = value; NotifyPropertyChanged(); } }
+
+        public PluginRelease CurrentRelease { get => currentRelease; set { currentRelease = value; NotifyPropertyChanged(); } } 
 
         public bool AutomaticUpdates { get; set; }
         public bool IsEnable { get => isEnable; set { isEnable = value; NotifyPropertyChanged(); } }
@@ -53,7 +52,8 @@ namespace U_System.API.Plugins
         private bool isEnable;
 
 
-        private PluginRelease[] pluginReleases;
+        private PluginRelease currentRelease;
+
         private int releaseActiveID;
 
 
