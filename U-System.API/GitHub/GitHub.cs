@@ -76,7 +76,24 @@ namespace U_System.API.GitHub
             };
             return JsonSerializer.Deserialize<Release[]>(response, jsonSerializerOptions);
         }
+        public static async Task<Release> GetReleaseAsync(Repository repository, int releaseID)
+        {
+            string url = string.Format("{0}repos/{1}/{2}/releases", _URL_API_GITHUB, repository.Author.Name, repository.Name);
 
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "U-System.APP");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3.raw"));
+            client.DefaultRequestHeaders.Add("Authorization", string.Concat("token ", _TOKEN));
+
+            string response = await client.GetStringAsync(url);
+
+            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
+            {
+                IgnoreNullValues = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+            return JsonSerializer.Deserialize<Release>(response, jsonSerializerOptions);
+        }
         public static async Task<Stream> GetReleaseAssetAsync(string url)
         {
             HttpClient client = new HttpClient();

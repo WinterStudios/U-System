@@ -61,25 +61,50 @@ namespace U_System.API.Plugins
             //plugin.ReleaseActive = plugin.PluginReleases[0];
             plugin.IsDoingStuff = false;
 
-            if (install)
-            {
-                Install(plugin);
-            }
+            Save();
+           
         }
 
         public static PluginRelease GetRelease(Plugin plugin)
         {
+            bool previewVersion = false;
             Release[] releases = plugin.GitHubRepository.Releases;
             if (releases.Length < 1 || releases == null)
                 return null;
 
-
-            if (previewVersion)
+            if (plugin.AllowPreview)
             {
                 Release release = releases.FirstOrDefault(x => x.PreRelease);
                 plugin.CurrentRelease.ReleaseTag = release.Tag;
                 plugin.CurrentRelease.ReleaseID = release.ID;
+
+                PluginRelease pluginRelease = new PluginRelease();
+                pluginRelease.ReleaseID = release.ID;
+                pluginRelease.ReleaseTag = release.Tag;
+                pluginRelease.PreRelease = true;
+
+                plugin.GitHubRelease = release;
+
+                return pluginRelease;
             }
+            else
+            {
+                Release release = releases.FirstOrDefault(x => !x.PreRelease);
+                plugin.CurrentRelease.ReleaseTag = release.Tag;
+                plugin.CurrentRelease.ReleaseID = release.ID;
+
+                PluginRelease pluginRelease = new PluginRelease();
+                pluginRelease.ReleaseID = release.ID;
+                pluginRelease.ReleaseTag = release.Tag;
+                pluginRelease.PreRelease = false;
+
+                plugin.GitHubRelease = release;
+
+                return pluginRelease;
+            }
+
+            
+
         }
 
         public static async void Install(Plugin plugin)
@@ -88,14 +113,7 @@ namespace U_System.API.Plugins
 
             await Task.Run(() => Thread.Sleep(1000));
 
-
-            Release release = new Release();
-            bool preview = false;
-
-            if (preview)
-                release = plugin.GitHubRepository.Releases.First(x => x.PreRelease);
-            else
-                release = plugin.GitHubRepository.Releases.First(x => !x.PreRelease);
+            Release release = plugin.GitHubRelease;
 
             Asset pluginAsset = release.Assets.First(x => x.Name == "Release.zip");
             Stream stream = await GitHub.GitHub.GetReleaseAssetAsync(pluginAsset.URL);
@@ -198,6 +216,23 @@ namespace U_System.API.Plugins
         public static async void Update(Plugin plugin)
         {
             
+        }
+        public static async void Update()
+        {
+            for (int i = 0; i < Plugins.Count; i++)
+            {
+                if (Plugins[i].GitHubRepository == null)
+                    Plugins[i].GitHubRepository = await GitHub.GitHub.GetRepositoryAsync(Plugins[i].GitHubRepositoryID);
+                if (Plugins[i].GitHubRelease == null)
+                {
+                    Release[] releases = await GitHub.GitHub.GetReleasesAsync(Plugins[i].GitHubRepository);
+                    Plugins[i].GitHubRelease = releases.First(x => x.ID == Plugins[i].CurrentRelease.ReleaseID);
+                }
+                /// --> +e preciso continuar para quando inicia-se o programa, verficar se existe alguma nova atualizaçao,
+                /// e se hover fazer o download automatico, instalar e ativar se tiver atualizaçaos automaticas, e ativo.
+                /// 
+
+            }
         }
 
         
@@ -436,7 +471,7 @@ namespace U_System.API.Plugins
             string json = File.ReadAllText(Paths.SETTINGS.PLUGINS_SETTINGS);
             JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true };
             Plugins = JsonSerializer.Deserialize<Plugin[]>(json, options).ToList();
-
+            Update();
         }
         //public static void LoadPluginsInfo()
         //{

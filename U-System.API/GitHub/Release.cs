@@ -15,6 +15,7 @@ namespace U_System.API.GitHub
         public string Name { get; set; }
         [JsonPropertyName("tag_name")]
         public string Tag { get; set; }
+        [JsonPropertyName("prerelease")]
         public bool PreRelease { get; set; }
         public Asset[] Assets { get; set; }
 

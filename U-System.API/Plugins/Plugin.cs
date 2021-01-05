@@ -25,14 +25,16 @@ namespace U_System.API.Plugins
 
         public PluginRelease CurrentRelease { get => currentRelease; set { currentRelease = value; NotifyPropertyChanged(); } } 
 
+        public bool AllowPreview { get => allowPreview; set { allowPreview = value; NotifyPropertyChanged(); } }
         public bool AutomaticUpdates { get; set; }
         public bool IsEnable { get => isEnable; set { isEnable = value; NotifyPropertyChanged(); } }
         public bool IsInstalled { get => isInstall; set { isInstall = value; NotifyPropertyChanged(); } }
         public bool IsDoingStuff { get => isDoingStuff; set { isDoingStuff = value; NotifyPropertyChanged(); } }
-
+        public bool UpdateAvalable { get => updateAvalable; set { updateAvalable = value; NotifyPropertyChanged(); } }
         
 
         internal Repository GitHubRepository { get; set; }
+        internal Release GitHubRelease { get; set; }
 
         public SemVersion Version { get; set; }
 
@@ -50,7 +52,8 @@ namespace U_System.API.Plugins
         private bool isInstall;
         private bool isDoingStuff;
         private bool isEnable;
-
+        private bool allowPreview;
+        private bool updateAvalable;
 
         private PluginRelease currentRelease;
 
