@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
+using U_System.Core.UX;
+
 namespace U_System.Styles
 {
     public partial class TabControlStyles
@@ -16,18 +18,19 @@ namespace U_System.Styles
             {
                 Button button = (Button)sender;
                 TabItem tab = (TabItem)button.TemplatedParent;
-                API.Navigation.TabSystem.Remove(tab);
+                TabsSystem.Remove(tab);
+                //API.Navigation.TabSystem.Remove(tab);
 
-                if (tab.DataContext != null)
-                {
-                    object[] data = (object[])tab.DataContext;
-                    if(data[0] != null && (string)data[0] == "_PLUGIN")
-                    {
-                        API.Plugins.PluginSystem.RemoveTabFromPlugin((int)data[1], (int)data[2]);
-                    }
+                //if (tab.DataContext != null)
+                //{
+                //    object[] data = (object[])tab.DataContext;
+                //    if(data[0] != null && (string)data[0] == "_PLUGIN")
+                //    {
+                //        API.Plugins.PluginSystem.RemoveTabFromPlugin((int)data[1], (int)data[2]);
+                //    }
 
 
-                }
+                //}
             }
         }
 

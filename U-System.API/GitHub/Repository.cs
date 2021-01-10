@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace U_System.API.GitHub
 {
-    public class Repository: INotifyPropertyChanged
+    public class Repository
     {
         public string Name { get; set; }
         public int ID { get; set; }
@@ -22,22 +22,6 @@ namespace U_System.API.GitHub
         [JsonPropertyName("url")] public string URL { get; set; }
 
         public Release[] Releases { get; set ; }
-
-
-        private Repository repository;
-
-        
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        internal void Update(Repository value) { }
-
-
-        
 
     }
 }

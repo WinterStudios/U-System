@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using U_System.API.Plugins;
+
 
 namespace U_System.Pages.Preferences
 {
@@ -23,51 +23,51 @@ namespace U_System.Pages.Preferences
     public partial class PluginManager : UserControl
     {
 
-        public PluginManager()
-        {
-            InitializeComponent();
+        //public PluginManager()
+        //{
+        //    InitializeComponent();
 
-            UC_ListBox_Plugins.ItemsSource = PluginSystem.Plugins;
+        //    UC_ListBox_Plugins.ItemsSource = PluginSystem.Plugins;
             
-        }
+        //}
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string _tag = (string)((Button)sender).Tag;
+        //    string _tag = (string)((Button)sender).Tag;
 
-            if (_tag == "ADD_PLUGIN")
-            {
-                PluginManager_Add _w_p_add = new PluginManager_Add();
-                if (_w_p_add.ShowDialog() == true)
-                {
-                    bool install = false;
-                    PluginSystem.AddPlugin(_w_p_add._output, install, this); ;
-                    UC_ListBox_Plugins.Items.Refresh();
-                }
-            }
+        //    if (_tag == "ADD_PLUGIN")
+        //    {
+        //        PluginManager_Add _w_p_add = new PluginManager_Add();
+        //        if (_w_p_add.ShowDialog() == true)
+        //        {
+        //            bool install = false;
+        //            PluginSystem.AddPlugin(_w_p_add._output, install, this); ;
+        //            UC_ListBox_Plugins.Items.Refresh();
+        //        }
+        //    }
         }
         private void PluginsListBoxItem_Button_Click(object sender, RoutedEventArgs e)
         {
-            Button button = (Button)sender;
-            Plugin plugin = (Plugin)button.DataContext;
+        //    Button button = (Button)sender;
+        //    Plugin plugin = (Plugin)button.DataContext;
 
-            string _tag = button.Tag.ToString();
-            if(_tag == "PLUGIN_INSTALL")
-            {
-                PluginSystem.Install(plugin);
+        //    string _tag = button.Tag.ToString();
+        //    if(_tag == "PLUGIN_INSTALL")
+        //    {
+        //        PluginSystem.Install(plugin);
 
-            }
-            if(_tag == "PLUGIN_ACTIVATE")
-            {
-                if(!plugin.CurrentRelease.IsEnable)
-                    PluginSystem.Enable(plugin);
-                else
-                    PluginSystem.Disable(plugin);
-            }
-            if(_tag == "PLUGIN_UPDATE")
-            {
-                PluginSystem.Update(plugin);
-            }
+        //    }
+        //    if(_tag == "PLUGIN_ACTIVATE")
+        //    {
+        //        if(!plugin.CurrentRelease.IsEnable)
+        //            PluginSystem.Enable(plugin);
+        //        else
+        //            PluginSystem.Disable(plugin);
+        //    }
+        //    if(_tag == "PLUGIN_UPDATE")
+        //    {
+        //        PluginSystem.Update(plugin);
+        //    }
         }
 
         //private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

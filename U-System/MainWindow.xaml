@@ -36,12 +36,7 @@
             </Menu>
         </Grid>
         <TabControl Grid.Row="1" x:Name="W_TabControl" Style="{DynamicResource TabControlStyle}">
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
+
         </TabControl>
     </Grid>
 </Window>

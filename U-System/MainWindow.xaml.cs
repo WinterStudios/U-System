@@ -13,9 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using U_System.API;
-using U_System.API.Navigation;
-using U_System.API.Plugins;
+
+using U_System.Core;
+using U_System.Core.UX;
 
 
 namespace U_System
@@ -28,8 +28,8 @@ namespace U_System
         public MainWindow()
         {
             InitializeComponent();
-            MenuBar.MainMenu = this.W_MainMenuBar;
-            TabSystem.TabControl = this.W_TabControl;
+            //MenuBar.MainMenu = this.W_MainMenuBar;
+            TabsSystem.UX_Control = this.W_TabControl;
 
         }
 
@@ -39,9 +39,9 @@ namespace U_System
             if(tag == "PLUGIN_MANAGER")
             {
                 TabItem tab = new TabItem();
-                Pages.Preferences.PluginManager manager = new Pages.Preferences.PluginManager();
+                UX.Preferences.UX_Plugin pluginTab = new UX.Preferences.UX_Plugin();
 
-                tab.Content = manager;
+                tab.Content = pluginTab;
                 tab.Header = "Plugin Manager";
                 W_TabControl.Items.Add(tab);
                 W_TabControl.SelectedItem = tab;

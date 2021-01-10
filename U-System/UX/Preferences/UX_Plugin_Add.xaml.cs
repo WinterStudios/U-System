@@ -12,19 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-using U_System.API.GitHub;
-using U_System.API.Plugins;
+using U_System.External.GitHub;
+using U_System.External.GitHub.Internal;
 
-namespace U_System.Pages.Preferences
+
+namespace U_System.UX.Preferences
 {
     /// <summary>
-    /// Interaction logic for PluginManager_Add.xaml
+    /// Interaction logic for UX_Plugin_Add.xaml
     /// </summary>
-    public partial class PluginManager_Add : Window
+    public partial class UX_Plugin_Add : Window
     {
         internal Repository _output { get; private set; }
 
-        public PluginManager_Add()
+        public UX_Plugin_Add()
         {
             InitializeComponent();
             GetRepositories("WinterStudios");
@@ -37,7 +38,7 @@ namespace U_System.Pages.Preferences
 
         private async void GetRepositories(string user)
         {
-            Repository[] _repositories = await GitHub.GetRepositoriesAsync(user);
+            Repository[] _repositories = await GitHubClient.GetRepositoriesAsync(user);
             W_ListBox_Repositories.ItemsSource = _repositories;
         }
 

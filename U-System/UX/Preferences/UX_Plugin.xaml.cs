@@ -23,6 +23,29 @@ namespace U_System.UX.Preferences
         public UX_Plugin()
         {
             InitializeComponent();
+            UC_ListBox_Plugins.ItemsSource = Core.Plugin.PluginManager.PluginUXs;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string _tag = (string)((Button)sender).Tag;
+
+            if (_tag == "PLUGIN_ADD")
+            {
+                UX_Plugin_Add _w_p_add = new UX_Plugin_Add();
+                if (_w_p_add.ShowDialog() == true)
+                {
+                    bool install = false;
+                    Core.Plugin.PluginManager.Add();
+                    //PluginSystem.AddPlugin(_w_p_add._output, install, this); ;
+                    UC_ListBox_Plugins.Items.Refresh();
+                }
+            }
+        }
+
+        private void PluginsListBoxItem_Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
