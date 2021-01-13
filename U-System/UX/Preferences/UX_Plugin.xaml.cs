@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using U_System.Core.Plugin;
+using U_System.Core.Plugin.Internal;
+
 namespace U_System.UX.Preferences
 {
     /// <summary>
@@ -36,7 +39,7 @@ namespace U_System.UX.Preferences
                 if (_w_p_add.ShowDialog() == true)
                 {
                     bool install = false;
-                    Core.Plugin.PluginManager.Add();
+                    Core.Plugin.PluginManager.Add(_w_p_add._output);
                     //PluginSystem.AddPlugin(_w_p_add._output, install, this); ;
                     UC_ListBox_Plugins.Items.Refresh();
                 }
@@ -44,6 +47,19 @@ namespace U_System.UX.Preferences
         }
 
         private void PluginsListBoxItem_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button _btn = (Button)sender;
+
+            string _tag = (string)_btn.Tag;
+
+            if(_tag == "PLUGIN_INSTALL") 
+            {
+                int _pluginID = ((PluginUX)_btn.DataContext).PluginID;
+                PluginManager.Install(_pluginID);
+            }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

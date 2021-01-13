@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace U_System.External.GitHub.Internal
 {
-    public class Release
+    public class Asset
     {
         public int ID { get; set; }
+        [JsonPropertyName("url")]
+        public string URL { get; set; }
         public string Name { get; set; }
-        [JsonPropertyName("tag_name")]
-        public string Tag { get; set; }
-        [JsonPropertyName("prerelease")]
-        public bool PreRelease { get; set; }
-        public Asset[] Assets { get; set; }
+        [JsonPropertyName("browser_download_url")]
+        public string DownloadURL { get; set; }
     }
 }
