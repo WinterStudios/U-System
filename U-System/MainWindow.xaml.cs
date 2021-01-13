@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
 using U_System.Core;
 using U_System.Core.UX;
 
@@ -30,7 +29,7 @@ namespace U_System
             InitializeComponent();
             //MenuBar.MainMenu = this.W_MainMenuBar;
             TabsSystem.UX_Control = this.W_TabControl;
-
+            MenuSystem.MainNavigation = this.W_MainMenuBar;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)

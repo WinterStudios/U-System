@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Loader;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -11,9 +13,11 @@ using System.Threading.Tasks;
 using U_System.Core.Extensions;
 using U_System.Core.Plugin.Internal;
 
+using U_System.External;
+using U_System.External.Plugin;
 using U_System.External.GitHub;
 using U_System.External.GitHub.Internal;
-
+using System.Windows.Controls;
 
 namespace U_System.Core.Plugin
 {
@@ -52,6 +56,7 @@ namespace U_System.Core.Plugin
 
             plugin.CurrentReleaseID = GetStableReleaseID(plugin.GitHubRepository.Releases);
             plugin.PluginReleases = plugin.Releases.ToPluginRelease();
+            plugin.CurrentPluginRelease = plugin.PluginReleases[plugin.CurrentReleaseID];
             //plugin.ReleaseActive = plugin.PluginReleases[0];
         }
 
@@ -70,6 +75,7 @@ namespace U_System.Core.Plugin
         internal static async void Install(int pluginID)
         {
             Internal.Plugin plugin = Plugins[pluginID];
+            plugin.Working = true;
 
             Release release = plugin.GitHubRepository.Releases[plugin.CurrentReleaseID];
 
@@ -96,11 +102,62 @@ namespace U_System.Core.Plugin
 
             plugin.CurrentPluginRelease.PluginFilesLocation = files;
             plugin.CurrentPluginRelease.IsInstalled = true;
+            plugin.CurrentPluginRelease.Enable = true;
             Save();
-        }
-        private static async void Enable(int pluginID)
-        {
+            Enable();
 
+            
+        }
+        private async static void Enable(int pluginID)
+        {
+            Internal.Plugin plugin = Plugins[pluginID];
+            AssemblyLoadContext temp = new AssemblyLoadContext(plugin.Name, true);
+            temp.Unloading += (alc) =>
+            {
+                GC.Collect();
+            };
+            Assembly assembly = temp.LoadFromAssemblyPath(plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll")));
+            plugin.Assembly = temp;
+
+            Type IPlugin = assembly.GetTypes().First(x => x.GetInterfaces().Contains(typeof(IPlugin)));
+            IPlugin PluginInfo = (IPlugin)Activator.CreateInstance(IPlugin);
+
+            plugin.Modules = PluginInfo.Modules;
+            plugin.Tabs = new TabItem[plugin.Modules.Length];
+            List<MenuItem> menus = new List<MenuItem>();
+            for (int i = 0; i < plugin.Modules.Length; i++)
+            {
+                External.Plugin.Module module = plugin.Modules[i];
+
+                int index = i;
+                if (module.PluginTypeBehavior == PluginTypeBehavior.Tab)
+                {
+                    MenuItem item = UX.MenuSystem.Add(module.Path);
+                    item.Click += (sender, arg) =>
+                    {
+                        if (plugin.Tabs[index] == null)
+                        {
+                            plugin.Tabs[index] = new TabItem();
+                            plugin.Tabs[index].Header = module.Name;
+                            Type type = assembly.GetType(module.Type);
+                            object content = Activator.CreateInstance(type);
+                            plugin.Tabs[index].Content = content;
+                            plugin.Tabs[index].DataContext = new object[3] { "_PLUGIN", plugin.ID, index };
+                            UX.TabsSystem.Add(plugin.Tabs[index]);
+                        }
+                        else
+                        {
+                            UX.TabsSystem.Select(plugin.Tabs[index]);
+                        }
+
+                    };
+                    menus.Add(item);
+                }
+            }
+            plugin.MenuItems = menus.ToArray();
+            plugin.CurrentPluginRelease.Enable = true;
+            plugin.Working = false;
+            Save();
         }
 
 

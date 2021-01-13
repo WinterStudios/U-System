@@ -136,11 +136,12 @@ namespace U_System.API.Plugins
             plugin.CurrentRelease.PluginFilesLocation = files;
             plugin.CurrentRelease.IsInstalled = true;
 
-            plugin.IsDoingStuff = false;
+            await Enable(plugin);
+            
             Save();
         }
 
-        public async static void Enable(Plugin plugin)
+        public async static Task Enable(Plugin plugin)
         {
             AssemblyLoadContext temp = new AssemblyLoadContext(plugin.Name, true);
             temp.Unloading += (alc) =>

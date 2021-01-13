@@ -15,5 +15,15 @@ namespace U_System.Core.UX
         {
             UX_Control.Items.Remove(tab);
         }
+
+        internal static void Add(TabItem tabItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void Select(TabItem tabItem)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

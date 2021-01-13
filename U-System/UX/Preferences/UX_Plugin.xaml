@@ -65,26 +65,24 @@
                             </DockPanel>
                             <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                                 <Button x:Name="btn_Install" Content="Install" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="PLUGIN_INSTALL" />
-                                <Button x:Name="btn_Enable" Content="Activate" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="PLUGIN_ACTIVATE" IsEnabled="False" />
                                 <Button x:Name="btn_Update" Content="Update" Padding="12,4,12,4" Click="PluginsListBoxItem_Button_Click" Tag="PLUGIN_UPDATE" />
                             </StackPanel>
                         </Grid>
                     </Border>
-                    <!--<DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding CurrentRelease.IsInstalled}" Value="True">
-                            <Setter Property="IsEnabled" TargetName="btn_Install" Value="False"/>
-                            <Setter Property="IsEnabled" TargetName="btn_Enable" Value="True"/>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding  CurrentPluginRelease.IsInstalled}" Value="False">
+                            <Setter Property="IsEnabled" TargetName="btn_Install" Value="True"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding CurrentRelease.IsEnable }" Value="True">
-                            <Setter Property="Content" TargetName="btn_Enable" Value="Disable"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsDoingStuff}" Value="True">
+                        <DataTrigger Binding="{Binding  CurrentPluginRelease.IsInstalled}" Value="True">
                             <Setter Property="IsEnabled" TargetName="btn_Install" Value="False"/>
-                            <Setter Property="IsEnabled" TargetName="btn_Enable" Value="False"/>
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding IsWorking}" Value="True">
+                            <Setter Property="IsEnabled" TargetName="btn_Install" Value="False"/>
                             <Setter Property="IsEnabled" TargetName="btn_Update" Value="False"/>
                             <Setter Property="IsIndeterminate" TargetName="progressBar" Value="True"/>
                         </DataTrigger>
-                    </DataTemplate.Triggers>-->
+                    </DataTemplate.Triggers>
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ItemContainerStyle>
