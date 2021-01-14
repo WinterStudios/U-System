@@ -104,7 +104,7 @@ namespace U_System.Core.Plugin
             plugin.CurrentPluginRelease.IsInstalled = true;
             plugin.CurrentPluginRelease.Enable = true;
             Save();
-            Enable();
+            Enable(pluginID);
 
             
         }

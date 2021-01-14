@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using U_System.API;
-using U_System.API.Plugins;
+
+using U_System.External;
+using U_System.External.Plugin;
 
 
 namespace U_System.TestLibary
@@ -19,13 +20,13 @@ namespace U_System.TestLibary
                 Name = "A1", 
                 Type = typeof(PluginSomething).FullName, 
                 Path = "Ferramentas>Encomendas Escolares", 
-                PluginType = PluginType.Tab 
+                PluginTypeBehavior = PluginTypeBehavior.Tab 
             },
             new Module() {
                 Name = "A2",
                 Type = typeof(PluginSomething).FullName,
                 Path = "Ferramentas>Gerador de Codigos de Bar",
-                PluginType = PluginType.Tab
+                PluginTypeBehavior = PluginTypeBehavior.Tab
             }
         };
     }
