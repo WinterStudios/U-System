@@ -85,8 +85,8 @@ namespace U_System.External.GitHub
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "U-System.APP");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/octet-stream"));
-            client.DefaultRequestHeaders.Add("Authorization", string.Concat("token ", _TOKEN));
-
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token",string.Concat("", _TOKEN));
+            
             byte[] content = await client.GetByteArrayAsync(url);
             Stream stream = new MemoryStream(content);
             return stream;

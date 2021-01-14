@@ -83,7 +83,7 @@ namespace U_System.Core.Plugin
             if (pluginAsset == null)
                 return;
 
-            Stream stream = await GitHubClient.GetReleaseAssetAsync(pluginAsset.DownloadURL);
+            Stream stream = await GitHubClient.GetReleaseAssetAsync(pluginAsset.URL);
             string pluginPath = Storage.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", plugin.Name, release.Tag);
             FileSystem.SaveStreamToFile(stream, pluginPath);
 
