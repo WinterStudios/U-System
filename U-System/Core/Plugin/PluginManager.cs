@@ -41,6 +41,7 @@ namespace U_System.Core.Plugin
             plugin.PluginUX = pluginUX;
             PluginUXs.Add(pluginUX);
             Plugins.Add(plugin);
+            plugin.Working = true;
 
             await Task.Run(() => Thread.Sleep(1000));
 
@@ -57,6 +58,8 @@ namespace U_System.Core.Plugin
             plugin.CurrentReleaseID = GetStableReleaseID(plugin.GitHubRepository.Releases);
             plugin.PluginReleases = plugin.Releases.ToPluginRelease();
             plugin.CurrentPluginRelease = plugin.PluginReleases[plugin.CurrentReleaseID];
+
+            plugin.Working = false;
             //plugin.ReleaseActive = plugin.PluginReleases[0];
         }
 
