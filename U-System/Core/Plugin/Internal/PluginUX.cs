@@ -32,7 +32,5 @@ namespace U_System.Core.Plugin.Internal
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public bool Working { get; internal set; }
     }
 }

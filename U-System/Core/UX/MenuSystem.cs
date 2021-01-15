@@ -18,7 +18,6 @@ namespace U_System.Core.UX
             MenuItem parent = null;
             for (int i = 0; i <= item.Length; i++)
             {
-                System.Diagnostics.Trace.WriteLine(i.ToString());
                 if (level >= hierarchy.Length)
                     break;
 
@@ -77,6 +76,28 @@ namespace U_System.Core.UX
             item.Header = header;
 
             return item;
+        }
+
+        /// <summary>
+        /// Not Finish
+        /// </summary>
+        /// <param name="path"></param>
+        /// 
+        [Obsolete("Dont use this one")]
+        internal static void Remove(string path)
+        {
+            string[] header = path.Split('>');
+        }
+        public static void Remove(MenuItem[] items)
+        {
+            if (items == null || items.Length < 1)
+                return;
+
+            for (int i = 0; i < items.Length; i++)
+            {
+                MenuItem parent = (MenuItem)items[i].Parent;
+                parent.Items.Remove(items[i]);
+            }
         }
     }
 }

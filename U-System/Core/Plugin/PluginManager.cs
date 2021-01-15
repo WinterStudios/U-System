@@ -162,7 +162,24 @@ namespace U_System.Core.Plugin
             plugin.Working = false;
             Save();
         }
+        /// <summary>
+        /// Disable the Plugin and uninstall the plugin from app Plugins folder
+        /// </summary>
+        /// <param name="pluginID">Index or ID of the plugin on the list of Plugins</param>
+        public async static void Uninstall(int pluginID)
+        {
+            Plugins[pluginID].Working = true;
+            UX.MenuSystem.Remove(Plugins[pluginID].MenuItems);
+            Plugins[pluginID].Assembly.Unload();
+            for (int i = 0; i < Plugins[pluginID].CurrentPluginRelease.PluginFilesLocation.Length; i++)
+            {
+                File.Delete(Plugins[pluginID].CurrentPluginRelease.PluginFilesLocation[i]);
+            }
+            Plugins[pluginID].CurrentPluginRelease.IsInstalled = false;
+            Plugins[pluginID].Working = false;
 
+            Save();
+        }
 
         private static int GetStableReleaseID(Release[] releases)
         {

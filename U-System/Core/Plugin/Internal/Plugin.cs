@@ -29,7 +29,7 @@ namespace U_System.Core.Plugin.Internal
         internal Module[] Modules { get => modules; set => modules = value; }
         internal TabItem[] Tabs { get => tabItems; set => tabItems = value; }
         internal MenuItem[] MenuItems { get => menuItems; set => menuItems = value; }
-        internal bool Working { get => working; set { working = value; PluginUX.Working = value; } }
+        internal bool Working { get => working; set { working = value; PluginUX.IsWorking = value; } }
 
         private int id;
         private string name;

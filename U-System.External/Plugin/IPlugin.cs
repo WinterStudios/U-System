@@ -14,5 +14,7 @@ namespace U_System.External.Plugin
         string Description { get; }
         SemVersion Version { get; }
         Module[] Modules { get; }
+        bool ShowWelcomePage { get; }
+        Module? WelcomePage { get; }
     }
 }

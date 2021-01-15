@@ -29,5 +29,12 @@ namespace U_System.TestLibary
                 PluginTypeBehavior = PluginTypeBehavior.Tab
             }
         };
+        public bool ShowWelcomePage => true;
+        public Module WelcomePage => new Module() {
+            Name = "Welcome",
+            Type = typeof(WelcomePage).FullName,
+            Path = "Help>Welcome Test",
+            PluginTypeBehavior = PluginTypeBehavior.Tab
+        };
     }
 }

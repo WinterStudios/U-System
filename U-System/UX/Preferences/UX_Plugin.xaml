@@ -70,10 +70,10 @@
                         </Grid>
                     </Border>
                     <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding  CurrentPluginRelease.IsInstalled}" Value="False">
+                        <DataTrigger Binding="{Binding CurrentPluginRelease.IsInstalled}" Value="False">
                             <Setter Property="IsEnabled" TargetName="btn_Install" Value="True"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding  CurrentPluginRelease.IsInstalled}" Value="True">
+                        <DataTrigger Binding="{Binding CurrentPluginRelease.IsInstalled}" Value="True">
                             <Setter Property="IsEnabled" TargetName="btn_Install" Value="False"/>
                         </DataTrigger>
 
