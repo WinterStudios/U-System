@@ -16,5 +16,9 @@ namespace U_System.External.GitHub.Internal
         [JsonPropertyName("prerelease")]
         public bool PreRelease { get; set; }
         public Asset[] Assets { get; set; }
+        [JsonPropertyName("published_at")]
+        public DateTime PublishedDate { get; set; }
+        [JsonPropertyName("body")]
+        public string ReleaseNotes { get; set; }
     }
 }

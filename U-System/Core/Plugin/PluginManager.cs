@@ -181,6 +181,25 @@ namespace U_System.Core.Plugin
             Save();
         }
 
+
+        public async static void Update(int pluginID)
+        {
+            Internal.Plugin plugin = Plugins[pluginID];
+
+            if (Plugins[pluginID].GitHubRepository == null)
+                Plugins[pluginID].GitHubRepository = await GitHubClient.GetRepositoryAsync(Plugins[pluginID].GitHubRepositoryID);
+
+            Release[] _releases = await GitHubClient.GetReleasesAsync(plugin.GitHubRepository);
+
+            Release _lastStableRelease = _releases.Where(x => x.PreRelease == false).OrderByDescending(x => x.PublishedDate).First();
+            Release _lastPreviewRelease = _releases.Where(x => x.PreRelease == true).OrderByDescending(x => x.PublishedDate).First();
+
+            if (!preview)
+                if (plugin.CurrentPluginRelease.ID != _lastStableRelease.ID)
+                    newUpdate;
+
+        }
+
         private static int GetStableReleaseID(Release[] releases)
         {
             int id = -1;

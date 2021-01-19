@@ -57,6 +57,11 @@ namespace U_System.UX.Preferences
                 int _pluginID = ((PluginUX)_btn.DataContext).PluginID;
                 PluginManager.Install(_pluginID);
             }
+            if (_tag == "PLUGIN_UPDATE")
+            {
+                int _pluginID = ((PluginUX)_btn.DataContext).PluginID;
+                PluginManager.Update(_pluginID);
+            }
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
