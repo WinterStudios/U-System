@@ -21,7 +21,10 @@ namespace U_System
             //base.OnStartup(e);
             //API.Paths.StorageFolder = Paths.Storage.AppDataLocation; 
 
-            Settings.Load();
+            SettingsSystem.LOAD();
+#if DEBUG
+            SettingsSystem.SET_VERSION();
+# endif
             MainWindow window = new MainWindow();
             window.Show();
 

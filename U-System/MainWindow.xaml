@@ -49,7 +49,7 @@
                 <Border Width="16" CornerRadius="2" BorderBrush="Gray" BorderThickness="0.5" Margin="4" />
                 <ProgressBar Width="140" Height="12" IsIndeterminate="True"/>
                 <Separator/>
-                <TextBlock Text="{Binding AppVersion, RelativeSource={RelativeSource AncestorType=local:MainWindow}}" FontSize="8" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6"/>
+                <TextBlock Text="{Binding m_version, RelativeSource={RelativeSource AncestorType=local:Settings}}" FontSize="8" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6"/>
             </StackPanel>
         </Grid>
     </Grid>
