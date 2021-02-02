@@ -24,6 +24,9 @@ namespace U_System
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static string AppVersion { get => string.Format("v{0}{1}", DateTime.Now.ToString("yy.mm.dd-hh"), DateTime.Now.ToString("mm")); }
+
+
         public MainWindow()
         {
             InitializeComponent();

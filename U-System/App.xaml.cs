@@ -15,11 +15,13 @@ namespace U_System
     /// </summary>
     public partial class App : Application
     {
+
         protected override void OnStartup(StartupEventArgs e)
         {
             //base.OnStartup(e);
             //API.Paths.StorageFolder = Paths.Storage.AppDataLocation; 
-            
+
+            Settings.Load();
             MainWindow window = new MainWindow();
             window.Show();
 

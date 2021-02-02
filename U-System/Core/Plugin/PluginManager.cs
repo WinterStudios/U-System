@@ -32,6 +32,7 @@ namespace U_System.Core.Plugin
         {
             Plugins = new List<Internal.Plugin>();
             PluginUXs = new List<Internal.PluginUX>();
+            Load();
         }
 
         internal async static void Add(Repository repository)
@@ -53,11 +54,8 @@ namespace U_System.Core.Plugin
             plugin.GitHubRepositoryID = repository.ID;
             plugin.GitHubRepositoryURL = repository.URL;
 
-            await GetReleases(plugin.ID);
+            await GetReleases(plugin.ID, false);
 
-            plugin.CurrentReleaseID = GetStableReleaseID(plugin.GitHubRepository.Releases);
-            plugin.PluginReleases = plugin.Releases.ToPluginRelease();
-            plugin.CurrentPluginRelease = plugin.PluginReleases[plugin.CurrentReleaseID];
 
             plugin.Working = false;
             //plugin.ReleaseActive = plugin.PluginReleases[0];
@@ -65,15 +63,22 @@ namespace U_System.Core.Plugin
 
 
 
-        internal static async Task GetReleases(int pluginID)
+        internal static async Task GetReleases(int pluginID, bool load)
         {
             if (pluginID >= Plugins.Count)
                 return;
             if (Plugins[pluginID].GitHubRepository == null)
+            {
                 Plugins[pluginID].GitHubRepository = await GitHubClient.GetRepositoryAsync(Plugins[pluginID].GitHubRepositoryID);
-
+            }
             Plugins[pluginID].Releases = await GitHubClient.GetReleasesAsync(Plugins[pluginID].GitHubRepository);
-        
+            if (!load)
+            {
+                Plugins[pluginID].CurrentReleaseID = GetStableReleaseID(Plugins[pluginID].GitHubRepository.Releases);
+                Plugins[pluginID].CurrentPluginRelease = Plugins[pluginID].PluginReleases[Plugins[pluginID].CurrentReleaseID];
+            }
+            Plugins[pluginID].PluginReleases = Plugins[pluginID].Releases.ToPluginRelease();
+
         }
         internal static async void Install(int pluginID)
         {
@@ -145,7 +150,7 @@ namespace U_System.Core.Plugin
                             Type type = assembly.GetType(module.Type);
                             object content = Activator.CreateInstance(type);
                             plugin.Tabs[index].Content = content;
-                            plugin.Tabs[index].DataContext = new object[3] { "_PLUGIN", plugin.ID, index };
+                            plugin.Tabs[index].DataContext = new object[3] { "_PLUGIN", plugin.ID, index};
                             UX.TabsSystem.Add(plugin.Tabs[index]);
                         }
                         else
@@ -181,6 +186,10 @@ namespace U_System.Core.Plugin
             Save();
         }
 
+        public async static void Remove(int pluginID) 
+        { 
+
+        }
 
         public async static void Update(int pluginID)
         {
@@ -194,9 +203,13 @@ namespace U_System.Core.Plugin
             Release _lastStableRelease = _releases.Where(x => x.PreRelease == false).OrderByDescending(x => x.PublishedDate).First();
             Release _lastPreviewRelease = _releases.Where(x => x.PreRelease == true).OrderByDescending(x => x.PublishedDate).First();
 
-            if (!preview)
+            if (!Plugins[pluginID].AllowPreview) {
                 if (plugin.CurrentPluginRelease.ID != _lastStableRelease.ID)
-                    newUpdate;
+                { }
+            }
+            else
+                if(plugin.CurrentPluginRelease.ID != _lastPreviewRelease.ID) 
+                { }
 
         }
 
@@ -219,6 +232,22 @@ namespace U_System.Core.Plugin
         {
             JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true };
             File.WriteAllText(Storage.SETTINGS.PLUGINS_SETTINGS, JsonSerializer.Serialize(Plugins, options));
+        }
+        private async static void Load()
+        {
+            if(File.Exists(Storage.SETTINGS.PLUGINS_SETTINGS))
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true };
+                string json = File.ReadAllText(Storage.SETTINGS.PLUGINS_SETTINGS);
+                Plugins = JsonSerializer.Deserialize<Internal.Plugin[]>(json, options).ToList();
+                for (int i = 0; i < Plugins.Count; i++)
+                {
+                    PluginUXs.Add(Plugins[i].PluginUX);
+                    await GetReleases(Plugins[i].ID, true);
+                    if (Plugins[i].CurrentPluginRelease.Enable)
+                        Enable(Plugins[i].ID);
+                }
+            }
         }
     }
 }

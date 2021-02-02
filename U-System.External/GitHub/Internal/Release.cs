@@ -20,5 +20,9 @@ namespace U_System.External.GitHub.Internal
         public DateTime PublishedDate { get; set; }
         [JsonPropertyName("body")]
         public string ReleaseNotes { get; set; }
+
+        [JsonPropertyName("target_commitish")]
+        public string Branch { get; set; }
+
     }
 }

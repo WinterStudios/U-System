@@ -17,6 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="28"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid x:Name="W_Grid_TopNav">
             <Grid.ColumnDefinitions>
@@ -38,5 +39,18 @@
         <TabControl Grid.Row="1" x:Name="W_TabControl" Style="{DynamicResource TabControlStyle}">
 
         </TabControl>
+        <Grid Grid.Row="2" Height="24" Background="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+                <TextBlock Text="[U-Media.Core.NotificationSystem.Message]" FontSize="8" FontWeight="Normal" Margin="6" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Border Width="16" CornerRadius="2" BorderBrush="Gray" BorderThickness="0.5" Margin="4" />
+                <ProgressBar Width="140" Height="12" IsIndeterminate="True"/>
+                <Separator/>
+                <TextBlock Text="{Binding AppVersion, RelativeSource={RelativeSource AncestorType=local:MainWindow}}" FontSize="8" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

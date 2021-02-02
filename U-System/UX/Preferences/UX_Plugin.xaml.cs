@@ -62,6 +62,11 @@ namespace U_System.UX.Preferences
                 int _pluginID = ((PluginUX)_btn.DataContext).PluginID;
                 PluginManager.Update(_pluginID);
             }
+            if (_tag == "PLUGIN_REMOVE")
+            {
+                int _pluginID = ((PluginUX)_btn.DataContext).PluginID;
+                PluginManager.Remove(_pluginID);
+            }
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

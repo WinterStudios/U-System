@@ -13,7 +13,7 @@ namespace U_System.Core.Plugin.Internal
 {
     public class Plugin
     {
-        public int ID { get => id; set { id = value; PluginUX.PluginID = value; } }
+        public int ID { get => id; set { id = value; if (PluginUX == null) PluginUX = new PluginUX(); PluginUX.PluginID = value;} }
         public string Name { get => name; set { name = value; PluginUX.Name = value; } }
         public string Description { get => description; set { description = value; PluginUX.Description = value; } }
         internal PluginUX PluginUX { get; set; }        
@@ -21,7 +21,8 @@ namespace U_System.Core.Plugin.Internal
         public string GitHubRepositoryURL { get; set; }
         public int CurrentReleaseID { get => currentPluginReleaseID; set { currentPluginReleaseID = value; PluginUX.ReleaseIndex = value; } } 
         public PluginRelease CurrentPluginRelease { get => currentPluginRelease; set { currentPluginRelease = value; PluginUX.CurrentPluginRelease = value; } }
-        public bool AutomaticUpdate { get; set; }
+        public bool AutomaticUpdate { get;  set; }
+        public bool AllowPreview { get; set; }
         internal PluginRelease[] PluginReleases { get => pluginReleases; set { pluginReleases = value; PluginUX.Releases = value; } }
         internal Repository GitHubRepository { get; set; }
         internal Release[] Releases { get => releases; set { releases = value; GitHubRepository.Releases = value; } }
@@ -44,6 +45,8 @@ namespace U_System.Core.Plugin.Internal
         private TabItem[] tabItems;
         private MenuItem[] menuItems;
         private bool automaticUpdate;
-        private previewStable
+        private int trie;
+
+
     }
 }

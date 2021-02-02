@@ -13,17 +13,26 @@ namespace U_System.Core.UX
 
         public static void Remove(TabItem tab)
         {
+            object[] tabInfo = (object[])tab.DataContext;
+            if(tabInfo != null && tabInfo.Length > 0)
+            {
+                if((string)tabInfo[0] == "_PLUGIN")
+                {
+                    Plugin.PluginManager.Plugins[(int)tabInfo[1]].Tabs[(int)tabInfo[2]] = null;
+                }
+            }
             UX_Control.Items.Remove(tab);
         }
 
         internal static void Add(TabItem tabItem)
         {
-            throw new NotImplementedException();
+            UX_Control.Items.Add(tabItem);
+            UX_Control.SelectedItem = tabItem;
         }
 
         internal static void Select(TabItem tabItem)
         {
-            throw new NotImplementedException();
+            UX_Control.SelectedItem = tabItem;
         }
     }
 }
