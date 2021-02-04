@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 using U_System.Core.UX;
 
-namespace U_System.Styles
+namespace U_System.Core.Styles
 {
     public partial class TabControlStyles
     {
@@ -32,11 +32,6 @@ namespace U_System.Styles
 
                 //}
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

@@ -16,7 +16,7 @@ using U_System.External.GitHub;
 using U_System.External.GitHub.Internal;
 
 
-namespace U_System.UX.Preferences
+namespace U_System.Core.UX.Preferences
 {
     /// <summary>
     /// Interaction logic for UX_Plugin_Add.xaml

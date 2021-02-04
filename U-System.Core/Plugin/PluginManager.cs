@@ -49,6 +49,7 @@ namespace U_System.Core.Plugin
             plugin.ID = Plugins.Count-1;
             plugin.Name = repository.Name;
             plugin.Description = repository.Description;
+            plugin.AutomaticUpdate = true;
 
             plugin.GitHubRepository = repository;
             plugin.GitHubRepositoryID = repository.ID;
@@ -72,12 +73,13 @@ namespace U_System.Core.Plugin
                 Plugins[pluginID].GitHubRepository = await GitHubClient.GetRepositoryAsync(Plugins[pluginID].GitHubRepositoryID);
             }
             Plugins[pluginID].Releases = await GitHubClient.GetReleasesAsync(Plugins[pluginID].GitHubRepository);
+            Plugins[pluginID].PluginReleases = Plugins[pluginID].Releases.ToPluginRelease();
             if (!load)
             {
                 Plugins[pluginID].CurrentReleaseID = GetStableReleaseID(Plugins[pluginID].GitHubRepository.Releases);
                 Plugins[pluginID].CurrentPluginRelease = Plugins[pluginID].PluginReleases[Plugins[pluginID].CurrentReleaseID];
             }
-            Plugins[pluginID].PluginReleases = Plugins[pluginID].Releases.ToPluginRelease();
+            
 
         }
         internal static async void Install(int pluginID)
@@ -164,6 +166,15 @@ namespace U_System.Core.Plugin
             }
             plugin.MenuItems = menus.ToArray();
             plugin.CurrentPluginRelease.Enable = true;
+            if(PluginInfo.ShowWelcomePage && PluginInfo.WelcomePage != null)
+            {
+                TabItem item = new TabItem();
+                item.Header = PluginInfo.WelcomePage.Name;
+                Type type = assembly.GetType(PluginInfo.WelcomePage.Type);
+                object content = Activator.CreateInstance(type);
+                item.Content = content;
+                UX.TabsSystem.Add(item);
+            }    
             plugin.Working = false;
             Save();
         }
@@ -191,24 +202,30 @@ namespace U_System.Core.Plugin
 
         }
 
-        public async static void Update(int pluginID)
+        internal async static Task Update(int pluginID)
         {
-            Internal.Plugin plugin = Plugins[pluginID];
 
             if (Plugins[pluginID].GitHubRepository == null)
                 Plugins[pluginID].GitHubRepository = await GitHubClient.GetRepositoryAsync(Plugins[pluginID].GitHubRepositoryID);
 
-            Release[] _releases = await GitHubClient.GetReleasesAsync(plugin.GitHubRepository);
+            Release[] _releases = await GitHubClient.GetReleasesAsync(Plugins[pluginID].GitHubRepository);
 
             Release _lastStableRelease = _releases.Where(x => x.PreRelease == false).OrderByDescending(x => x.PublishedDate).First();
             Release _lastPreviewRelease = _releases.Where(x => x.PreRelease == true).OrderByDescending(x => x.PublishedDate).First();
 
             if (!Plugins[pluginID].AllowPreview) {
-                if (plugin.CurrentPluginRelease.ID != _lastStableRelease.ID)
-                { }
+                if (Plugins[pluginID].CurrentPluginRelease.ID != _lastStableRelease.ID)
+                {
+                    if (Plugins[pluginID].AutomaticUpdate)
+                    {
+                        Plugins[pluginID].CurrentReleaseID = GetStableReleaseID(_releases, _lastStableRelease);
+                        Plugins[pluginID].CurrentPluginRelease = Plugins[pluginID].PluginReleases[Plugins[pluginID].CurrentReleaseID];
+                        Install(pluginID);
+                    }
+                }
             }
             else
-                if(plugin.CurrentPluginRelease.ID != _lastPreviewRelease.ID) 
+                if(Plugins[pluginID].CurrentPluginRelease.ID != _lastPreviewRelease.ID) 
                 { }
 
         }
@@ -220,6 +237,21 @@ namespace U_System.Core.Plugin
             for (int i = 0; i < releases.Length; i++)
             {
                 if (!releases[i].PreRelease)
+                {
+                    id = i;
+                    break;
+                }
+            }
+
+            return id;
+        }
+        private static int GetStableReleaseID(Release[] releases, Release release)
+        {
+            int id = -1;
+
+            for (int i = 0; i < releases.Length; i++)
+            {
+                if (releases[i].ID == release.ID)
                 {
                     id = i;
                     break;
@@ -244,6 +276,7 @@ namespace U_System.Core.Plugin
                 {
                     PluginUXs.Add(Plugins[i].PluginUX);
                     await GetReleases(Plugins[i].ID, true);
+                    await Update(Plugins[i].ID);
                     if (Plugins[i].CurrentPluginRelease.Enable)
                         Enable(Plugins[i].ID);
                 }

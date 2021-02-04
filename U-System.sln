@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U-System.API", "U-System.AP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U-System.TestLibary", "U-System.TestLibary\U-System.TestLibary.csproj", "{24A433B5-5825-4C19-989A-8B4A3E1E2F36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U-System.External", "U-System.External\U-System.External.csproj", "{22FA9C6B-E13C-46F3-89B9-60682AAC3448}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U-System.External", "U-System.External\U-System.External.csproj", "{22FA9C6B-E13C-46F3-89B9-60682AAC3448}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U-System.Core", "U-System.Core\U-System.Core.csproj", "{5937E94A-461E-487A-BFEA-9AB648E694EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{22FA9C6B-E13C-46F3-89B9-60682AAC3448}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22FA9C6B-E13C-46F3-89B9-60682AAC3448}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22FA9C6B-E13C-46F3-89B9-60682AAC3448}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5937E94A-461E-487A-BFEA-9AB648E694EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5937E94A-461E-487A-BFEA-9AB648E694EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5937E94A-461E-487A-BFEA-9AB648E694EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5937E94A-461E-487A-BFEA-9AB648E694EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

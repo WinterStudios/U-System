@@ -5,9 +5,10 @@
     <RootNamespace>U_System.API</RootNamespace>
     <UseWPF>true</UseWPF>
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	  <AssemblyVersion>1.0.0.0</AssemblyVersion>
+	  <AssemblyVersion>21.2.2.1625</AssemblyVersion>
 	  <NeutralLanguage>pt-PT</NeutralLanguage>
 	  <AppDesignerFolder>Properties</AppDesignerFolder>
+	  <FileVersion>21.2.3.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

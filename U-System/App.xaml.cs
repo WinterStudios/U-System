@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 
 using U_System;
+using U_System.Core;
 
 namespace U_System
 {
@@ -18,31 +20,7 @@ namespace U_System
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            //base.OnStartup(e);
-            //API.Paths.StorageFolder = Paths.Storage.AppDataLocation; 
-
-            SettingsSystem.LOAD();
-#if DEBUG
-            SettingsSystem.SET_VERSION();
-# endif
-            MainWindow window = new MainWindow();
-            window.Show();
-
-            Core.Plugin.PluginManager.Inicialize();
-
-            //API.Plugins.PluginSystem.InitializeComponent();
-            //API.Paths.Settings.CreateDirectory();
-
-            //window.Loaded += (sender, arg) => LoadAPI();
-
-            //API.Plugins.PluginSystem.EnablePlugins();
-            //API.Plugins.PluginSystem.Load();
-            //API.Plugins.PluginSystem.EnablePlugins();
-
-
-
-
-
+            Core.Core.Inicialize(this);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace U_System.Core
                     Directory.CreateDirectory(STORAGE_DIRECTORY);
             }
         }
-        private static StorageLocation _StorageFolder = StorageLocation.AppDataLocation;
+        public static StorageLocation _StorageFolder = StorageLocation.ExeLocation;
         public static string STORAGE_DIRECTORY
         {
             get
@@ -46,7 +46,7 @@ namespace U_System.Core
                     case StorageLocation.AppDataLocation:
                         return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\U-System\\";
                     case StorageLocation.ExeLocation:
-                        return AppDomain.CurrentDomain.BaseDirectory + "Config\\";
+                        return AppDomain.CurrentDomain.BaseDirectory;
                     default:
                         return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\U-System\\";
                 }

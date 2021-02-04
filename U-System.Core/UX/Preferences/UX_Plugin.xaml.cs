@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 using U_System.Core.Plugin;
 using U_System.Core.Plugin.Internal;
 
-namespace U_System.UX.Preferences
+namespace U_System.Core.UX.Preferences
 {
     /// <summary>
     /// Interaction logic for UX_Plugin.xaml
@@ -26,7 +26,7 @@ namespace U_System.UX.Preferences
         public UX_Plugin()
         {
             InitializeComponent();
-            UC_ListBox_Plugins.ItemsSource = Core.Plugin.PluginManager.PluginUXs;
+            UC_ListBox_Plugins.ItemsSource = PluginManager.PluginUXs;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -39,7 +39,7 @@ namespace U_System.UX.Preferences
                 if (_w_p_add.ShowDialog() == true)
                 {
                     bool install = false;
-                    Core.Plugin.PluginManager.Add(_w_p_add._output);
+                    PluginManager.Add(_w_p_add._output);
                     //PluginSystem.AddPlugin(_w_p_add._output, install, this); ;
                     UC_ListBox_Plugins.Items.Refresh();
                 }

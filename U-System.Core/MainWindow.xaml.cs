@@ -13,23 +13,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using U_System.Core;
 using U_System.Core.UX;
 
 
-namespace U_System
+namespace U_System.Core
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static string AppVersion { get => string.Format("v{0}{1}", DateTime.Now.ToString("yy.mm.dd-hh"), DateTime.Now.ToString("mm")); }
+        
 
 
         public MainWindow()
         {
             InitializeComponent();
+            W_TextBlock_APP_VERSION.Text = SettingsSystem.APP_VERSION;
             //MenuBar.MainMenu = this.W_MainMenuBar;
             TabsSystem.UX_Control = this.W_TabControl;
             MenuSystem.MainNavigation = this.W_MainMenuBar;

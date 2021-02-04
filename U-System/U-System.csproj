@@ -6,12 +6,24 @@
     <RootNamespace>U_System</RootNamespace>
     <UseWPF>true</UseWPF>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+	<FileVersion>21.2.4.1</FileVersion>
+	<ApplicationIcon>dimensions.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\U-System.External\U-System.External.csproj">
-      <Private>true</Private>
-    </ProjectReference>
+    <None Remove="dimensions.ico" />
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <ProjectReference Include="..\U-System.Core\U-System.Core.csproj" />
+    <ProjectReference Include="..\U-System.External\U-System.External.csproj" />
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <Resource Include="dimensions.ico" />
   </ItemGroup>
 
 </Project>
