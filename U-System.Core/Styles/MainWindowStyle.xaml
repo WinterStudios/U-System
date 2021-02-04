@@ -3,23 +3,24 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:U_System.Core.Styles" 
                     xmlns:shell="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+                    xmlns:core="clr-namespace:U_System.Core"
                     >
 
-    <Style x:Key="ModernStyle" TargetType="{x:Type Window}">
+    <Style x:Key="ModernStyle" TargetType="{x:Type core:MainWindow}">
         <Setter Property="Icon" Value="pack://application:,,,/dimensions.ico"/>
         <Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
-                <shell:WindowChrome CaptionHeight="0" ResizeBorderThickness="0" NonClientFrameEdges="None" GlassFrameThickness="1" UseAeroCaptionButtons="False"/>
+                <shell:WindowChrome CaptionHeight="0"  />
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Window}">
+                <ControlTemplate TargetType="Window">
                     <Grid>
-                        <Border Height="28" VerticalAlignment="Top" Background="DarkBlue" MouseDown="titleBar_MouseDown"/>
-                        <Border Margin="1">
-                            <ContentPresenter Content="{TemplateBinding Content}" />
+                        <Border Margin="{Binding Path={x:Static shell:SystemParameters.WindowNonClientFrameThickness}}">
+                            <ContentPresenter Grid.Row="0" Content="{TemplateBinding Content}" />
                         </Border>
+                        
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
