@@ -28,6 +28,8 @@ namespace U_System.Core
 
         public MainWindow()
         {
+            this.TaskbarItemInfo = new System.Windows.Shell.TaskbarItemInfo();
+            this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
             InitializeComponent();
             W_TextBlock_APP_VERSION.Text = SettingsSystem.APP_VERSION;
             //MenuBar.MainMenu = this.W_MainMenuBar;
