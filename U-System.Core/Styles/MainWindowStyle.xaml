@@ -5,14 +5,14 @@
 
 
     <Style x:Key="ModernStyle" TargetType="{x:Type Window}">
+        <Setter Property="Icon" Value="pack://application:,,,/dimensions.ico"/>
         <Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
                 <shell:WindowChrome 
-                    NonClientFrameEdges="None"
                     GlassFrameThickness="5"
                     ResizeBorderThickness="2"
                     CaptionHeight="32"
-                    CornerRadius="3"
+                    CornerRadius="2"
                     UseAeroCaptionButtons="True"
                      />
             </Setter.Value>
@@ -23,18 +23,20 @@
                     <Grid>
                         <!--Title Panel-->
                     <DockPanel LastChildFill="True">
-                        <Border Background="Transparent" DockPanel.Dock="Top" Height="{x:Static SystemParameters.CaptionHeight}" x:Name="titlebar">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <!--Title text only-->
-                                <TextBlock Grid.Column="1" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" 
-                                VerticalAlignment="Top" HorizontalAlignment="Center" Background="Transparent"  />
-                                 
-                            </Grid>
+                        <Border Background="SeaGreen" DockPanel.Dock="Top" Height="{x:Static SystemParameters.CaptionHeight}" x:Name="titlebar">
+                                <Grid>
+                                    <!--Title text only-->
+                                    <Image Source="{TemplateBinding Icon}"  
+       VerticalAlignment="Top" HorizontalAlignment="Left"  
+       Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness}"   
+       Width="24"  
+       shell:WindowChrome.IsHitTestVisibleInChrome="True"/>
+
+                                    <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}"   
+           VerticalAlignment="Top" HorizontalAlignment="Left"   
+           Margin="36,8,0,0"/>
+
+                                </Grid>
 
                         </Border>
                         <!--Provides the actual content control-->

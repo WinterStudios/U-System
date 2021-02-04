@@ -8,7 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="dimensions.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\U-System.External\U-System.External.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="dimensions.ico" />
   </ItemGroup>
 
   <ItemGroup>
