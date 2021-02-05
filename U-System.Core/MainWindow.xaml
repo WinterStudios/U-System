@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:shell="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
         xmlns:local="clr-namespace:U_System.Core"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowStyle="SingleBorderWindow"
         Title="MainWindow" Height="450" Width="800" Style="{DynamicResource ModernStyle}" x:Name="_Main_Window" >
     <Window.Resources>
         <ResourceDictionary>
@@ -13,17 +13,17 @@
                 <ResourceDictionary Source="/U-System.Core;component/Styles/MainWindowStyle.xaml" />
                 <ResourceDictionary Source="/U-System.Core;component/Styles/TabControlStyles.xaml" />
                 <ResourceDictionary Source="/U-System.Core;component/Styles/MenuStyles.xaml" />
+                <ResourceDictionary Source="/U-System.Core;component/Styles/Buttons/Core.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Border BorderThickness="0">
+    <Border x:Name="mainBorder">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="28"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="W_Grid_TopNav" Background="{Binding _WINDOW_GLASS_BRUSH, RelativeSource={RelativeSource AncestorType=local:MainWindow}}" Margin="{DynamicResource {x:Static shell:SystemParameters.WindowNonClientFrameThickness}}" >
+            <Grid x:Name="W_Grid_TopNav" Background="{x:Static shell:SystemParameters.WindowGlassBrush}" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -31,7 +31,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Image Margin="12,6,12,6" Source="pack://application:,,,/dimensions.ico"/>
-                <Menu x:Name="W_MainMenuBar" Grid.Column="1">
+                <Menu x:Name="W_MainMenuBar" Grid.Column="1" shell:WindowChrome.IsHitTestVisibleInChrome="True">
                     <MenuItem Header="File">
                         <MenuItem Header="Preferences">
                             <MenuItem Header="Plugins Manager" Tag="PLUGIN_MANAGER" Click="MenuItem_Click"/>
@@ -41,23 +41,36 @@
 
                     </MenuItem>
                 </Menu>
-            </Grid>
-            <TabControl Grid.Row="1" x:Name="W_TabControl" Style="{DynamicResource TabControlStyle}" >
-                <TabItem Header="WDL"/>
-            </TabControl>
-            <Grid Grid.Row="2" Height="24" Background="LightGray">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
-                    <TextBlock Text="[U-Media.Core.NotificationSystem.Message]" FontSize="8" FontWeight="Normal" Margin="6" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <Border Width="16" CornerRadius="2" BorderBrush="Gray" BorderThickness="0.5" Margin="4" />
-                    <ProgressBar Width="140" Height="12" IsIndeterminate="True"/>
-                    <Separator/>
-                    <TextBlock x:Name="W_TextBlock_APP_VERSION" Text="[Settings.APP_VERSION]" FontSize="8" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6"/>
+                <TextBlock Grid.Column="2" Text="U-System" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <StackPanel Grid.Column="3">
+                    <Button Style="{DynamicResource Styles.Button.Core.Close}" shell:WindowChrome.IsHitTestVisibleInChrome="True" />
                 </StackPanel>
             </Grid>
+            <Border Grid.Row="1" BorderBrush="{x:Static shell:SystemParameters.WindowGlassBrush}" BorderThickness="1,0,1,1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TabControl Grid.Row="0" x:Name="W_TabControl" Style="{DynamicResource TabControlStyle}" >
+
+                    </TabControl>
+                    <Grid Grid.Row="1" Height="24" Background="LightGray">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
+                            <TextBlock Text="[U-Media.Core.NotificationSystem.Message]" FontSize="8" FontWeight="Normal" Margin="6" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <Border Width="16" CornerRadius="2" BorderBrush="Gray" BorderThickness="0.5" Margin="4" />
+                            <ProgressBar Width="140" Height="12" IsIndeterminate="True"/>
+                            <Separator/>
+                            <TextBlock x:Name="W_TextBlock_APP_VERSION" Text="[Settings.APP_VERSION]" FontSize="8" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+            
         </Grid>
        
     </Border>

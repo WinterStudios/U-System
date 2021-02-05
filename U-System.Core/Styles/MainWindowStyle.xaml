@@ -8,19 +8,21 @@
 
     <Style x:Key="ModernStyle" TargetType="{x:Type core:MainWindow}">
         <Setter Property="Icon" Value="pack://application:,,,/dimensions.ico"/>
+        <EventSetter Event="Loaded" Handler="MainWindow_Loaded"/>
         <Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
-                <shell:WindowChrome CaptionHeight="0"  />
+                <shell:WindowChrome CaptionHeight="27" UseAeroCaptionButtons="False" />
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Window">
+                <ControlTemplate TargetType="shell:Window">
                     <Grid>
-                        <Border Margin="{Binding Path={x:Static shell:SystemParameters.WindowNonClientFrameThickness}}">
-                            <ContentPresenter Grid.Row="0" Content="{TemplateBinding Content}" />
+                        <Border Grid.ColumnSpan="2">
+                            <Border Background="White">
+                                <ContentPresenter Grid.Row="0" WindowChrome.IsHitTestVisibleInChrome="True" Content="{TemplateBinding Content}" />
+                            </Border>
                         </Border>
-                        
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

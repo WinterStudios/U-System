@@ -28,5 +28,20 @@ namespace U_System.Core.Styles
                 //WindowChrome.SetWindowChrome(window, chrome);
             }
         }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Window window = (Window)sender;
+            window.SizeChanged += Window_SizeChanged;
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            MainWindow window = (MainWindow)sender;
+            if (window.WindowState == WindowState.Maximized)
+                window.mainBorder.BorderThickness = new Thickness(7);
+            if (window.WindowState == WindowState.Normal)
+                window.mainBorder.BorderThickness = new Thickness(0);
+        }
     }
 }
