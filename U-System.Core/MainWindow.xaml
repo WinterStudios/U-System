@@ -42,8 +42,10 @@
                     </MenuItem>
                 </Menu>
                 <TextBlock Grid.Column="2" Text="U-System" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <StackPanel Grid.Column="3">
-                    <Button Style="{DynamicResource Styles.Button.Core.Close}" shell:WindowChrome.IsHitTestVisibleInChrome="True" />
+                <StackPanel Grid.Column="3" Orientation="Horizontal">
+                    <Button Style="{DynamicResource Styles.Button.Core.Minimize}" shell:WindowChrome.IsHitTestVisibleInChrome="True" />
+                    <Button Style="{DynamicResource Styles.Button.Core.Maximize}" shell:WindowChrome.IsHitTestVisibleInChrome="True" />
+                    <Button Style="{DynamicResource Styles.Button.Core.Close}" shell:WindowChrome.IsHitTestVisibleInChrome="True" Click="App_Navbar_Button_Click" Tag="__APP_NAVBAR_BTN_CLOSE" />
                 </StackPanel>
             </Grid>
             <Border Grid.Row="1" BorderBrush="{x:Static shell:SystemParameters.WindowGlassBrush}" BorderThickness="1,0,1,1">

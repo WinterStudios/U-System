@@ -82,5 +82,13 @@ namespace U_System.Core
                 W_TabControl.SelectedItem = tab;
             }
         }
+
+        private void App_Navbar_Button_Click (object sender, RoutedEventArgs e)
+        {
+            string tag = (string)((Button)sender).Tag;
+
+            if (tag == "__APP_NAVBAR_BTN_CLOSE")
+                Application.Current.Shutdown();
+        }
     }
 }
