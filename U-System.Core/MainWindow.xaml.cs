@@ -88,7 +88,28 @@ namespace U_System.Core
             string tag = (string)((Button)sender).Tag;
 
             if (tag == "__APP_NAVBAR_BTN_CLOSE")
+            {
                 Application.Current.Shutdown();
+                return;
+            }                
+            if (tag == "__APP_NAVBAR_BTN_MAX")
+            {
+                if (this.WindowState == WindowState.Maximized)
+                {
+                    this.WindowState = WindowState.Normal;
+                    return;
+                }
+                if (this.WindowState == WindowState.Normal)
+                {
+                    this.WindowState = WindowState.Maximized;
+                    return;
+                }
+            }
+            if (tag == "__APP_NAVBAR_BTN_MIN")
+            {
+                this.WindowState = WindowState.Minimized;
+                return;
+            }
         }
     }
 }

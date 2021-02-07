@@ -43,8 +43,8 @@
                 </Menu>
                 <TextBlock Grid.Column="2" Text="U-System" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <StackPanel Grid.Column="3" Orientation="Horizontal">
-                    <Button Style="{DynamicResource Styles.Button.Core.Minimize}" shell:WindowChrome.IsHitTestVisibleInChrome="True" />
-                    <Button Style="{DynamicResource Styles.Button.Core.Maximize}" shell:WindowChrome.IsHitTestVisibleInChrome="True" />
+                    <Button Style="{DynamicResource Styles.Button.Core.Minimize}" shell:WindowChrome.IsHitTestVisibleInChrome="True" Click="App_Navbar_Button_Click" Tag="__APP_NAVBAR_BTN_MIN" />
+                    <Button Style="{DynamicResource Styles.Button.Core.Maximize}" shell:WindowChrome.IsHitTestVisibleInChrome="True" Click="App_Navbar_Button_Click" Tag="__APP_NAVBAR_BTN_MAX" />
                     <Button Style="{DynamicResource Styles.Button.Core.Close}" shell:WindowChrome.IsHitTestVisibleInChrome="True" Click="App_Navbar_Button_Click" Tag="__APP_NAVBAR_BTN_CLOSE" />
                 </StackPanel>
             </Grid>
