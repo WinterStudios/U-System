@@ -30,7 +30,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Image Margin="12,6,12,6" Source="pack://application:,,,/dimensions.ico"/>
+                <Image Margin="12,6,12,6" Source="/U-System;component/dimensions.ico"/>
                 <Menu x:Name="W_MainMenuBar" Grid.Column="1" shell:WindowChrome.IsHitTestVisibleInChrome="True">
                     <MenuItem Header="File">
                         <MenuItem Header="Preferences">
