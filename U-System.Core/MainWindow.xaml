@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="/U-System.Core;component/Styles/MainWindowStyle.xaml" />
                 <ResourceDictionary Source="/U-System.Core;component/Styles/TabControlStyles.xaml" />
                 <ResourceDictionary Source="/U-System.Core;component/Styles/MenuStyles.xaml" />
+                <ResourceDictionary Source="/U-System.Core;component/Styles/Colores.xaml" />
                 <ResourceDictionary Source="/U-System.Core;component/Styles/Buttons/Core.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -23,15 +24,16 @@
                 <RowDefinition Height="28"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="W_Grid_TopNav" Background="{x:Static shell:SystemParameters.WindowGlassBrush}" >
+            <Grid x:Name="W_Grid_TopNav" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+                <Rectangle Fill="{DynamicResource APP.MAINCOLOR}" Grid.ColumnSpan="4" />
                 <Image Margin="12,6,12,6" Source="/U-System;component/dimensions.ico"/>
-                <Menu x:Name="W_MainMenuBar" Grid.Column="1" shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                <Menu x:Name="W_MainMenuBar" Grid.Column="1" shell:WindowChrome.IsHitTestVisibleInChrome="True" Style="{DynamicResource MenuStyle}">
                     <MenuItem Header="File">
                         <MenuItem Header="Preferences">
                             <MenuItem Header="Plugins Manager" Tag="PLUGIN_MANAGER" Click="MenuItem_Click"/>

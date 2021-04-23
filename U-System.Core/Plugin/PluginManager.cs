@@ -44,7 +44,7 @@ namespace U_System.Core.Plugin
             Plugins.Add(plugin);
             plugin.Working = true;
 
-            await Task.Run(() => Thread.Sleep(1000));
+            //await Task.Run(() => Thread.Sleep(1000));
 
             plugin.ID = Plugins.Count-1;
             plugin.Name = repository.Name;

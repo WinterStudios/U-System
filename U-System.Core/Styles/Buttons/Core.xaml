@@ -13,14 +13,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border x:Name="mainBorder" Background="{DynamicResource App.MainColor}">
-                        <Viewbox Width="10" Height="10" RenderOptions.EdgeMode="Unspecified" RenderOptions.BitmapScalingMode="NearestNeighbor">
-                            <Path Fill="Black" Data="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717    L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859    c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287    l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285    L284.286,256.002z"/>
+                    <Border x:Name="mainBorder" Background="{DynamicResource APP.MAINCOLOR}" Padding="8">
+                        <Viewbox RenderOptions.EdgeMode="Unspecified" RenderOptions.BitmapScalingMode="NearestNeighbor">
+                            <Path Fill="{DynamicResource APP.NAVBAR.BTN.FOREGROUND}" Data="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717    L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859    c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287    l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285    L284.286,256.002z"/>
                         </Viewbox>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="mainBorder" Value="red"/>
+                            <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH.RED}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -35,14 +35,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border x:Name="mainBorder" Background="{DynamicResource App.MainColor}" SnapsToDevicePixels="True">
+                    <Border x:Name="mainBorder" Background="{DynamicResource APP.MAINCOLOR}" SnapsToDevicePixels="True">
                         <Viewbox x:Name="viewBox" Height="10" Width="10" Stretch="Uniform" SnapsToDevicePixels="True">
-                            <Path x:Name="path" Fill="Black" Data="M 0 0 L 128 0 L 128 128 L 0 128 L 0 120 L 120 120 L 120 8 L 8 8 L 8 120 L 0 120 Z" />
+                            <Path x:Name="path" Fill="{DynamicResource APP.NAVBAR.BTN.FOREGROUND}" Data="M 0 0 L 128 0 L 128 128 L 0 128 L 0 120 L 120 120 L 120 8 L 8 8 L 8 120 L 0 120 Z" />
                         </Viewbox>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="mainBorder" Value="#15000000"/>
+                            <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH}"/>
                         </Trigger>
                         <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
                             <Setter Property="Data" TargetName="path" Value="M 25.6 0 L 128 0 L 128 102.4 L 102.4 102.4 L 102.4 96 L 121.6 96 L 121.6 6.4 L 32 6.4 L 32 25.6 L 102.4 25.6 L 102.4 128 L 0 128 L 0 25.6 L 6.4 25.6 L 6.4 121.6 L 96 121.6 L 96 32 L 6.4 32 L 6.4 25.6 L 25.6 25.6 Z"/>
@@ -63,7 +63,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border x:Name="mainBorder" Background="{DynamicResource App.MainColor}">
+                    <Border x:Name="mainBorder" Background="Transparent">
                         <Viewbox x:Name="viewBox" Height="1" Width="10" Stretch="Fill" SnapsToDevicePixels="True" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Path x:Name="path" Fill="Black" Data="M 0 0 L 32 0 L 32 1 L 0 1 Z"/>
                         </Viewbox>

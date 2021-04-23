@@ -14,10 +14,15 @@ namespace U_System.Core
         public static void Inicialize(Application application)
         {
             Application = application;
-            MainWindow window = new MainWindow();
-            window.Show();
 
+            Theme.ThemeSystem.Inicialize();
+
+            MainWindow window = new MainWindow();
+            window.Resources.MergedDictionaries.Add(Theme.ThemeSystem.ThemeResourceDictionary);
             Plugin.PluginManager.Inicialize();
+            window.Show();
+            
+
         }
     }
 }
