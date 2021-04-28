@@ -4,7 +4,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>U_System.Core</RootNamespace>
     <UseWPF>true</UseWPF>
-    <FileVersion>21.2.28.0</FileVersion>
+    <FileVersion>21.4.28.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

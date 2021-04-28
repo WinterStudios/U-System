@@ -36,5 +36,10 @@ namespace U_System.TestLibary
             Path = "Help>Welcome Test",
             PluginTypeBehavior = PluginTypeBehavior.Tab
         };
+
+        public void initialization()
+        {
+            
+        }
     }
 }

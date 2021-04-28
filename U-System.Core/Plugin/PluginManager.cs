@@ -174,7 +174,14 @@ namespace U_System.Core.Plugin
                 object content = Activator.CreateInstance(type);
                 item.Content = content;
                 UX.TabsSystem.Add(item);
-            }    
+            }
+            PluginInfo.PluginInformation = new PluginInfo()
+            {
+                PluginStorageData = string.Format("/Data/{0}/", PluginInfo.GetType().Namespace)
+            };
+
+            PluginInfo.initialization();
+
             plugin.Working = false;
             Save();
         }
