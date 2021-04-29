@@ -37,6 +37,9 @@ namespace U_System.TestLibary
             PluginTypeBehavior = PluginTypeBehavior.Tab
         };
 
+        public string DataStorage { get; set; }
+        public PluginInfo PluginInformation { get; set; }
+
         public void initialization()
         {
             

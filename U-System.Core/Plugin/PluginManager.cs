@@ -177,7 +177,7 @@ namespace U_System.Core.Plugin
             }
             PluginInfo.PluginInformation = new PluginInfo()
             {
-                PluginStorageData = string.Format("/Data/{0}/", PluginInfo.GetType().Namespace)
+                PluginStorageData = string.Format("{0}Data\\{1}\\", AppContext.BaseDirectory, PluginInfo.GetType().Namespace)
             };
 
             PluginInfo.initialization();
