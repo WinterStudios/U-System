@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>U_System.Resources</RootNamespace>
+	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <FileVersion>21.5.1.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Icons\alert.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\alert.png" />
+  </ItemGroup>
+
+</Project>

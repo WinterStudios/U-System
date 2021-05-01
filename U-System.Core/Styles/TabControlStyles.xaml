@@ -4,6 +4,11 @@
                     x:Class="U_System.Core.Styles.TabControlStyles"
                     >
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/U-System.Core;component/Styles/Colores.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+
     <Style x:Key="Tab_Control_Item_Close_Btn" TargetType="Button">
         <Setter Property="Background" Value="Red"/>
         <Setter Property="Template">
@@ -34,13 +39,12 @@
         </Grid>
     </DataTemplate>
 
-    <SolidColorBrush x:Key="TabItem.Selected.Background" Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="TabItem.Selected.Border" Color="#ACACAC"/>
+    
     <Style x:Key="TabControlStyle" TargetType="{x:Type TabControl}">
         <Setter Property="Padding" Value="2"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="DarkGray"/>
         <!--Item Background-->
         <Setter Property="BorderBrush" Value="{DynamicResource TabItem.Selected.Border}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -59,7 +63,7 @@
                             <RowDefinition x:Name="RowDefinition1" Height="*"/>
                         </Grid.RowDefinitions>
                         <TabPanel x:Name="headerPanel" Background="{TemplateBinding Background}" Grid.Column="0" IsItemsHost="true" Margin="0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
-                        <Border x:Name="contentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" Background="{DynamicResource Work_Background}">
+                        <Border x:Name="contentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" Background="{DynamicResource APP.TABCONTROL.BACKGROUND}">
                             <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>
                     </Grid>
@@ -116,10 +120,12 @@
     <SolidColorBrush x:Key="TabItem.MouseOver.Border" Color="#7EB4EA"/>
     <SolidColorBrush x:Key="TabItem.Disabled.Background" Color="#F0F0F0"/>
     <SolidColorBrush x:Key="TabItem.Disabled.Border" Color="#D9D9D9"/>
+    
+    
     <Style x:Key="TabItemStyle1" TargetType="{x:Type TabItem}">
         <!--<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>-->
-        <Setter Property="Foreground" Value="{DynamicResource TabControl.TabItem.Text}"/>
-        <Setter Property="Background" Value="GreenYellow"/>
+        <Setter Property="Foreground" Value="white"/>
+        <Setter Property="Background" Value="{DynamicResource APP.TABCONTROL.ITEM.BACKGROUND}"/>
         <Setter Property="BorderBrush" Value="ForestGreen"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="8,6,8,6"/>
@@ -129,20 +135,13 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
-                    <Grid x:Name="templateRoot" SnapsToDevicePixels="true" Background="{DynamicResource TabControl.TabItem.Background}">
+                    <Grid x:Name="templateRoot" SnapsToDevicePixels="true" Background="{DynamicResource APP.TABCONTROL.ITEM.BACKGROUND}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="32"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="32"/>
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="mainBorder" Grid.Column="0" Grid.ColumnSpan="3" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0">
-                            <Border.Background>
-                                <LinearGradientBrush EndPoint="0,0" StartPoint="1,1" Opacity="0.3">
-                                    <GradientStop Color="#FF07DDFF"/>
-                                    <GradientStop Color="#FFBED8D7" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                        </Border>
+                        <Border x:Name="mainBorder" Grid.Column="0" Grid.ColumnSpan="3" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0"/>
                         <Image Grid.Column="0" Width="16" Height="16" Source="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Tag}"/>
                         <ContentPresenter Grid.Column="1" x:Name="contentPresenter" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
                         <Button Grid.Column="2" Style="{DynamicResource Tab_Control_Item_Close_Btn}" Click="tab_Close_Btn_Click" />

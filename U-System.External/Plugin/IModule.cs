@@ -15,6 +15,8 @@ namespace U_System.External.Plugin
         string Type { get; }
         string Path { get; }
         string? TabIconLocations { get; }
+        string? Shortcut { get; }
+        string? Icon { get; }
         PluginTypeBehavior PluginTypeBehavior { get; }
     }
 }

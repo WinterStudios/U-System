@@ -10,5 +10,6 @@
     <SolidColorBrush x:Key="APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH"/>
     <SolidColorBrush x:Key="APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH.RED"/>
     <SolidColorBrush x:Key="APP.NAVBAR.MENU.BACKGROUND"/>
-    
+    <SolidColorBrush x:Key="APP.TABCONTROL.BACKGROUND"/>
+    <SolidColorBrush x:Key="APP.TABCONTROL.ITEM.BACKGROUND"/>
 </ResourceDictionary>

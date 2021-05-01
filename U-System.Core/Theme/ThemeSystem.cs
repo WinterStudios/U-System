@@ -26,6 +26,8 @@ namespace U_System.Core.Theme
             public SolidColorBrush APP_NAVBAR_BTN_FOREGROUND_HIGHLIGH { get => (SolidColorBrush)ThemeResourceDictionary["APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH"]; set => ThemeResourceDictionary["APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH"] = value; }
             public SolidColorBrush APP_NAVBAR_BTN_FOREGROUND_HIGHLIGH_RED { get => (SolidColorBrush)ThemeResourceDictionary["APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH.RED"]; set => ThemeResourceDictionary["APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH.RED"] = value; }
             public SolidColorBrush APP_NAVBAR_MENU_BACGROUND { get => (SolidColorBrush)ThemeResourceDictionary["APP.NAVBAR.MENU.BACKGROUND"]; set => ThemeResourceDictionary["APP.NAVBAR.MENU.BACKGROUND"] = value; }
+            public SolidColorBrush APP_TABCONTROL_BACKGROUND { get => (SolidColorBrush)ThemeResourceDictionary["APP.TABCONTROL.BACKGROUND"]; set => ThemeResourceDictionary["APP.TABCONTROL.BACKGROUND"] = value; }
+            public SolidColorBrush APP_TABCONTROL_ITEM_BACKGROUND { get => (SolidColorBrush)ThemeResourceDictionary["APP.TABCONTROL.ITEM.BACKGROUND"]; set => ThemeResourceDictionary["APP.TABCONTROL.ITEM.BACKGROUND"] = value; }
         }       
         public static void Inicialize()
         {
@@ -42,6 +44,9 @@ namespace U_System.Core.Theme
             _theme.APP_NAVBAR_BTN_FOREGROUND = new SolidColorBrush(Color.FromRgb(220, 220, 220));
             _theme.APP_NAVBAR_BTN_FOREGROUND_HIGHLIGH = new SolidColorBrush(Color.FromRgb(60, 60, 60));
             _theme.APP_NAVBAR_BTN_FOREGROUND_HIGHLIGH_RED = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+
+            _theme.APP_TABCONTROL_BACKGROUND = new SolidColorBrush(Color.FromRgb(40, 40, 40));
+            _theme.APP_TABCONTROL_ITEM_BACKGROUND = new SolidColorBrush(Color.FromRgb(40, 40, 40));
             return _theme;
         }
     }

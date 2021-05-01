@@ -39,8 +39,23 @@
                             <MenuItem Header="Plugins Manager" Tag="PLUGIN_MANAGER" Click="MenuItem_Click"/>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="Help">
-
+                    <MenuItem Header="Ajuda">
+                        <MenuItem Header="Bem Vindo"/>
+                        <MenuItem Header="Documentação"/>
+                        <MenuItem Header="Notas de Lançamento"/>
+                        <Separator/>
+                        <MenuItem Header="Reportar um erro">
+                            <MenuItem.Icon>
+                                <Image Source="/U-System.Resources;component/Icons/alert.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator/>
+                        <MenuItem Header="Ver Licença"/>
+                        <MenuItem Header="Termos de Privacidade"/>
+                        <Separator/>
+                        <MenuItem Header="Verificar se há atualizações"/>
+                        <Separator/>
+                        <MenuItem Header="Sobre"/>
                     </MenuItem>
                 </Menu>
                 <TextBlock Grid.Column="2" Text="U-System" VerticalAlignment="Center" HorizontalAlignment="Center"/>

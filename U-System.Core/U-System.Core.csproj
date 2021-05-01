@@ -4,11 +4,14 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>U_System.Core</RootNamespace>
     <UseWPF>true</UseWPF>
-    <FileVersion>21.4.29.0</FileVersion>
+    <FileVersion>21.5.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\U-System.External\U-System.External.csproj" />
+    <ProjectReference Include="..\U-System.Resources\U-System.Resources.csproj">
+      <Private>true</Private>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>

@@ -142,7 +142,7 @@ namespace U_System.Core.Plugin
                 int index = i;
                 if (module.PluginTypeBehavior == PluginTypeBehavior.Tab)
                 {
-                    MenuItem item = UX.MenuSystem.Add(module.Path);
+                    MenuItem item = UX.MenuSystem.Add(module.Path, module.Shortcut, module.Icon);
                     item.Click += (sender, arg) =>
                     {
                         if (plugin.Tabs[index] == null)
