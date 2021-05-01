@@ -84,9 +84,9 @@ namespace U_System.Core.UX
                 Image image = new Image();
                 image.Source = new BitmapImage(new Uri(icon));
                 image.Stretch = System.Windows.Media.Stretch.Uniform;
-                RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
-                image.SnapsToDevicePixels = true;
-                RenderOptions.SetEdgeMode(image, EdgeMode.Unspecified);
+                //RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
+                //image.SnapsToDevicePixels = true;
+                //RenderOptions.SetEdgeMode(image, EdgeMode.Unspecified);
                 item.Icon = image;
             }
             return item;
