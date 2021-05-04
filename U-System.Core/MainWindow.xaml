@@ -23,7 +23,7 @@
     <Border x:Name="mainBorder">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="32"/>
+                <RowDefinition Height="28"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid x:Name="W_Grid_TopNav" Grid.Row="0">
