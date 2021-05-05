@@ -9,7 +9,7 @@ namespace U_System.C
     {
         static void Main()
         {
-            string key = "ghp_WZaDl2IvpWZZLLS1Zbf2P1KhQsboph1I8tcJ";
+
         }
     }
 }
