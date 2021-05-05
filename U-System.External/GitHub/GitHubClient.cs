@@ -15,7 +15,7 @@ namespace U_System.External.GitHub
 {
     public class GitHubClient
     {
-        private static string _TOKEN { get => Settings._GITHUB_ACCESS_TOKEN; }
+        private static string _TOKEN { get => Settings._GITHUB_ACCESS_TOKEN.Replace('Z','u').Replace("U-System.KEY-", "ghp_"); }
         private static string _URL_API_GITHUB { get => "https://api.github.com/"; }
 
 
