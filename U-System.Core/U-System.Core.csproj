@@ -17,6 +17,9 @@
     <ProjectReference Include="..\U-System.Resources\U-System.Resources.csproj">
       <Private>true</Private>
     </ProjectReference>
+    <ProjectReference Include="..\U-System.UX\U-System.UX.csproj">
+      <Private>true</Private>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
