@@ -5,7 +5,7 @@
     <RootNamespace>U_System.External</RootNamespace>
     <UseWPF>true</UseWPF>
     <AssemblyVersion>21.2.2.1</AssemblyVersion>
-    <FileVersion>21.5.1.1</FileVersion>
+    <FileVersion>21.5.11.1</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

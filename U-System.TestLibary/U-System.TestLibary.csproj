@@ -6,7 +6,7 @@
     <UseWPF>true</UseWPF>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	<AssemblyVersion>21.2.2.1625</AssemblyVersion>
-	<FileVersion>21.5.1.0</FileVersion>
+	<FileVersion>21.5.11.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

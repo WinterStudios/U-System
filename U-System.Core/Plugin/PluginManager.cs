@@ -217,8 +217,8 @@ namespace U_System.Core.Plugin
 
             Release[] _releases = await GitHubClient.GetReleasesAsync(Plugins[pluginID].GitHubRepository);
 
-            Release _lastStableRelease = _releases.Where(x => x.PreRelease == false).OrderByDescending(x => x.PublishedDate).First();
-            Release _lastPreviewRelease = _releases.Where(x => x.PreRelease == true).OrderByDescending(x => x.PublishedDate).First();
+            Release _lastStableRelease = _releases.Where(x => x.PreRelease == false).OrderByDescending(x => x.PublishedDate).FirstOrDefault();
+            Release _lastPreviewRelease = _releases.Where(x => x.PreRelease == true).OrderByDescending(x => x.PublishedDate).FirstOrDefault();
 
             if (!Plugins[pluginID].AllowPreview) {
                 if (Plugins[pluginID].CurrentPluginRelease.ID != _lastStableRelease.ID)

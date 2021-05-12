@@ -5,10 +5,7 @@
     <RootNamespace>U_System.UX</RootNamespace>
 	  <UseWPF>true</UseWPF>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	  <FileVersion>21.5.11.0</FileVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
 
 </Project>
