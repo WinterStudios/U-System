@@ -39,6 +39,7 @@ namespace U_System.TestLibary
 
         public string DataStorage { get; set; }
         public PluginInfo PluginInformation { get; set; }
+        public string[] PluginDependicy { get; set; }
 
         public void initialization()
         {

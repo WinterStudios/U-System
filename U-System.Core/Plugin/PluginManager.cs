@@ -128,8 +128,36 @@ namespace U_System.Core.Plugin
             {
                 GC.Collect();
             };
-            Assembly assembly = temp.LoadFromAssemblyPath(plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll")));
+           
+            Assembly assembly = temp.LoadFromAssemblyPath(plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name)));
+
+            Internal.PluginDependencies pluginDependencies = JsonSerializer.Deserialize<Internal.PluginDependencies>(File.ReadAllText(plugin.CurrentPluginRelease.PluginFilesLocation.FirstOrDefault(x => x.EndsWith(".json"))));
+            
             plugin.Assembly = temp;
+            temp.Resolving += (sender, args) =>
+            {
+                try
+                {
+                    string d = string.Format("{0}{1}.dll", Storage.PLUGINS.PLUGIN_DIRECTORY, args.Name);
+                    return temp.LoadFromAssemblyPath(d);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    try
+                    {
+                        string d = string.Format("{0}{1}.dll", Storage.PLUGINS.PLUGIN_DIRECTORY, args.Name);
+                        Assembly.ReflectionOnlyLoad(args.FullName);
+                    }
+                    catch (Exception ex2)
+                    {
+                        System.Diagnostics.Debug.WriteLine(ex2.Message);
+
+                    }
+                    return null;
+                }
+
+            };
 
             Type IPlugin = assembly.GetTypes().First(x => x.GetInterfaces().Contains(typeof(IPlugin)));
             IPlugin PluginInfo = (IPlugin)Activator.CreateInstance(IPlugin);

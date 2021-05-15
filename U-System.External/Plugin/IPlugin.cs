@@ -37,7 +37,7 @@ namespace U_System.External.Plugin
         /// Welcome Page
         /// </summary>
         /// <remarks>ShowWelcomePage has to be true to display the welcome page</remarks>
-        Module? WelcomePage { get; }
+        Module WelcomePage { get; }
 
         /// <summary>
         /// Inicialize the plugin at load plugin
@@ -47,7 +47,7 @@ namespace U_System.External.Plugin
         /// Location define by Plugin Engine were can be store data
         /// </summary>
         string DataStorage { get; set; }
-
-       PluginInfo PluginInformation { get; set; }
+        PluginInfo PluginInformation { get; set; }
+        string[] PluginDependicy { get; set; }
     }
 }

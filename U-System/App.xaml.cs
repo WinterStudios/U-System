@@ -10,6 +10,8 @@ using System.Windows;
 using U_System;
 using U_System.Core;
 
+//using Microsoft.Data.SqlClient;
+
 namespace U_System
 {
     /// <summary>
