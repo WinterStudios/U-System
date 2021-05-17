@@ -45,7 +45,7 @@ namespace U_System.Core.Theme
             _theme.APP_NAVBAR_BTN_FOREGROUND_HIGHLIGH = new SolidColorBrush(Color.FromRgb(60, 60, 60));
             _theme.APP_NAVBAR_BTN_FOREGROUND_HIGHLIGH_RED = new SolidColorBrush(Color.FromRgb(255, 0, 0));
 
-            _theme.APP_TABCONTROL_BACKGROUND = new SolidColorBrush(Color.FromRgb(250, 250, 250));
+            _theme.APP_TABCONTROL_BACKGROUND = new SolidColorBrush(Color.FromRgb(40, 40, 40));
             _theme.APP_TABCONTROL_ITEM_BACKGROUND = new SolidColorBrush(Color.FromRgb(40, 40, 40));
             return _theme;
         }

@@ -10,7 +10,7 @@
     <Style TargetType="{x:Type GroupBox}">
         <Setter Property="BorderBrush" Value="#a000d9ff"/>
         <Setter Property="Foreground" Value="#ccc"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
         <Setter Property="Template">
@@ -30,7 +30,7 @@
                             <RowDefinition Height="6"/>
                         </Grid.RowDefinitions>
                         <Border Background="{TemplateBinding Background}" BorderThickness="0" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="4" Grid.ColumnSpan="4" Grid.Column="0" Grid.RowSpan="3" Grid.Row="1"/>
-                        <Border BorderThickness="2" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="5" Grid.ColumnSpan="4" Grid.RowSpan="3" Grid.Row="1">
+                        <Border BorderThickness="0" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="5" Grid.ColumnSpan="4" Grid.RowSpan="3" Grid.Row="1">
                             <Border.OpacityMask>
                                 <MultiBinding Converter="{StaticResource BorderGapMaskConverter}" ConverterParameter="7">
                                     <Binding ElementName="Header" Path="ActualWidth"/>
@@ -38,7 +38,7 @@
                                     <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
                                 </MultiBinding>
                             </Border.OpacityMask>
-                            <Border BorderThickness="0" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="2">
+                            <Border BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="1">
                                 <Border BorderThickness="0" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="2"/>
                             </Border>
                         </Border>
