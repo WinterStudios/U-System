@@ -5,7 +5,7 @@
                     x:Class="U_System.Core.Styles.Colores" >
 
 
-    <SolidColorBrush x:Key="APP.MAINCOLOR" />
+    <SolidColorBrush x:Key="APP.MAINCOLOR"/>
     <SolidColorBrush x:Key="APP.NAVBAR.BTN.FOREGROUND"/>
     <SolidColorBrush x:Key="APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH"/>
     <SolidColorBrush x:Key="APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH.RED"/>

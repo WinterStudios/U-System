@@ -38,7 +38,9 @@
                 <Menu x:Name="W_MainMenuBar" Grid.Column="1" shell:WindowChrome.IsHitTestVisibleInChrome="True" Style="{DynamicResource MenuStyle}">
                     <MenuItem Header="File">
                         <MenuItem Header="Preferences">
+                            <MenuItem Header="Settings"/>
                             <MenuItem Header="Plugins Manager" Tag="PLUGIN_MANAGER" Click="MenuItem_Click"/>
+                            <MenuItem Header="Color Theme" Tag="THEME_MANAGER" Click="MenuItem_Click"/>
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Ajuda">

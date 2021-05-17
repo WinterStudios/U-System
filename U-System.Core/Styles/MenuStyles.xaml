@@ -141,7 +141,7 @@
                         <SolidColorBrush Color="White" />
                     </Path.Fill>
                 </Path>
-                <Popup x:Name="Popup" Placement="Left" HorizontalOffset="11" VerticalOffset="-6" IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
+                <Popup x:Name="Popup" Placement="Right" HorizontalOffset="11" VerticalOffset="-6" IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
                     <Border x:Name="SubmenuBorder" Padding="0,6,0,6" SnapsToDevicePixels="True" Background="{DynamicResource APP.MAINCOLOR}" BorderThickness="0">
                         <Border.BorderBrush>
                             <SolidColorBrush Color="{DynamicResource BorderMediumColor}" />

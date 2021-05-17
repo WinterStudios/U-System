@@ -61,12 +61,12 @@ namespace U_System.Core
 
         private void MainWindow_Activated(object sender, EventArgs e)
         {
-            W_Grid_TopNav.Background = Theme.Colores._WINDOW_NAVBAR_ACTIVE;
+            //W_Grid_TopNav.Background = Theme.Colores._WINDOW_NAVBAR_ACTIVE;
         }
 
         private void MainWindow_Deactivated(object sender, EventArgs e)
         {
-            W_Grid_TopNav.Background = Theme.Colores._WINDOW_NAVBAR_DEACTIVE;
+            //W_Grid_TopNav.Background = Theme.Colores._WINDOW_NAVBAR_DEACTIVE;
         }
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -78,6 +78,16 @@ namespace U_System.Core
 
                 tab.Content = pluginTab;
                 tab.Header = "Plugin Manager";
+                W_TabControl.Items.Add(tab);
+                W_TabControl.SelectedItem = tab;
+            }
+            if(tag == "THEME_MANAGER")
+            {
+                TabItem tab = new TabItem();
+                UX.Preferences.UX_ThemeManager color = new UX.Preferences.UX_ThemeManager();
+
+                tab.Content = color;
+                tab.Header = "Color Theme";
                 W_TabControl.Items.Add(tab);
                 W_TabControl.SelectedItem = tab;
             }
