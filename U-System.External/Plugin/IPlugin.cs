@@ -48,6 +48,6 @@ namespace U_System.External.Plugin
         /// </summary>
         string DataStorage { get; set; }
         PluginInfo PluginInformation { get; set; }
-        string[] PluginDependicy { get; set; }
+        string[] PluginDependicy { get; }
     }
 }

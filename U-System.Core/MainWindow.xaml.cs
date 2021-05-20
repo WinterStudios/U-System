@@ -35,7 +35,7 @@ namespace U_System.Core
 
             InitializeComponent();
             //W_Grid_TopNav.MouseDown += W_Grid_TopNav_MouseDown;
-            W_TextBlock_APP_VERSION.Text = SettingsSystem.APP_VERSION;
+            //W_TextBlock_APP_VERSION.Text = SettingsSystem.APP_VERSION;
             //MenuBar.MainMenu = this.W_MainMenuBar;
             TabsSystem.UX_Control = this.W_TabControl;
             MenuSystem.MainNavigation = this.W_MainMenuBar;

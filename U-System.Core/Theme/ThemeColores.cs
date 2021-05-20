@@ -16,5 +16,10 @@ namespace U_System.Core.Theme
     public struct Colores
     {
         public string APP_MAIN_COLOR { get; set; }
+        public string APP_NAVBAR_BTN_FOREGROUND { get; set; }
+        public string APP_NAVBAR_BTN_FOREGROUND_HIGHLIGH { get; set; }
+        public string APP_NAVBAR_BTN_FOREGROUND_HIGHLIGH_RED { get; set; }
+        public string APP_TABCONTROL_BACKGROUND { get; set; }
+        public string APP_TABCONTROL_ITEM_BACKGROUND { get; set; }
     }
 }

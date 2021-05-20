@@ -134,16 +134,25 @@ namespace U_System.Core.Plugin
             Internal.PluginDependencies pluginDependencies = JsonSerializer.Deserialize<Internal.PluginDependencies>(File.ReadAllText(plugin.CurrentPluginRelease.PluginFilesLocation.FirstOrDefault(x => x.EndsWith(".json"))));
             
             plugin.Assembly = temp;
+            //var ass = AppDomain.CurrentDomain.GetAssemblies();
+            //var app = AssemblyLoadContext.All;
             temp.Resolving += (sender, args) =>
             {
                 try
                 {
+                  
                     string d = string.Format("{0}{1}.dll", Storage.PLUGINS.PLUGIN_DIRECTORY, args.Name);
-                    return temp.LoadFromAssemblyPath(d);
+
+                    //AssemblyLoadContext.Default.LoadFromAssemblyPath(d);
+                    
+                    System.Diagnostics.Debug.WriteLine(string.Format("[U-SYSTEM].[PluginManager] Load: {0}", args.Name));
+                    //Assembly.ReflectionOnlyLoadFrom(d);
+                    AssemblyName name = new AssemblyName(args.Name);
+                    return temp.LoadFromAssemblyName(name);
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                    System.Diagnostics.Debug.WriteLine(string.Format("[U-SYSTEM] [PluginManager] [ERROR] -> {0} {1}",ex.Message,args.Name));
                     try
                     {
                         string d = string.Format("{0}{1}.dll", Storage.PLUGINS.PLUGIN_DIRECTORY, args.Name);
@@ -151,17 +160,25 @@ namespace U_System.Core.Plugin
                     }
                     catch (Exception ex2)
                     {
-                        System.Diagnostics.Debug.WriteLine(ex2.Message);
+                        System.Diagnostics.Debug.WriteLine(string.Format("[U-SYSTEM] [PluginManager] [ERROR] -> {0} {1}", ex2.Message, args.Name));
 
                     }
                     return null;
                 }
 
             };
-
             Type IPlugin = assembly.GetTypes().First(x => x.GetInterfaces().Contains(typeof(IPlugin)));
             IPlugin PluginInfo = (IPlugin)Activator.CreateInstance(IPlugin);
-
+            try
+            {
+                for (int i = 0; i < PluginInfo.PluginDependicy.Length; i++)
+                {
+                    string d = string.Format("{0}{1}.dll", Storage.PLUGINS.PLUGIN_DIRECTORY, PluginInfo.PluginDependicy[i]);
+                    temp.LoadFromAssemblyPath(d);
+                }
+            }
+            catch { }
+            
             plugin.Modules = PluginInfo.Modules;
             plugin.Tabs = new TabItem[plugin.Modules.Length];
             List<MenuItem> menus = new List<MenuItem>();

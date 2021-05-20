@@ -26,10 +26,6 @@
     <None Remove="dimensions.ico" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.2" />
-  </ItemGroup>
-
 	
   <ItemGroup>
     <ProjectReference Include="..\U-System.Core\U-System.Core.csproj" />
