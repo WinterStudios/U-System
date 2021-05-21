@@ -91,10 +91,15 @@ namespace U_System.Core
             {
                 get
                 {
-                    string _path = STORAGE_DIRECTORY + "Plugins\\";
-                    if (!Directory.Exists(_path))
-                        Directory.CreateDirectory(_path);
-                    return _path;
+                    try
+                    {
+                        string _path = STORAGE_DIRECTORY + "Plugins\\";
+                        if (!Directory.Exists(_path))
+                            Directory.CreateDirectory(_path);
+                        return _path;
+                    }
+                    catch (Exception ex) { throw ex.InnerException; }
+                    
                 }
             }
         }
