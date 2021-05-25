@@ -32,6 +32,7 @@ namespace U_System.Core.Plugin
 
         public static void Inicialize()
         {
+            Debug.Log.LogMessage("Initialize Plugin Manager", typeof(PluginManager));
             Plugins = new List<Internal.Plugin>();
             PluginUXs = new List<Internal.PluginUX>();
             Load();
@@ -70,10 +71,14 @@ namespace U_System.Core.Plugin
         {
             if (pluginID >= Plugins.Count)
                 return;
+            Debug.Log.LogMessage(string.Format("{0} : Initialize |-> Getting Plugin Releases", Plugins[pluginID].Name), typeof(PluginManager));
+
             if (Plugins[pluginID].GitHubRepository == null)
             {
+                Debug.Log.LogMessage(string.Format("{0} : Getting Plugin GitHub Repository", Plugins[pluginID].Name), typeof(PluginManager));
                 Plugins[pluginID].GitHubRepository = await GitHubClient.GetRepositoryAsync(Plugins[pluginID].GitHubRepositoryID);
             }
+            Debug.Log.LogMessage(string.Format("{0} : Getting Plugin GitHub Releases", Plugins[pluginID].Name), typeof(PluginManager));
             Plugins[pluginID].Releases = await GitHubClient.GetReleasesAsync(Plugins[pluginID].GitHubRepository);
             Plugins[pluginID].PluginReleases = Plugins[pluginID].Releases.ToPluginRelease();
             if (!load)
@@ -81,11 +86,12 @@ namespace U_System.Core.Plugin
                 Plugins[pluginID].CurrentReleaseID = GetStableReleaseID(Plugins[pluginID].GitHubRepository.Releases);
                 Plugins[pluginID].CurrentPluginRelease = Plugins[pluginID].PluginReleases[Plugins[pluginID].CurrentReleaseID];
             }
-            
+            Debug.Log.LogMessage(string.Format("{0} : Get Relases Finish", Plugins[pluginID].Name), typeof(PluginManager));
 
         }
         internal static async void Install(int pluginID)
         {
+            Debug.Log.LogMessage(string.Format("{0} : Instaling", Plugins[pluginID].Name), typeof(PluginManager));
             Internal.Plugin plugin = Plugins[pluginID];
             plugin.Working = true;
 
@@ -94,11 +100,12 @@ namespace U_System.Core.Plugin
             Asset pluginAsset = release.Assets.First(x => x.Name == "Release.zip");
             if (pluginAsset == null)
                 return;
-
+            Debug.Log.LogMessage(string.Format("{0} : Downloading", Plugins[pluginID].Name), typeof(PluginManager));
             Stream stream = await GitHubClient.GetReleaseAssetAsync(pluginAsset.URL);
             string pluginPath = Storage.STORAGE_DOWNLOADS + string.Format("{0}-{1}.zip", plugin.Name, release.Tag);
             FileSystem.SaveStreamToFile(stream, pluginPath);
 
+            Debug.Log.LogMessage(string.Format("{0} : Installing", Plugins[pluginID].Name), typeof(PluginManager));
 
             ZipArchive zip = ZipFile.OpenRead(pluginPath);
             string name = zip.Entries.First(x => x.Name.EndsWith(".dll")).Name;
@@ -115,6 +122,7 @@ namespace U_System.Core.Plugin
             plugin.CurrentPluginRelease.PluginFilesLocation = files;
             plugin.CurrentPluginRelease.IsInstalled = true;
             plugin.CurrentPluginRelease.Enable = true;
+            Debug.Log.LogMessage(string.Format("{0} : Plugin Installed", Plugins[pluginID].Name), typeof(PluginManager));
             Save();
             Enable(pluginID);
 
@@ -122,6 +130,7 @@ namespace U_System.Core.Plugin
         }
         private async static void Enable(int pluginID)
         {
+            Debug.Log.LogMessage(string.Format("{0} : Enabling...", Plugins[pluginID].Name), typeof(PluginManager));
             Internal.Plugin plugin = Plugins[pluginID];
             AssemblyLoadContext pluginContext = new AssemblyLoadContext(plugin.Name, true);
             
@@ -160,11 +169,11 @@ namespace U_System.Core.Plugin
             //{
             //    try
             //    {
-                  
+
             //        string d = string.Format("{0}{1}.dll", Storage.PLUGINS.PLUGIN_DIRECTORY, args.Name);
 
             //        //AssemblyLoadContext.Default.LoadFromAssemblyPath(d);
-                    
+
             //        System.Diagnostics.Debug.WriteLine(string.Format("[U-SYSTEM].[PluginManager] Load: {0}", args.Name));
             //        //Assembly.ReflectionOnlyLoadFrom(d);
             //        AssemblyName name = new AssemblyName(args.Name);
@@ -187,6 +196,8 @@ namespace U_System.Core.Plugin
             //    }
 
             //};
+
+            Debug.Log.LogMessage(string.Format("{0} : Enabling: Getting EntryPoint", Plugins[pluginID].Name), typeof(PluginManager));
             Type IPlugin = assembly.GetTypes().First(x => x.GetInterfaces().Contains(typeof(IPlugin)));
             IPlugin PluginInfo = (IPlugin)Activator.CreateInstance(IPlugin);
             try
@@ -203,6 +214,7 @@ namespace U_System.Core.Plugin
             }
 
 
+            Debug.Log.LogMessage(string.Format("{0} : Enabling: Get Modules", Plugins[pluginID].Name), typeof(PluginManager));
             plugin.Modules = PluginInfo.Modules;
             plugin.Tabs = new TabItem[plugin.Modules.Length];
             List<MenuItem> menus = new List<MenuItem>();
@@ -244,15 +256,16 @@ namespace U_System.Core.Plugin
                 Type type = assembly.GetType(PluginInfo.WelcomePage.Type);
                 object content = Activator.CreateInstance(type);
                 item.Content = content;
+                Debug.Log.LogMessage(string.Format("{0} : Show Welcoming page", Plugins[pluginID].Name), typeof(PluginManager));
                 UX.TabsSystem.Add(item);
             }
             PluginInfo.PluginInformation = new PluginInfo()
             {
                 PluginStorageData = string.Format("{0}Data\\{1}\\", AppContext.BaseDirectory, PluginInfo.GetType().Namespace)
             };
-
+            Debug.Log.LogMessage(string.Format("{0} : Initialize Plugin", Plugins[pluginID].Name), typeof(PluginManager));
             PluginInfo.initialization();
-
+            Debug.Log.LogMessage(string.Format("{0} : Plugin Enable", Plugins[pluginID].Name), typeof(PluginManager));
             plugin.Working = false;
             Save();
         }
@@ -286,18 +299,26 @@ namespace U_System.Core.Plugin
             if (Plugins[pluginID].GitHubRepository == null)
                 Plugins[pluginID].GitHubRepository = await GitHubClient.GetRepositoryAsync(Plugins[pluginID].GitHubRepositoryID);
 
+            Debug.Log.LogMessage(string.Format("{0} : Current Version:{1}", Plugins[pluginID].Name, Plugins[pluginID].CurrentPluginRelease.Name), typeof(PluginManager));
+
+            Debug.Log.LogMessage(string.Format("{0} : Check for Updates", Plugins[pluginID].Name), typeof(PluginManager));
+
             Release[] _releases = await GitHubClient.GetReleasesAsync(Plugins[pluginID].GitHubRepository);
 
             Release _lastStableRelease = _releases.Where(x => x.PreRelease == false).OrderByDescending(x => x.PublishedDate).FirstOrDefault();
             Release _lastPreviewRelease = _releases.Where(x => x.PreRelease == true).OrderByDescending(x => x.PublishedDate).FirstOrDefault();
 
+            
+
             if (!Plugins[pluginID].AllowPreview) {
                 if (Plugins[pluginID].CurrentPluginRelease.ID != _lastStableRelease.ID)
                 {
+                    Debug.Log.LogMessage(string.Format("{0} : New Update avalable:{1}", Plugins[pluginID].Name, _lastStableRelease.Tag), typeof(PluginManager));
                     if (Plugins[pluginID].AutomaticUpdate)
                     {
                         Plugins[pluginID].CurrentReleaseID = GetStableReleaseID(_releases, _lastStableRelease);
                         Plugins[pluginID].CurrentPluginRelease = Plugins[pluginID].PluginReleases[Plugins[pluginID].CurrentReleaseID];
+                        Debug.Log.LogMessage(string.Format("{0} : Starting Installing new Update:{1}", Plugins[pluginID].Name, _lastStableRelease.Tag), typeof(PluginManager));
                         Install(pluginID);
                     }
                 }
@@ -345,19 +366,33 @@ namespace U_System.Core.Plugin
         }
         private async static void Load()
         {
-            if(File.Exists(Storage.SETTINGS.PLUGINS_SETTINGS))
+            if (File.Exists(Storage.SETTINGS.PLUGINS_SETTINGS))
             {
+                Debug.Log.LogMessage("Loading plugins", typeof(PluginManager));
+                Debug.Log.LogMessage("Loading plugins settings", typeof(PluginManager));
+
                 JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true };
                 string json = File.ReadAllText(Storage.SETTINGS.PLUGINS_SETTINGS);
                 Plugins = JsonSerializer.Deserialize<Internal.Plugin[]>(json, options).ToList();
-                for (int i = 0; i < Plugins.Count; i++)
-                {
+
+                Debug.Log.LogMessage(string.Format("Plugins: {0}", Plugins.Count), typeof(PluginManager));
+                Debug.Log.LogMessage("Starting loading plugins", typeof(PluginManager));
+
+                Parallel.For(0, Plugins.Count, new ParallelOptions() { MaxDegreeOfParallelism = 1 }, async (i) => {
+                    Debug.Log.LogMessage(string.Format("Plugin Found: {0}", Plugins[i].Name), typeof(PluginManager));
                     PluginUXs.Add(Plugins[i].PluginUX);
-                    await GetReleases(Plugins[i].ID, true);
-                    await Update(Plugins[i].ID);
+
+                    //await GetReleases(Plugins[i].ID, true);
+                    //await Update(Plugins[i].ID);
+                    
                     if (Plugins[i].CurrentPluginRelease.Enable)
                         Enable(Plugins[i].ID);
+                });
+                for (int i = 0; i < Plugins.Count; i++)
+                {
+                    
                 }
+                Debug.Log.LogMessage("Plugins Load with Success", typeof(PluginManager));
             }
         }
     }

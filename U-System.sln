@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U-System.Resources", "U-Sys
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U-System.C", "U-System.C\U-System.C.csproj", "{0275520E-1C59-4277-A20B-32748AED316A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U-System.UX", "U-System.UX\U-System.UX.csproj", "{B2CAC244-8DFF-4F27-B0AB-86148A96CCE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U-System.UX", "U-System.UX\U-System.UX.csproj", "{B2CAC244-8DFF-4F27-B0AB-86148A96CCE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "U-System.Debug", "U-System.Debug\U-System.Debug.csproj", "{6DC1E9D7-BE1F-4B93-9111-CC003077BC74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,14 @@ Global
 		{B2CAC244-8DFF-4F27-B0AB-86148A96CCE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2CAC244-8DFF-4F27-B0AB-86148A96CCE8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B2CAC244-8DFF-4F27-B0AB-86148A96CCE8}.Release|x64.ActiveCfg = Release|Any CPU
+		{6DC1E9D7-BE1F-4B93-9111-CC003077BC74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DC1E9D7-BE1F-4B93-9111-CC003077BC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DC1E9D7-BE1F-4B93-9111-CC003077BC74}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6DC1E9D7-BE1F-4B93-9111-CC003077BC74}.Debug|x64.Build.0 = Debug|Any CPU
+		{6DC1E9D7-BE1F-4B93-9111-CC003077BC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DC1E9D7-BE1F-4B93-9111-CC003077BC74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DC1E9D7-BE1F-4B93-9111-CC003077BC74}.Release|x64.ActiveCfg = Release|Any CPU
+		{6DC1E9D7-BE1F-4B93-9111-CC003077BC74}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

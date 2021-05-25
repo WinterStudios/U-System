@@ -32,12 +32,15 @@ namespace U_System.Core
             this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
             this.Deactivated += MainWindow_Deactivated;
             this.Activated += MainWindow_Activated;
-
+            Debug.Log.LogMessage("Initialize Window components", typeof(MainWindow));
             InitializeComponent();
+            Debug.Log.LogMessage("Window components Load", typeof(MainWindow));
             //W_Grid_TopNav.MouseDown += W_Grid_TopNav_MouseDown;
             //W_TextBlock_APP_VERSION.Text = SettingsSystem.APP_VERSION;
             //MenuBar.MainMenu = this.W_MainMenuBar;
+            Debug.Log.LogMessage("Set: TabSystem", typeof(MainWindow));
             TabsSystem.UX_Control = this.W_TabControl;
+            Debug.Log.LogMessage("Set: MenuSystem", typeof(MainWindow));
             MenuSystem.MainNavigation = this.W_MainMenuBar;
         }
 

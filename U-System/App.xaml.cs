@@ -22,7 +22,10 @@ namespace U_System
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            Debug.Log.LogMessage("Start Application", this.GetType());
             Core.Core.Inicialize(this);
+            Debug.Log.LogMessage("Core Load", this.GetType());
+
         }
     }
 }

@@ -36,10 +36,12 @@ namespace U_System.Core.Theme
         public static ThemeColores[] Themes { get; set; }
         public static void Inicialize()
         {
+            Debug.Log.LogMessage("Initializing", typeof(ThemeSystem));
             ThemeResourceDictionary = new ResourceDictionary();
             ThemeResourceDictionary.Source = new Uri("/U-System.Core;component/Styles/Colores.xaml", UriKind.Relative);
             Application.Current.Resources.MergedDictionaries.Add(ThemeResourceDictionary);
             //_THEME = DarkTheme();
+            Debug.Log.LogMessage("Loading Theme", typeof(ThemeSystem));
             LoadTheme();
         }
 
@@ -60,14 +62,20 @@ namespace U_System.Core.Theme
         internal static void LoadTheme()
         {
             if (!File.Exists(ThemeFile))
+            {
+                Debug.Log.LogMessage(string.Format("File Not Found .: {0}", ThemeFile), typeof(ThemeSystem), Debug.LogMessageType.Warning);
+                Debug.Log.LogMessage("Trying load default theme", typeof(ThemeSystem));
                 LoadDefault();
+            }
             else
             {
                 try
                 {
+                    Debug.Log.LogMessage("Trying load themes", typeof(ThemeSystem));
                     JsonSerializerOptions serializerOptions = new JsonSerializerOptions() { WriteIndented = true };
                     string json = File.ReadAllText(ThemeFile);
                     Themes = JsonSerializer.Deserialize<ThemeColores[]>(json, serializerOptions);
+                    Debug.Log.LogMessage("Load themes", typeof(ThemeSystem));
                     ApplyTheme(Themes[Settings.SettingsSystem.Setting.Theme]);
 
                     //Settings.SettingsSystem.Setting.Theme = 0;
@@ -78,6 +86,7 @@ namespace U_System.Core.Theme
         }
         internal static void LoadDefault()
         {
+            
             if (Themes == null)
             {
                 Themes = new ThemeColores[] { 
@@ -91,18 +100,22 @@ namespace U_System.Core.Theme
                             APP_TABCONTROL_ITEM_BACKGROUND = "#FF282828"
 
                         } } };
+                Debug.Log.LogMessage("Load Default Values", typeof(ThemeSystem));
                 Save();
                 ApplyDefaultTheme();
             }
         }
         internal static void Save()
         {
+            Debug.Log.LogMessage("Starting Save", typeof(ThemeSystem));
             JsonSerializerOptions serializerOptions = new JsonSerializerOptions() { WriteIndented = true };
             string json = JsonSerializer.Serialize(Themes, serializerOptions);
             File.WriteAllText(ThemeFile, json);
+            Debug.Log.LogMessage("Theme Save", typeof(ThemeSystem));
         }
         internal static THEME ApplyTheme(ThemeColores themeColores)
         {
+            Debug.Log.LogMessage(string.Format("Starting Applpying Theme:\"{0}\"",themeColores.Name), typeof(ThemeSystem));
             THEME theme = new THEME();
             theme.APP_MAIN_COLOR = (SolidColorBrush)new BrushConverter().ConvertFrom(themeColores.Colores.APP_MAIN_COLOR);
             theme.APP_NAVBAR_BTN_FOREGROUND = (SolidColorBrush)new BrushConverter().ConvertFrom(themeColores.Colores.APP_NAVBAR_BTN_FOREGROUND);
@@ -111,6 +124,7 @@ namespace U_System.Core.Theme
             theme.APP_TABCONTROL_BACKGROUND = (SolidColorBrush)new BrushConverter().ConvertFrom(themeColores.Colores.APP_TABCONTROL_BACKGROUND);
             theme.APP_TABCONTROL_ITEM_BACKGROUND = (SolidColorBrush)new BrushConverter().ConvertFrom(themeColores.Colores.APP_TABCONTROL_ITEM_BACKGROUND);
             _THEME = theme;
+            Debug.Log.LogMessage("Theme apllyed with Success", typeof(ThemeSystem));
             return _THEME;
         }
         internal static void ApplyDefaultTheme() => ApplyTheme(Themes[0]);

@@ -29,6 +29,7 @@
 	
   <ItemGroup>
     <ProjectReference Include="..\U-System.Core\U-System.Core.csproj" />
+    <ProjectReference Include="..\U-System.Debug\U-System.Debug.csproj" />
     <ProjectReference Include="..\U-System.External\U-System.External.csproj" />
   </ItemGroup>
 
