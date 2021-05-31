@@ -378,16 +378,19 @@ namespace U_System.Core.Plugin
                 Debug.Log.LogMessage(string.Format("Plugins: {0}", Plugins.Count), typeof(PluginManager));
                 Debug.Log.LogMessage("Starting loading plugins", typeof(PluginManager));
 
-                Parallel.For(0, Plugins.Count, new ParallelOptions() { MaxDegreeOfParallelism = 1 }, async (i) => {
-                    Debug.Log.LogMessage(string.Format("Plugin Found: {0}", Plugins[i].Name), typeof(PluginManager));
-                    PluginUXs.Add(Plugins[i].PluginUX);
+                Parallel.For(0, Plugins.Count, new ParallelOptions() { MaxDegreeOfParallelism = 1 },
+                    async (i) =>
+                    {
 
-                    //await GetReleases(Plugins[i].ID, true);
-                    //await Update(Plugins[i].ID);
-                    
-                    if (Plugins[i].CurrentPluginRelease.Enable)
-                        Enable(Plugins[i].ID);
-                });
+                        Debug.Log.LogMessage(string.Format("Plugin Found: {0}", Plugins[i].Name), typeof(PluginManager));
+                        PluginUXs.Add(Plugins[i].PluginUX);
+
+                        await GetReleases(Plugins[i].ID, true);
+                        await Update(Plugins[i].ID);
+
+                        if (Plugins[i].CurrentPluginRelease.Enable)
+                            Enable(Plugins[i].ID);
+                    });
                 for (int i = 0; i < Plugins.Count; i++)
                 {
                     
