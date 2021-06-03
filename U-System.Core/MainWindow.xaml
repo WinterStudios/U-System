@@ -114,7 +114,7 @@
                         <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
                             <TextBlock Text="[U-Media.Core.NotificationSystem.Message]" FontSize="8" FontWeight="Normal" Margin="6" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             <Border Width="16" CornerRadius="2" BorderBrush="Gray" BorderThickness="0.5" Margin="4" />
-                            <ProgressBar Width="140" Height="12" IsIndeterminate="True"/>
+                            <ProgressBar Width="140" Height="12" IsIndeterminate="False"/>
                             <Separator/>
                             <TextBlock x:Name="W_TextBlock_APP_VERSION" Text="v20.05.21" FontSize="8" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="12,6"/>
                         </StackPanel>

@@ -25,7 +25,6 @@ namespace U_System
             Debug.Log.LogMessage("Start Application", this.GetType());
             Core.Core.Inicialize(this);
             Debug.Log.LogMessage("Core Load", this.GetType());
-
         }
     }
 }

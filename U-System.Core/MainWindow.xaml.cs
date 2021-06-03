@@ -28,8 +28,8 @@ namespace U_System.Core
 
         public MainWindow()
         {
-            this.TaskbarItemInfo = new System.Windows.Shell.TaskbarItemInfo();
-            this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
+            //this.TaskbarItemInfo = new System.Windows.Shell.TaskbarItemInfo();
+            //this.TaskbarItemInfo.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Indeterminate;
             this.Deactivated += MainWindow_Deactivated;
             this.Activated += MainWindow_Activated;
             Debug.Log.LogMessage("Initialize Window components", typeof(MainWindow));
