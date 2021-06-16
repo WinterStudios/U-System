@@ -8,7 +8,7 @@ namespace U_System.Core
 {
     internal class AppUpdate
     {
-        public static string Version { get; set}
+        public static string Version { get; set; }
         public static void Init()
         {
 
