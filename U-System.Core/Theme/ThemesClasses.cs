@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace U_System.Core.Theme
 {
-    public enum ThemeMode { Light = 0, Dark = 1}
-
     public class ThemeColorPallete
     {
         public string Primary { get; set; }
@@ -22,9 +20,9 @@ namespace U_System.Core.Theme
     }
     public class ThemeColor
     {
-        public ThemeMode ThemeMode { get; set; }
-        public ThemeColorPallete ColorPallete { get; set; }
-        
+        public ThemeColorPallete ColorPalleteLight { get; set; }
+        public ThemeColorPallete ColorPalleteDark { get; set; }
+
     }
     public class WindowColor
     {

@@ -34,6 +34,11 @@ namespace U_System.Core.Theme
         }
 
         public static ThemeColores[] Themes { get; set; }
+
+
+        public static Theme.ThemeColor[] __Themes { get; set; }
+
+
         public static void Inicialize()
         {
             Debug.Log.LogMessage("Initializing", typeof(ThemeSystem));
@@ -129,5 +134,10 @@ namespace U_System.Core.Theme
         }
         internal static void ApplyDefaultTheme() => ApplyTheme(Themes[0]);
 
+
+        internal static void SetDefault()
+        {
+
+        }
     }
 }
