@@ -8,9 +8,34 @@ namespace U_System.UX
 {
     public class ThemeSystem
     {
+        public static List<Theme> Themes { get; set; }
         public static void Initialize()
         {
 
+        }
+
+        public static Theme[] LoadDefaultThemes()
+        {
+            Theme[] themes = new Theme[]
+            {
+                new Theme()
+                {
+                    Name = "Light",
+                    ThemeMode = ThemeMode.Light,
+                    ThemeColorPallete = new ThemeColorPallete()
+                    {
+
+                    }
+                },
+                new Theme()
+                {
+
+                }
+            };
+
+
+
+            return null;
         }
     }
 }
