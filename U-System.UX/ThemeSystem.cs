@@ -11,7 +11,7 @@ namespace U_System.UX
         public static List<Theme> Themes { get; set; }
         public static void Initialize()
         {
-
+            Themes.AddRange(LoadDefaultThemes());
         }
 
         public static Theme[] LoadDefaultThemes()

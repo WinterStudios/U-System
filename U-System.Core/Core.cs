@@ -12,6 +12,7 @@ using U_System.Core.Settings;
 using U_System.Core.Theme;
 using U_System.Core.UX;
 using U_System.Debug;
+using U_System.UX;
 
 namespace U_System.Core
 {
@@ -23,7 +24,8 @@ namespace U_System.Core
             Debug.Log.LogMessage("", typeof(Core));
             Application = application;
             SettingsSystem.Initialize();
-            ThemeSystem.Inicialize();
+            Theme.ThemeSystem.Inicialize();
+            U_System.UX.ThemeSystem.Initialize();
 
             Debug.Log.LogMessage("Starting creating the main Window", typeof(Core));
             MainWindow window = new MainWindow();

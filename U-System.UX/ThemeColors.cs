@@ -23,7 +23,7 @@ namespace U_System.UX
         {
             ThemeColorPallete light = new ThemeColorPallete()
             {
-                BackgroundColor = "#EEEEEE"
+                BackgroundColor = "#FAFAFA"
             };
             return light;
         }
