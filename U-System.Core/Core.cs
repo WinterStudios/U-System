@@ -9,7 +9,6 @@ using U_System;
 using U_System.Core.Extensions;
 using U_System.Core.Plugin;
 using U_System.Core.Settings;
-using U_System.Core.Theme;
 using U_System.Core.UX;
 using U_System.Debug;
 using U_System.UX;
@@ -24,13 +23,13 @@ namespace U_System.Core
             Debug.Log.LogMessage("", typeof(Core));
             Application = application;
             SettingsSystem.Initialize();
-            Theme.ThemeSystem.Inicialize();
+            //Theme.ThemeSystem.Inicialize();
             U_System.UX.ThemeSystem.Initialize();
 
             Debug.Log.LogMessage("Starting creating the main Window", typeof(Core));
             MainWindow window = new MainWindow();
             Debug.Log.LogMessage("Window is ready", typeof(Core));
-            window.Resources.MergedDictionaries.Add(Theme.ThemeSystem.ThemeResourceDictionary);
+            window.Resources.MergedDictionaries.Add(U_System.UX.ThemeSystem.ThemeResourceDictionary);
             Plugin.PluginManager.Inicialize();
             Debug.Log.LogMessage("Show Main Window", typeof(Core));
             window.Show();

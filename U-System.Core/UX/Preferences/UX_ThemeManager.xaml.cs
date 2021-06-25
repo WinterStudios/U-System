@@ -23,7 +23,14 @@ namespace U_System.Core.UX.Preferences
         public UX_ThemeManager()
         {
             InitializeComponent();
-            SolidColorBrush brush = (SolidColorBrush)Application.Current.Resources[""];
+            UC_ComboBox_Theme.ItemsSource = U_System.UX.ThemeSystem.Themes;
+            UC_ComboBox_Theme.SelectedItem = U_System.UX.ThemeSystem.CurrentTheme;
+            UC_ComboBox_Theme.SelectionChanged += UC_ComboBox_Theme_SelectionChanged;
+        }
+
+        private void UC_ComboBox_Theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            U_System.UX.ThemeSystem.ApplyTheme((U_System.UX.Theme)UC_ComboBox_Theme.SelectedItem);
         }
     }
 }

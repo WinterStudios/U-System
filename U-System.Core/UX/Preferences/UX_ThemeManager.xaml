@@ -8,6 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
    
     <Grid>
+        <ComboBox x:Name="UC_ComboBox_Theme" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="130" DisplayMemberPath="Name"/>
         <Border HorizontalAlignment="Center" Width="100" Height="30" BorderThickness="1" Background="{DynamicResource APP.MAINCOLOR}" BorderBrush="Black" />
     </Grid>
 </UserControl>

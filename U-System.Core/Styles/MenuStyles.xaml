@@ -3,12 +3,13 @@
                     xmlns:local="clr-namespace:U_System.Core.Styles">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/U-System.Core;component/Styles/Colores.xaml" />
+        <ResourceDictionary Source="/U-System.UX;component/ThemeResource.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="MenuStyle" TargetType="{x:Type Menu}">
         <Setter Property="Height" Value="28"/>
-        <Setter Property="Background" Value="{DynamicResource APP.MAINCOLOR}"/>
-        <Setter Property="Foreground" Value="#ececec"/>
+        <Setter Property="Background" Value="{DynamicResource Theme.Surface}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Theme.Primary}"/>
     </Style>
 
     <SolidColorBrush x:Key="MenuItem.Highlight" Color="#5000d9ff"/>
@@ -19,7 +20,7 @@
             <Grid>
                 <ContentPresenter x:Name="content" Margin="8,3,8,3" ContentSource="Header" RecognizesAccessKey="True" VerticalAlignment="Center" />
                 <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
-                    <Border x:Name="SubmenuBorder" SnapsToDevicePixels="True" BorderThickness="0" Background="{DynamicResource APP.MAINCOLOR}">
+                    <Border x:Name="SubmenuBorder" SnapsToDevicePixels="True" BorderThickness="0" Background="{DynamicResource Theme.Surface}">
                         <ScrollViewer CanContentScroll="True" Style="{DynamicResource MenuScrollViewer}">
                             <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                         </ScrollViewer>
@@ -74,7 +75,7 @@
 
     <!-- SubmenuItem -->
     <ControlTemplate x:Key="{x:Static MenuItem.SubmenuItemTemplateKey}" TargetType="{x:Type MenuItem}">
-        <Border x:Name="Border" BorderThickness="0" Height="32" Padding="24,0,12,0" Background="{DynamicResource APP.MAINCOLOR}">
+        <Border x:Name="Border" BorderThickness="0" Height="32" Padding="24,0,12,0" Background="{DynamicResource Theme.Surface}">
             <Grid VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
@@ -82,7 +83,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
                     <ColumnDefinition Width="13" />
                 </Grid.ColumnDefinitions>
-                <ContentPresenter x:Name="Icon" Margin="0,0,12,0" Width="24" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True" VerticalAlignment="Center" ContentSource="Icon"/>
+                <Image x:Name="Icon" Margin="0,0,12,0" Width="24" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Unspecified" SnapsToDevicePixels="True" VerticalAlignment="Center" Source="{TemplateBinding Icon}"/>
                 <Border x:Name="Check" Width="13" Height="13" Visibility="Collapsed" Margin="6,0,6,0" BorderThickness="1">
                     <Path x:Name="CheckMark" Width="7" Height="7" Visibility="Hidden" SnapsToDevicePixels="False" StrokeThickness="2" Data="M 0 0 L 7 7 M 0 7 L 7 0">
                         <Path.Stroke>
@@ -125,7 +126,7 @@
 
     <!--SubmenuItemHeader-->
     <ControlTemplate x:Key="{x:Static MenuItem.SubmenuHeaderTemplateKey}" TargetType="{x:Type MenuItem}">
-        <Border x:Name="Border" BorderThickness="0" Padding="12,0,12,0" Background="{DynamicResource APP.MAINCOLOR}"  Height="32">
+        <Border x:Name="Border" BorderThickness="0" Padding="12,0,12,0" Background="{DynamicResource Theme.Surface}"  Height="32">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
@@ -142,7 +143,7 @@
                     </Path.Fill>
                 </Path>
                 <Popup x:Name="Popup" Placement="Right" HorizontalOffset="11" VerticalOffset="-6" IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
-                    <Border x:Name="SubmenuBorder" Padding="0,6,0,6" SnapsToDevicePixels="True" Background="{DynamicResource APP.MAINCOLOR}" BorderThickness="0">
+                    <Border x:Name="SubmenuBorder" Padding="0,6,0,6" SnapsToDevicePixels="True" Background="{DynamicResource Theme.Surface}" BorderThickness="0">
                         <Border.BorderBrush>
                             <SolidColorBrush Color="{DynamicResource BorderMediumColor}" />
                         </Border.BorderBrush>

@@ -20,6 +20,7 @@
     </ProjectReference>
     <ProjectReference Include="..\U-System.UX\U-System.UX.csproj">
       <Private>true</Private>
+      <PrivateAssets>True</PrivateAssets>
     </ProjectReference>
   </ItemGroup>
 
