@@ -15,17 +15,8 @@ namespace U_System.UX
         public string SecundaryVariantColor { get; set; }
 
         public string SurfaceColor { get; set; }
+        public string SurfaceHoverColor { get; set; }
         public string BackgroundColor { get; set; }
         public string ErrorColor { get; set; }
-
-
-        internal ThemeColorPallete GetDefaultLightTheme()
-        {
-            ThemeColorPallete light = new ThemeColorPallete()
-            {
-                BackgroundColor = "#FAFAFA"
-            };
-            return light;
-        }
     }
 }

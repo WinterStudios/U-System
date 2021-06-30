@@ -23,7 +23,7 @@ namespace U_System.Core.UX.Preferences
         public UX_ThemeManager()
         {
             InitializeComponent();
-            UC_ComboBox_Theme.ItemsSource = U_System.UX.ThemeSystem.Themes;
+            UC_ComboBox_Theme.ItemsSource = U_System.UX.ThemeSystem.Themes.ToArray();
             UC_ComboBox_Theme.SelectedItem = U_System.UX.ThemeSystem.CurrentTheme;
             UC_ComboBox_Theme.SelectionChanged += UC_ComboBox_Theme_SelectionChanged;
         }

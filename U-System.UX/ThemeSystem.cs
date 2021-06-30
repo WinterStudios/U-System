@@ -24,7 +24,7 @@ namespace U_System.UX
             ThemeResourceDictionary = new ResourceDictionary();
             ThemeResourceDictionary.Source = new Uri("/U-System.UX;component/ThemeResource.xaml", UriKind.Relative);
             Application.Current.Resources.MergedDictionaries.Add(ThemeResourceDictionary);
-            ApplyTheme(Themes[0]);
+            CurrentTheme = Themes[0];
         }
 
         public static Theme[] LoadDefaultThemes()
@@ -41,7 +41,8 @@ namespace U_System.UX
                         PrimaryVariantColor = "#212121",
 
                         BackgroundColor = "#FAFAFA",
-                        SurfaceColor = "#EAEAEA"
+                        SurfaceColor = "#EAEAEA",
+                        SurfaceHoverColor = "#DEDEDE"
                     }
                 },
                 new Theme()
@@ -54,8 +55,8 @@ namespace U_System.UX
                         PrimaryVariantColor = "#DEDEDE",
 
                         BackgroundColor = "#050505",
-                        SurfaceColor = "#212121"
-                        
+                        SurfaceColor = "#212121",
+                        SurfaceHoverColor = "#323232"
                     }
                 }
             };
@@ -72,6 +73,15 @@ namespace U_System.UX
 
             ThemeResourceDictionary["Theme.Background"] = (SolidColorBrush)new BrushConverter().ConvertFrom(theme.ThemeColorPallete.BackgroundColor);
             ThemeResourceDictionary["Theme.Surface"] = (SolidColorBrush)new BrushConverter().ConvertFrom(theme.ThemeColorPallete.SurfaceColor);
+
+
+            ThemeResourceDictionary["Theme.PrimaryColor"] = (Color)ColorConverter.ConvertFromString(theme.ThemeColorPallete.PrimaryColor);
+            ThemeResourceDictionary["Theme.PrimaryVariantColor"] = (Color)ColorConverter.ConvertFromString(theme.ThemeColorPallete.PrimaryVariantColor);
+
+            ThemeResourceDictionary["Theme.BackgroundColor"] = (Color)ColorConverter.ConvertFromString(theme.ThemeColorPallete.BackgroundColor);
+            ThemeResourceDictionary["Theme.SurfaceColor"] = (Color)ColorConverter.ConvertFromString(theme.ThemeColorPallete.SurfaceColor);
+            ThemeResourceDictionary["Theme.SurfaceHoverColor"] = (Color)ColorConverter.ConvertFromString(theme.ThemeColorPallete.SurfaceHoverColor);
+
             return theme;
         }
     }

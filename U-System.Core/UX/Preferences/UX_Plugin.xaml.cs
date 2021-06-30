@@ -71,7 +71,12 @@ namespace U_System.Core.UX.Preferences
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            PluginUX pluginUX = (PluginUX)((ComboBox)sender).DataContext;
+            if (pluginUX.Plugin.CurrentPluginRelease != null && pluginUX.Plugin.CurrentPluginRelease.IsInstalled)
+                PluginManager.Uninstall(pluginUX.PluginID);
+            pluginUX.CurrentPluginRelease = pluginUX.Releases[pluginUX.ReleaseIndex];
+            pluginUX.Plugin.CurrentPluginRelease = pluginUX.CurrentPluginRelease;
+            pluginUX.Plugin.CurrentReleaseID = pluginUX.ReleaseIndex;
         }
     }
 }

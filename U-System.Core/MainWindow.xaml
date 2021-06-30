@@ -87,7 +87,7 @@
                         <MenuItem Header="Sobre" Icon="{DynamicResource ICON.About}"/>
                     </MenuItem>
                 </Menu>
-                <TextBlock Grid.Column="2" Text="U-System" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="2" Foreground="{DynamicResource Theme.PrimaryVariant}" Text="U-System" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <StackPanel Grid.Column="3" Orientation="Horizontal">
                     <Button Style="{DynamicResource Styles.Button.Core.Minimize}" shell:WindowChrome.IsHitTestVisibleInChrome="True" Click="App_Navbar_Button_Click" Tag="__APP_NAVBAR_BTN_MIN" />
                     <Button Style="{DynamicResource Styles.Button.Core.Maximize}" shell:WindowChrome.IsHitTestVisibleInChrome="True" Click="App_Navbar_Button_Click" Tag="__APP_NAVBAR_BTN_MAX" />

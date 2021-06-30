@@ -1,10 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:U_System.Core.Styles.Buttons">
+                    xmlns:local="clr-namespace:U_System.Core.Styles.Buttons"
+                    xmlns:resource="clr-namespace:U_System.Resources;assembly=U-System.Resources"
+                    >
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/U-System.Core;component/Styles/Colores.xaml"/>
+        <ResourceDictionary Source="/U-System.UX;component/ThemeResource.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-
+    
 
     <Style x:Key="Styles.Button.Core.Close" TargetType="Button">
         <Setter Property="Height" Value="28"/>
@@ -13,15 +16,26 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border x:Name="mainBorder" Background="{DynamicResource APP.MAINCOLOR}" Padding="9">
+                    <Border x:Name="mainBorder" Background="{DynamicResource Theme.Surface}" Padding="9">
                         <Viewbox RenderOptions.EdgeMode="Unspecified" RenderOptions.BitmapScalingMode="NearestNeighbor">
-                            <Path Fill="{DynamicResource APP.NAVBAR.BTN.FOREGROUND}" Data="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717    L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859    c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287    l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285    L284.286,256.002z"/>
+                            <Path Fill="{DynamicResource Theme.Primary}" Data="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717    L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859    c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287    l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285    L284.286,256.002z"/>
                         </Viewbox>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH.RED}"/>
-                        </Trigger>
+                        <EventTrigger RoutedEvent="Border.MouseEnter" SourceName="mainBorder">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.2" To="#FFFF0000" Storyboard.TargetName="mainBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Border.MouseLeave" SourceName="mainBorder">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.2" To="{StaticResource Theme.SurfaceColor}" Storyboard.TargetName="mainBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -35,15 +49,28 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border x:Name="mainBorder" Background="{DynamicResource APP.MAINCOLOR}" SnapsToDevicePixels="True" Padding="9">
+                    <Border x:Name="mainBorder" Background="{StaticResource Theme.Surface}" SnapsToDevicePixels="True" Padding="9">
                         <Viewbox x:Name="viewBox" Width="10" Height="10" Stretch="Uniform" SnapsToDevicePixels="True">
-                            <Path x:Name="path" Fill="{DynamicResource APP.NAVBAR.BTN.FOREGROUND}" Data="M 0 0 L 128 0 L 128 128 L 0 128 L 0 120 L 120 120 L 120 8 L 8 8 L 8 120 L 0 120 Z" />
+                            <Path x:Name="path" Fill="{DynamicResource Theme.Primary}" Data="M 0 0 L 128 0 L 128 128 L 0 128 L 0 120 L 120 120 L 120 8 L 8 8 L 8 120 L 0 120 Z" />
                         </Viewbox>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH}"/>
-                        </Trigger>
+                        <EventTrigger RoutedEvent="Border.MouseEnter" SourceName="mainBorder">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.2" To="#40808080" Storyboard.TargetName="mainBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Border.MouseLeave" SourceName="mainBorder">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.2" To="Transparent" Storyboard.TargetName="mainBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        
+                        
                         <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
                             <Setter Property="Data" TargetName="path" Value="M 25.6 0 L 128 0 L 128 102.4 L 102.4 102.4 L 102.4 96 L 121.6 96 L 121.6 6.4 L 32 6.4 L 32 25.6 L 102.4 25.6 L 102.4 128 L 0 128 L 0 25.6 L 6.4 25.6 L 6.4 121.6 L 96 121.6 L 96 32 L 6.4 32 L 6.4 25.6 L 25.6 25.6 Z"/>
                         </DataTrigger>
@@ -63,15 +90,27 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border x:Name="mainBorder" Background="{DynamicResource APP.MAINCOLOR}" Padding="9">
+                    <Border x:Name="mainBorder" Background="{DynamicResource Theme.Surface}" Padding="9">
                         <Viewbox x:Name="viewBox" Stretch="Fill" Height="1" Width="10" SnapsToDevicePixels="True" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Path x:Name="path" Fill="{DynamicResource APP.NAVBAR.BTN.FOREGROUND}" Data="M 0 0 L 32 0 L 32 1 L 0 1 Z"/>
+                            <Path x:Name="path" Fill="{DynamicResource Theme.Primary}" Data="M 0 0 L 32 0 L 32 1 L 0 1 Z"/>
                         </Viewbox>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="mainBorder" Value="{DynamicResource APP.NAVBAR.BTN.FOREGROUND.HIGHLIGH}"/>
-                        </Trigger>
+                        <EventTrigger RoutedEvent="Border.MouseEnter" SourceName="mainBorder">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.2" To="#40808080" Storyboard.TargetName="mainBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Border.MouseLeave" SourceName="mainBorder">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.2" To="Transparent" Storyboard.TargetName="mainBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

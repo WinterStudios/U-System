@@ -157,8 +157,12 @@ namespace U_System.Core.Plugin
 
             string pluginLocation = plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name));
 
+            //byte[] pluginFileBytes = File.ReadAllBytes(plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name)));
+            FileStream fileStream = File.Open(plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name)), FileMode.Open);
 
-            Assembly assembly = pluginContext.LoadFromAssemblyPath(plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name)));
+            //stream.Write(pluginFileBytes, 0, pluginFileBytes.Length);
+
+            Assembly assembly = pluginContext.LoadFromStream(fileStream); // pluginContext.LoadFromAssemblyPath(plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name)));
             //AssemblyName assemblyName = new AssemblyName(plugin.Name);
             Internal.PluginDependencies pluginDependencies = JsonSerializer.Deserialize<Internal.PluginDependencies>(File.ReadAllText(plugin.CurrentPluginRelease.PluginFilesLocation.FirstOrDefault(x => x.EndsWith(".json"))));
             

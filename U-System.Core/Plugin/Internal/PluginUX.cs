@@ -19,6 +19,8 @@ namespace U_System.Core.Plugin.Internal
         public bool IsWorking { get => isWorking; set { isWorking = value; NotifyPropertyChanged(); } }
 
 
+        internal Plugin Plugin { get => PluginManager.Plugins[this.PluginID]; }
+
         private int id;
         private string name;
         private string description;
@@ -26,7 +28,7 @@ namespace U_System.Core.Plugin.Internal
         private bool isWorking;
         private PluginRelease[] pluginReleases;
         private PluginRelease currentPluginRelease;
-
+        private Plugin plugin;
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {

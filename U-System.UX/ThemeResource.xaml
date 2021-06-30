@@ -4,7 +4,17 @@
 
     <SolidColorBrush x:Key="Theme.Primary"/>
     <SolidColorBrush x:Key="Theme.PrimaryVariant"/>
-    
+
     <SolidColorBrush x:Key="Theme.Background"/>
     <SolidColorBrush x:Key="Theme.Surface"/>
+    <SolidColorBrush x:Key="Theme.Error"/>
+    
+    
+    <Color x:Key="Theme.PrimaryColor"/>
+    <Color x:Key="Theme.PrimaryVariantColor"/>
+    
+    <Color x:Key="Theme.BackgroundColor"/>
+    <Color x:Key="Theme.SurfaceColor"/>
+    <Color x:Key="Theme.SurfaceHoverColor"/>
+    <Color x:Key="Theme.ErrorColor"/>
 </ResourceDictionary>
