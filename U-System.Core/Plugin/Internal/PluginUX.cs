@@ -17,6 +17,7 @@ namespace U_System.Core.Plugin.Internal
         public PluginRelease[] Releases { get => pluginReleases; set { pluginReleases = value; NotifyPropertyChanged(); } }
         public PluginRelease CurrentPluginRelease { get => currentPluginRelease; set { currentPluginRelease = value; NotifyPropertyChanged(); } }
         public bool IsWorking { get => isWorking; set { isWorking = value; NotifyPropertyChanged(); } }
+        public bool CheckUpdate { get => checkForUpdate; set { checkForUpdate = value; NotifyPropertyChanged(); } }
 
 
         internal Plugin Plugin { get => PluginManager.Plugins[this.PluginID]; }
@@ -26,6 +27,7 @@ namespace U_System.Core.Plugin.Internal
         private string description;
         private int releaseIndex;
         private bool isWorking;
+        private bool checkForUpdate;
         private PluginRelease[] pluginReleases;
         private PluginRelease currentPluginRelease;
         private Plugin plugin;
@@ -34,5 +36,7 @@ namespace U_System.Core.Plugin.Internal
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+     
     }
 }

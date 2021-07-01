@@ -13,7 +13,7 @@ namespace U_System.External.Plugin
         public string Path { get; set; }
         public string TabIconLocations { get; set; }
         public string Shortcut { get; set; }
-        public string Icon { get; set; }
+        public object Icon { get; set; }
         public PluginTypeBehavior PluginTypeBehavior { get; set; }
         
     }

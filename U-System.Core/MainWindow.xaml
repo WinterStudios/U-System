@@ -38,10 +38,10 @@
                 <Image Margin="12,6,12,6" Source="/U-System;component/dimensions.ico"/>
                 <Menu x:Name="W_MainMenuBar" Grid.Column="1" shell:WindowChrome.IsHitTestVisibleInChrome="True" Style="{DynamicResource MenuStyle}">
                     <MenuItem Header="File">
-                        <MenuItem Header="Preferences">
+                        <MenuItem Header="Preferences" Icon="{DynamicResource ICON.Settings}">
                             <MenuItem Header="Settings"/>
                             <MenuItem Header="Plugins Manager" Tag="PLUGIN_MANAGER" Click="MenuItem_Click"/>
-                            <MenuItem Header="Color Theme" Tag="THEME_MANAGER" Click="MenuItem_Click"/>
+                            <MenuItem Header="Color Theme" Tag="THEME_MANAGER" Click="MenuItem_Click" Icon="{DynamicResource ICON.ColorPalette}"/>
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Ajuda">

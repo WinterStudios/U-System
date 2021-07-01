@@ -24,7 +24,7 @@ namespace U_System.UX
             ThemeResourceDictionary = new ResourceDictionary();
             ThemeResourceDictionary.Source = new Uri("/U-System.UX;component/ThemeResource.xaml", UriKind.Relative);
             Application.Current.Resources.MergedDictionaries.Add(ThemeResourceDictionary);
-            CurrentTheme = Themes[0];
+            CurrentTheme = Themes[1];
         }
 
         public static Theme[] LoadDefaultThemes()

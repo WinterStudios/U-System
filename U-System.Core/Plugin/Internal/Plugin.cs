@@ -21,6 +21,7 @@ namespace U_System.Core.Plugin.Internal
         public string GitHubRepositoryURL { get; set; }
         public int CurrentReleaseID { get => currentPluginReleaseID; set { currentPluginReleaseID = value; PluginUX.ReleaseIndex = value; } } 
         public PluginRelease CurrentPluginRelease { get => currentPluginRelease; set { currentPluginRelease = value; PluginUX.CurrentPluginRelease = value; } }
+        public bool CheckUpdates { get => checkUpdates; set { checkUpdates = value; PluginUX.CheckUpdate = value; } }
         public bool AutomaticUpdate { get;  set; }
         public bool AllowPreview { get; set; }
         internal PluginRelease[] PluginReleases { get => pluginReleases; set { pluginReleases = value; PluginUX.Releases = value; } }
@@ -45,6 +46,7 @@ namespace U_System.Core.Plugin.Internal
         private TabItem[] tabItems;
         private MenuItem[] menuItems;
         private bool automaticUpdate;
+        private bool checkUpdates;
         private int trie;
 
 

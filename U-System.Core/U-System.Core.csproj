@@ -1,27 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
     <RootNamespace>U_System.Core</RootNamespace>
     <UseWPF>true</UseWPF>
     <FileVersion>21.5.14.0</FileVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>none</DebugType>
-    <DebugSymbols>false</DebugSymbols>
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\U-System.Debug\U-System.Debug.csproj" />
     <ProjectReference Include="..\U-System.External\U-System.External.csproj" />
-    <ProjectReference Include="..\U-System.Resources\U-System.Resources.csproj">
-      <Private>true</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\U-System.UX\U-System.UX.csproj">
-      <Private>true</Private>
-      <PrivateAssets>True</PrivateAssets>
-    </ProjectReference>
+	<ProjectReference Include="..\U-System.Resources\U-System.Resources.csproj"/>
+    <ProjectReference Include="..\U-System.UX\U-System.UX.csproj"/>
   </ItemGroup>
 
   <ItemGroup>

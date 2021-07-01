@@ -13,7 +13,7 @@ namespace U_System.Core.UX
     public class MenuSystem
     {
         public static Menu MainNavigation { get; set; }
-        public static MenuItem Add(string path, string? shortcut = null, string? icon = null)
+        public static MenuItem Add(string path, string? shortcut = null, object? icon = null)
         {
             string[] hierarchy = path.Split('>');
             int level = 0;
@@ -73,21 +73,21 @@ namespace U_System.Core.UX
 
             return parent;
         }
-        private static MenuItem Create(string header, string? shortcut = null, string? icon = null)
+        private static MenuItem Create(string header, string? shortcut = null, object? icon = null)
         {
             MenuItem item = new MenuItem();
             item.Header = header;
             if (!string.IsNullOrEmpty(shortcut))
                 item.InputGestureText = shortcut;
-            if (!string.IsNullOrEmpty(icon))
+            if (icon != null)
             {
-                Image image = new Image();
-                image.Source = new BitmapImage(new Uri(icon));
-                image.Stretch = System.Windows.Media.Stretch.Uniform;
+                //Image image = new Image();
+                //image.Source = new BitmapImage(new Uri(icon));
+                //image.Stretch = System.Windows.Media.Stretch.Uniform;
                 //RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
                 //image.SnapsToDevicePixels = true;
                 //RenderOptions.SetEdgeMode(image, EdgeMode.Unspecified);
-                item.Icon = image;
+                item.Icon = icon;
             }
             return item;
         }

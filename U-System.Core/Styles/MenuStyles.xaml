@@ -92,7 +92,7 @@
                     </Path>
                 </Border>
                 <ContentPresenter x:Name="HeaderHost" Grid.Column="1" ContentSource="Header" RecognizesAccessKey="True" VerticalAlignment="Center" />
-                <TextBlock x:Name="InputGestureText" Grid.Column="2" Text="{TemplateBinding InputGestureText}" Margin="20,2,0,2" VerticalAlignment="Center" DockPanel.Dock="Right" Foreground="White" HorizontalAlignment="Right" />
+                <TextBlock x:Name="InputGestureText" Grid.Column="2" Text="{TemplateBinding InputGestureText}" Margin="20,2,0,2" VerticalAlignment="Center" DockPanel.Dock="Right" Foreground="{DynamicResource Theme.PrimaryVariant}" HorizontalAlignment="Right" />
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
@@ -134,7 +134,7 @@
                     <ColumnDefinition MinWidth="84"  Width="Auto" SharedSizeGroup="Shortcut" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <ContentPresenter x:Name="Icon" Margin="6,0,6,0" Width="28" VerticalAlignment="Center" ContentSource="Icon" />
+                <Image x:Name="Icon" Margin="0,0,12,0" Width="24" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Unspecified" SnapsToDevicePixels="True" VerticalAlignment="Center" Source="{TemplateBinding Icon}"/>
                 <ContentPresenter x:Name="HeaderHost" Grid.Column="1" ContentSource="Header" RecognizesAccessKey="True" VerticalAlignment="Center" />
                 <TextBlock x:Name="InputGestureText" Grid.Column="2" Text="{TemplateBinding InputGestureText}" Margin="5,2,2,2" DockPanel.Dock="Right" />
                 <Path Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 0 7 L 4 3.5 Z" Margin="12,0">

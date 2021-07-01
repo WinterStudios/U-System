@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U-System", "U-System\U-System.csproj", "{5F2E1EA5-7624-4571-9F78-7412FC93E333}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E582CA9A-2448-467A-BEA8-917970103AEA} = {E582CA9A-2448-467A-BEA8-917970103AEA}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U-System.API", "U-System.API\U-System.API.csproj", "{E17D4663-809F-4356-8FE5-48E4BA43C8FF}"
 EndProject
@@ -21,7 +24,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U-System.UX", "U-System.UX\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "U-System.Debug", "U-System.Debug\U-System.Debug.csproj", "{6DC1E9D7-BE1F-4B93-9111-CC003077BC74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdater", "AutoUpdater\AutoUpdater.csproj", "{EBB741ED-B5A8-44EE-B94D-6B4F4581F6B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoUpdater", "AutoUpdater\AutoUpdater.csproj", "{EBB741ED-B5A8-44EE-B94D-6B4F4581F6B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
