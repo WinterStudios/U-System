@@ -363,7 +363,7 @@ namespace U_System.Core.Plugin
 
             return id;
         }
-        private static void Save()
+        internal static void Save()
         {
             JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true };
             File.WriteAllText(Storage.SETTINGS.PLUGINS_SETTINGS, JsonSerializer.Serialize(Plugins, options));
@@ -388,10 +388,18 @@ namespace U_System.Core.Plugin
 
                         Debug.Log.LogMessage(string.Format("Plugin Found: {0}", Plugins[i].Name), typeof(PluginManager));
                         PluginUXs.Add(Plugins[i].PluginUX);
+                        Internal.Plugin plugin = Plugins[i];
 
-                        await GetReleases(Plugins[i].ID, true);
-                        await Update(Plugins[i].ID);
-
+                        if(plugin.CheckUpdates)
+                        {
+                            await GetReleases(Plugins[i].ID, true);
+                            await Update(Plugins[i].ID);
+                        }
+                        else
+                        {
+                            plugin.PluginUX.Releases = new PluginRelease[] { plugin.CurrentPluginRelease };
+                        }
+                        
                         if (Plugins[i].CurrentPluginRelease.Enable)
                             Enable(Plugins[i].ID);
                     });

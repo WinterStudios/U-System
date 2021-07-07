@@ -16,12 +16,12 @@ namespace U_System.Core.Plugin.Internal
         public int ID { get => id; set { id = value; if (PluginUX == null) PluginUX = new PluginUX(); PluginUX.PluginID = value;} }
         public string Name { get => name; set { name = value; PluginUX.Name = value; } }
         public string Description { get => description; set { description = value; PluginUX.Description = value; } }
-        internal PluginUX PluginUX { get; set; }        
+        internal PluginUX PluginUX { get => pluginUX; set { pluginUX = value; pluginUX.Plugin = this; } }
         public int GitHubRepositoryID { get; set; }
         public string GitHubRepositoryURL { get; set; }
         public int CurrentReleaseID { get => currentPluginReleaseID; set { currentPluginReleaseID = value; PluginUX.ReleaseIndex = value; } } 
         public PluginRelease CurrentPluginRelease { get => currentPluginRelease; set { currentPluginRelease = value; PluginUX.CurrentPluginRelease = value; } }
-        public bool CheckUpdates { get => checkUpdates; set { checkUpdates = value; PluginUX.CheckUpdate = value; } }
+        public bool CheckUpdates { get => checkUpdates; set { checkUpdates = value; } }
         public bool AutomaticUpdate { get;  set; }
         public bool AllowPreview { get; set; }
         internal PluginRelease[] PluginReleases { get => pluginReleases; set { pluginReleases = value; PluginUX.Releases = value; } }
@@ -38,6 +38,7 @@ namespace U_System.Core.Plugin.Internal
         private string description;
         private bool working;
         private Release[] releases;
+        private PluginUX pluginUX;
         private int currentPluginReleaseID;
         private PluginRelease currentPluginRelease;
         private PluginRelease[] pluginReleases;
@@ -48,7 +49,6 @@ namespace U_System.Core.Plugin.Internal
         private bool automaticUpdate;
         private bool checkUpdates;
         private int trie;
-
 
     }
 }

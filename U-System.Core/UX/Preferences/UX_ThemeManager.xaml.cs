@@ -31,6 +31,9 @@ namespace U_System.Core.UX.Preferences
         private void UC_ComboBox_Theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             U_System.UX.ThemeSystem.ApplyTheme((U_System.UX.Theme)UC_ComboBox_Theme.SelectedItem);
+            U_System.Resources.Settings.SettingsSystem.Setting.Theme = UC_ComboBox_Theme.SelectedIndex;
+            U_System.Resources.Settings.SettingsSystem.Save();
+
         }
     }
 }

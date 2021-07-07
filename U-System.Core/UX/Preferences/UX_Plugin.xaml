@@ -42,9 +42,13 @@
                             <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
                                 <TextBlock Text="{Binding Name}" FontSize="14px" FontWeight="Normal"/>
                                 <TextBlock Text="{Binding }" FontSize="12px" FontWeight="Light"/>
+                                <StackPanel Orientation="Vertical">
+                                    <CheckBox x:Name="combobox_CheckForUpdate" Content="Verificar por atualizações" IsChecked="{Binding CheckUpdate, Mode=TwoWay}"/>
+                                    <CheckBox x:Name="combobox_AutoUpdate" Content="Atualizações Automaticas" IsChecked="{x:Null}" />
+                                </StackPanel>
                             </StackPanel>
-                            <TextBlock Text="{Binding PluginID }" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                            <ComboBox Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" ItemsSource="{Binding Releases}" SelectedIndex="{Binding ReleaseIndex}" Style="{DynamicResource PluginComboBox}" SelectionChanged="ComboBox_SelectionChanged">
+      
+                            <ComboBox Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" ItemsSource="{Binding Releases}" SelectedIndex="{Binding ReleaseIndex}" Style="{DynamicResource PluginComboBox}" SelectionChanged="ComboBox_SelectionChanged" SelectedValue="{Binding CurrentPluginRelease}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="{x:Type plugin:PluginRelease}">
                                         <Border>
@@ -84,6 +88,9 @@
                             <Setter Property="IsEnabled" TargetName="btn_Disable" Value="False"/>
                             <Setter Property="IsEnabled" TargetName="btn_Enable" Value="False"/>
                             <Setter Property="IsIndeterminate" TargetName="progressBar" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding CheckUpdate}" Value="False">
+                            <Setter Property="IsEnabled" TargetName="combobox_AutoUpdate" Value="False"/>
                         </DataTrigger>
                     </DataTemplate.Triggers>
                 </DataTemplate>

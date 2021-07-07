@@ -8,7 +8,7 @@ using System.Windows;
 using U_System;
 using U_System.Core.Extensions;
 using U_System.Core.Plugin;
-using U_System.Core.Settings;
+
 using U_System.Core.UX;
 using U_System.Debug;
 using U_System.UX;
@@ -17,12 +17,12 @@ namespace U_System.Core
 {
     public class Core
     {
-        private static Application Application { get; set; }
+        public static Application Application { get; private set; }
         public static void Inicialize(Application application)
         {
             Debug.Log.LogMessage("", typeof(Core));
             Application = application;
-            SettingsSystem.Initialize();
+            U_System.Resources.Settings.SettingsSystem.Initialize();
             //Theme.ThemeSystem.Inicialize();
             U_System.UX.ThemeSystem.Initialize();
 

@@ -6,7 +6,9 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace U_System.Core.Settings
+using U_System;
+
+namespace U_System.Resources.Settings
 {
     public class SettingsSystem
     {

@@ -78,5 +78,10 @@ namespace U_System.Core.UX.Preferences
             pluginUX.Plugin.CurrentPluginRelease = pluginUX.CurrentPluginRelease;
             pluginUX.Plugin.CurrentReleaseID = pluginUX.ReleaseIndex;
         }
+
+        private void combobox_CheckForUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

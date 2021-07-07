@@ -12,4 +12,9 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\U-System.Debug\U-System.Debug.csproj" />
+    <ProjectReference Include="..\U-System.Resources\U-System.Resources.csproj" />
+  </ItemGroup>
+
 </Project>

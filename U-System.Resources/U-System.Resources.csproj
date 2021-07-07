@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <RootNamespace>U_System.Resources</RootNamespace>
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -23,6 +23,10 @@
     <None Remove="Icons\privacy.png" />
     <None Remove="Icons\release-notes.png" />
     <None Remove="Icons\welcome-page.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\U-System.Debug\U-System.Debug.csproj" />
   </ItemGroup>
 
   <ItemGroup>
