@@ -145,14 +145,27 @@ namespace U_System.Core.Plugin
                 string s = (Storage.PLUGINS.PLUGIN_DIRECTORY + args.Name + ".dll").Replace('\\', Path.DirectorySeparatorChar);
                 try
                 {
-                    AssemblyName assemblyName = new AssemblyName(Storage.PLUGINS.PLUGIN_DIRECTORY + args.Name);
+                    string libDepencicieLocation = Storage.PLUGINS.PLUGIN_DIRECTORY + "runtimes\\win\\lib\\netcoreapp3.1\\" + args.Name;
+
+                    if (File.Exists(libDepencicieLocation))
+                    {
+                        var pluginContextResolver = pluginContext.LoadFromAssemblyPath(libDepencicieLocation);
+
+                        return pluginContextResolver;
+                    }
+                    else
+                    {
+                        var pluginContextResolver = pluginContext.LoadFromAssemblyPath(s);
+
+                        return pluginContextResolver;
+                    }
                 }
-                catch { }
+                catch {
+                    return null;
+                }
                 //Assembly.LoadFrom(Storage.PLUGINS.PLUGIN_DIRECTORY);
 
-                var pluginContextResolver = pluginContext.LoadFromAssemblyPath(s);
-
-                return pluginContextResolver;
+                
             };
 
             string pluginLocation = plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name));
