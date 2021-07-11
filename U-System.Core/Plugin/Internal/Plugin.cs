@@ -24,6 +24,10 @@ namespace U_System.Core.Plugin.Internal
         public bool CheckUpdates { get => checkUpdates; set { checkUpdates = value; } }
         public bool AutomaticUpdate { get;  set; }
         public bool AllowPreview { get; set; }
+        public string[] Runtimes { get; set; }
+
+
+
         internal PluginRelease[] PluginReleases { get => pluginReleases; set { pluginReleases = value; PluginUX.Releases = value; } }
         internal Repository GitHubRepository { get; set; }
         internal Release[] Releases { get => releases; set { releases = value; GitHubRepository.Releases = value; } }
@@ -50,5 +54,17 @@ namespace U_System.Core.Plugin.Internal
         private bool checkUpdates;
         private int trie;
 
+        internal void TryLoadRuntime()
+        {
+
+            foreach (var item in Runtimes)
+            {
+                try
+                {
+                    Assembly.LoadFromAssemblyPath(Storage.PLUGINS.PLUGIN_DIRECTORY + item);
+                }
+                catch { }
+            }
+        }
     }
 }

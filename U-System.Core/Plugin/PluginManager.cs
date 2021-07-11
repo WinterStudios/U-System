@@ -109,17 +109,24 @@ namespace U_System.Core.Plugin
 
             ZipArchive zip = ZipFile.OpenRead(pluginPath);
             string name = zip.Entries.First(x => x.Name.EndsWith(".dll")).Name;
+
+            var runtimes = zip.Entries.Where(x => x.FullName.Contains("runtimes") && x.FullName.Contains(".dll")).ToArray();
+            plugin.Runtimes = new string[runtimes.Length];
+            for (int i = 0; i < runtimes.Length; i++)
+            {
+                plugin.Runtimes[i] = runtimes[i].FullName;
+            }
             plugin.CurrentPluginRelease.ReleaseZipFile = pluginPath.Replace("\\", "/");
             plugin.CurrentPluginRelease.AssetID = pluginAsset.ID;
             zip.ExtractToDirectory(Storage.PLUGINS.PLUGIN_DIRECTORY, true);
 
-            string[] files = new string[zip.Entries.Count];
-            for (int i = 0; i < files.Length; i++)
+            var files = zip.Entries.Where(x => x.FullName.Last() != '\\').ToArray();
+            plugin.CurrentPluginRelease.PluginFilesLocation = new string[files.Count()];
+            for (int i = 0; i < plugin.CurrentPluginRelease.PluginFilesLocation.Length; i++)
             {
-                files[i] = Storage.PLUGINS.PLUGIN_DIRECTORY.Replace("\\", "/") + zip.Entries[i].FullName;
+                plugin.CurrentPluginRelease.PluginFilesLocation[i] = files[i].FullName;
             }
 
-            plugin.CurrentPluginRelease.PluginFilesLocation = files;
             plugin.CurrentPluginRelease.IsInstalled = true;
             plugin.CurrentPluginRelease.Enable = true;
             Debug.Log.LogMessage(string.Format("{0} : Plugin Installed", Plugins[pluginID].Name), typeof(PluginManager));
@@ -140,46 +147,56 @@ namespace U_System.Core.Plugin
             };
 
 
-            pluginContext.Resolving += (sender, args) => {
+            pluginContext.Resolving += (sender, args) =>
+            {
 
                 string s = (Storage.PLUGINS.PLUGIN_DIRECTORY + args.Name + ".dll").Replace('\\', Path.DirectorySeparatorChar);
-                try
+                foreach (var item in plugin.CurrentPluginRelease.PluginFilesLocation)
                 {
-                    string libDepencicieLocation = Storage.PLUGINS.PLUGIN_DIRECTORY + "runtimes\\win\\lib\\netcoreapp3.1\\" + args.Name;
-
-                    if (File.Exists(libDepencicieLocation))
+                    try
                     {
-                        var pluginContextResolver = pluginContext.LoadFromAssemblyPath(libDepencicieLocation);
+                        string f = item.Split('/').LastOrDefault();
+                        if (f.Contains(args.Name))
+                        {
+                            string loc = Storage.PLUGINS.PLUGIN_DIRECTORY + item;
+                            return pluginContext.LoadFromAssemblyPath(loc);
 
-                        return pluginContextResolver;
+                        }
+                        
                     }
-                    else
-                    {
-                        var pluginContextResolver = pluginContext.LoadFromAssemblyPath(s);
+                    catch { break; }
+                }
+                return null;
+            };
 
-                        return pluginContextResolver;
-                    }
-                }
-                catch {
-                    return null;
-                }
-                //Assembly.LoadFrom(Storage.PLUGINS.PLUGIN_DIRECTORY);
 
                 
-            };
+
+                //Assembly.LoadFrom(Storage.PLUGINS.PLUGIN_DIRECTORY);  
 
             string pluginLocation = plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name));
 
             //byte[] pluginFileBytes = File.ReadAllBytes(plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name)));
-            FileStream fileStream = File.Open(plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name)), FileMode.Open);
-
+            FileStream fileStream = File.Open(Storage.PLUGINS.PLUGIN_DIRECTORY + plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name)), FileMode.Open);
+            
             //stream.Write(pluginFileBytes, 0, pluginFileBytes.Length);
 
             Assembly assembly = pluginContext.LoadFromStream(fileStream); // pluginContext.LoadFromAssemblyPath(plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name)));
             //AssemblyName assemblyName = new AssemblyName(plugin.Name);
-            Internal.PluginDependencies pluginDependencies = JsonSerializer.Deserialize<Internal.PluginDependencies>(File.ReadAllText(plugin.CurrentPluginRelease.PluginFilesLocation.FirstOrDefault(x => x.EndsWith(".json"))));
             
             plugin.Assembly = pluginContext;
+
+            //foreach (var item in plugin.CurrentPluginRelease.PluginFilesLocation.Where(x => x.EndsWith(".dll") && !x.EndsWith(plugin.Name)))
+            //{
+            //    try
+            //    {
+            //        pluginContext.LoadFromAssemblyPath(Storage.PLUGINS.PLUGIN_DIRECTORY + item);
+            //    }
+            //    catch { }
+            //}
+
+
+
             //var ass = AppDomain.CurrentDomain.GetAssemblies();
             //var app = AssemblyLoadContext.All;
             //temp.Resolving += (sender, args) =>
@@ -213,6 +230,9 @@ namespace U_System.Core.Plugin
             //    }
 
             //};
+
+
+            plugin.TryLoadRuntime();
 
             Debug.Log.LogMessage(string.Format("{0} : Enabling: Getting EntryPoint", Plugins[pluginID].Name), typeof(PluginManager));
             Type IPlugin = assembly.GetTypes().First(x => x.GetInterfaces().Contains(typeof(IPlugin)));
