@@ -1,0 +1,56 @@
+﻿<ResourceDictionary x:Class="U_System.Core.Styles.MainWindowStyle"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:U_System.Core.Styles" 
+                    xmlns:shell="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+                    xmlns:core="clr-namespace:U_System.Core"
+                    >
+
+    <Style x:Key="ModernStyle" TargetType="{x:Type core:MainWindow}">
+        <Setter Property="Icon" Value="pack://application:,,,/dimensions.ico"/>
+        <EventSetter Event="Loaded" Handler="MainWindow_Loaded"/>
+        <Setter Property="shell:WindowChrome.WindowChrome">
+            <Setter.Value>
+                <shell:WindowChrome CaptionHeight="27" UseAeroCaptionButtons="False" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="shell:Window">
+                    <Grid>
+                        <Border Grid.ColumnSpan="2">
+                            <Border Background="White">
+                                <ContentPresenter Grid.Row="0" WindowChrome.IsHitTestVisibleInChrome="True" Content="{TemplateBinding Content}" />
+                            </Border>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--<Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Grid>
+                        <Border Name="titlebar" Height="32" Background="Red" VerticalAlignment="Top">
+                            
+                        </Border>
+                        <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}"   
+                               VerticalAlignment="Top" HorizontalAlignment="Left"   
+                               Margin="36,8,0,0"/>
+                        <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon}"  
+                           VerticalAlignment="Top" HorizontalAlignment="Left"  
+                           Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness}"   
+                           Width="{Binding Path=(shell:WindowChrome.WindowChrome).SmallIconSize.Width}"  
+                           shell:WindowChrome.IsHitTestVisibleInChrome="True"/>
+                        <Border Background="White" Margin="0,0,0,0">
+                            <ContentPresenter Content="{TemplateBinding Content}" />
+                        </Border>
+                    </Grid>
+                    
+                        
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>-->
+    </Style>
+
+</ResourceDictionary>

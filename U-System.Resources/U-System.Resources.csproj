@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>U_System.Resources</RootNamespace>
+	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <FileVersion>21.5.14.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Icons\about.png" />
+    <None Remove="Icons\alert.png" />
+    <None Remove="Icons\check-update.png" />
+    <None Remove="Icons\documention.png" />
+    <None Remove="Icons\home-page.png" />
+    <None Remove="Icons\license.png" />
+    <None Remove="Icons\privacy.png" />
+    <None Remove="Icons\release-notes.png" />
+    <None Remove="Icons\welcome-page.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\U-System.Debug\U-System.Debug.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\about.png" />
+    <Resource Include="Icons\alert.png" />
+    <Resource Include="Icons\check-update.png" />
+    <Resource Include="Icons\documention.png" />
+    <Resource Include="Icons\home-page.png" />
+    <Resource Include="Icons\license.png" />
+    <Resource Include="Icons\privacy.png" />
+    <Resource Include="Icons\release-notes.png" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <RootNamespace>U_System</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+	<FileVersion>21.5.14.1</FileVersion>
+	<ApplicationIcon>dimensions.ico</ApplicationIcon>
+	<Platforms>AnyCPU;x64</Platforms>
+	<Company>Winter Studio, Uni</Company>
+	<RepositoryUrl>https://github.com/WinterStudios/U-System</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="dimensions.ico" />
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <ProjectReference Include="..\U-System.Core\U-System.Core.csproj" />
+    <ProjectReference Include="..\U-System.Debug\U-System.Debug.csproj" />
+    <ProjectReference Include="..\U-System.External\U-System.External.csproj" />
+    <ProjectReference Include="..\U-System.UX\U-System.UX.csproj" />
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <Resource Include="dimensions.ico" />
+  </ItemGroup>
+
+</Project>
