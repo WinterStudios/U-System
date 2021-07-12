@@ -126,12 +126,12 @@
 
     <!--SubmenuItemHeader-->
     <ControlTemplate x:Key="{x:Static MenuItem.SubmenuHeaderTemplateKey}" TargetType="{x:Type MenuItem}">
-        <Border x:Name="Border" BorderThickness="0" Padding="12,0,12,0" Background="{DynamicResource Theme.Surface}"  Height="32">
+        <Border x:Name="Border" BorderThickness="0" Padding="24,0,12,0" Background="{DynamicResource Theme.Surface}"  Height="32">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition MinWidth="84"  Width="Auto" SharedSizeGroup="Shortcut" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Image x:Name="Icon" Margin="0,0,12,0" Width="24" RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Unspecified" SnapsToDevicePixels="True" VerticalAlignment="Center" Source="{TemplateBinding Icon}"/>
