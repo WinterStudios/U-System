@@ -42,7 +42,13 @@ namespace U_System.External.Plugin
         /// <summary>
         /// Inicialize the plugin at load plugin
         /// </summary>
-        void initialization();
+        void Start();
+
+        /// <summary>
+        /// Its Call in async way before Initialization()
+        /// </summary>
+        void Awake();
+
         /// <summary>
         /// Location define by Plugin Engine were can be store data
         /// </summary>

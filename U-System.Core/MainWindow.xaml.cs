@@ -40,6 +40,7 @@ namespace U_System.Core
             //MenuBar.MainMenu = this.W_MainMenuBar;
             Debug.Log.LogMessage("Set: TabSystem", typeof(MainWindow));
             TabsSystem.UX_Control = this.W_TabControl;
+            External.UI.TabSystem.SetTabController(TabsSystem.UX_Control);
             Debug.Log.LogMessage("Set: MenuSystem", typeof(MainWindow));
             MenuSystem.MainNavigation = this.W_MainMenuBar;
         }
