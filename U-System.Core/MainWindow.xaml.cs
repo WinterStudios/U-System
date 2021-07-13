@@ -39,8 +39,9 @@ namespace U_System.Core
             //W_TextBlock_APP_VERSION.Text = SettingsSystem.APP_VERSION;
             //MenuBar.MainMenu = this.W_MainMenuBar;
             Debug.Log.LogMessage("Set: TabSystem", typeof(MainWindow));
-            TabsSystem.Start();
+
             TabsSystem.UX_Control = this.W_TabControl;
+            TabsSystem.Start();
             External.UI.TabSystem.SetTabController(TabsSystem.UX_Control);
             Debug.Log.LogMessage("Set: MenuSystem", typeof(MainWindow));
             MenuSystem.MainNavigation = this.W_MainMenuBar;
@@ -84,7 +85,7 @@ namespace U_System.Core
                 tab.Content = pluginTab;
                 tab.Header = "Plugin Manager";
                 W_TabControl.Items.Add(tab);
-                W_TabControl.SelectedItem = tab;
+                //W_TabControl.SelectedItem = tab;
             }
             if(tag == "THEME_MANAGER")
             {
@@ -94,7 +95,7 @@ namespace U_System.Core
                 tab.Content = color;
                 tab.Header = "Color Theme";
                 W_TabControl.Items.Add(tab);
-                W_TabControl.SelectedItem = tab;
+                //W_TabControl.SelectedItem = tab;
             }
         }
 

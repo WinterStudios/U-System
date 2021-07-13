@@ -69,7 +69,7 @@ namespace U_System.Core.UX
 
         private static void UX_Control_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
 
         internal static void Select(TabItem tabItem)

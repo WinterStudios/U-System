@@ -11,7 +11,9 @@
     </ResourceDictionary.MergedDictionaries>
 
     <extensionTab:Extension_TabControl_Animations x:Key="ConvertTabControlSelectAnimations"/>
-
+    <extensionTab:MultiplyConverter x:Key="ConvertMultiplyBinding"/>
+    
+    
     <Style x:Key="Tab_Control_Item_Close_Btn" TargetType="Button">
         <Setter Property="Background" Value="Red"/>
         <Setter Property="Template">
@@ -100,9 +102,9 @@
                             <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
                             <Setter Property="Margin" TargetName="headerPanel" Value="0,2,2,2"/>
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
+                        <!--<Trigger Property="IsEnabled" Value="false">
                             <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                        </Trigger>
+                        </Trigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -148,7 +150,14 @@
                         <Image Grid.Column="0" Width="16" Height="16" Source="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Tag}"/>
                         <ContentPresenter Grid.Column="1" x:Name="contentPresenter" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
                         <Button Grid.Column="2" Style="{DynamicResource Tab_Control_Item_Close_Btn}" Click="tab_Close_Btn_Click" />
-                        <Border x:Name="selectBorder" Height="4" Grid.ColumnSpan="3" CornerRadius="2" Background="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0" VerticalAlignment="Bottom"/>
+                        <Border x:Name="selectBorder" Height="4" Grid.ColumnSpan="3" CornerRadius="2" Background="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0" VerticalAlignment="Bottom">
+                            <Border.Width>
+                                <MultiBinding Converter="{StaticResource  ConvertMultiplyBinding}">
+                                    <Binding Path="ActualWidth" ElementName="ExpanderContent"/>
+                                    <Binding Path="Tag" RelativeSource="{RelativeSource Self}" />
+                                </MultiBinding>
+                            </Border.Width>
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <!--<MultiDataTrigger>
@@ -192,14 +201,22 @@
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding SelectedIndex, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}, Converter={StaticResource ConvertTabControlSelectAnimations}, ConverterParameter={RelativeSource AncestorType={x:Type TabControl}}}" Value="True"/>
+                                <Condition Binding="{Binding SelectedIndex, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}, Converter={StaticResource ConvertTabControlSelectAnimations}, ConverterParameter={RelativeSource AncestorType={x:Type TabControl}}}" Value="1"/>
                             </MultiDataTrigger.Conditions>
-                            <Setter Property="Width" Value="32" TargetName="selectBorder" />
+                            <Setter Property="HorizontalAlignment" TargetName="selectBorder" Value="Left"/>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard x:Name="storyboard1">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:1" From="0" To="1" Storyboard.TargetProperty="Width" Storyboard.TargetName="Tag"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiDataTrigger.EnterActions>
+                            
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter> 
     </Style>
 
 

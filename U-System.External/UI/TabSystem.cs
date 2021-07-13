@@ -60,10 +60,16 @@ namespace U_System.External.UI
                 TabItem tab = new TabItem();
                 tab.Content = content;
                 tab.Header = header;
+                tab.LostFocus += Tab_LostFocus;
                 
                 Add(tab);
             }
             return null;
+        }
+
+        private static void Tab_LostFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         internal static TabItem Add(TabItem tab)
