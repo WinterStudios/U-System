@@ -2,13 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:U_System.Core.Styles"
                     x:Class="U_System.Core.Styles.TabControlStyles"
+                    xmlns:extensionTab="clr-namespace:U_System.Core.Extensions"
                     >
-
+  
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/U-System.Core;component/Styles/Colores.xaml"/>
         <ResourceDictionary Source="/U-System.UX;component/ThemeResource.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
+    <extensionTab:Extension_TabControl_Animations x:Key="ConvertTabControlSelectAnimations"/>
 
     <Style x:Key="Tab_Control_Item_Close_Btn" TargetType="Button">
         <Setter Property="Background" Value="Red"/>
@@ -22,7 +24,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="#FF505050"/>
+                            <Setter TargetName="border" Property="Background" Value="red"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -45,7 +47,7 @@
         <Setter Property="Padding" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Background" Value="{DynamicResource Theme.Surface}"/>
+        <Setter Property="Background" Value="GreenYellow"/>
         <!--Item Background-->
         <Setter Property="BorderBrush" Value="{DynamicResource TabItem.Selected.Border}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -63,7 +65,7 @@
                             <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
                             <RowDefinition x:Name="RowDefinition1" Height="*"/>
                         </Grid.RowDefinitions>
-                        <TabPanel x:Name="headerPanel" Background="Gainsboro" Grid.Column="0" IsItemsHost="true" Margin="0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+                        <TabPanel x:Name="headerPanel" Background="{DynamicResource Theme.SurfaceVariant}" Grid.Column="0" IsItemsHost="true" Margin="0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
                         <Border x:Name="contentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" Background="{DynamicResource APP.TABCONTROL.BACKGROUND}">
                             <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>
@@ -125,9 +127,9 @@
     
     <Style x:Key="TabItemStyle1" TargetType="{x:Type TabItem}">
         <!--<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>-->
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="{DynamicResource Theme.PrimaryVariant}"/>
         <Setter Property="Background" Value="Red"/>
-        <Setter Property="BorderBrush" Value="ForestGreen"/>
+        <Setter Property="BorderBrush" Value="#0094AF"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="8,6,8,6"/>
         <Setter Property="BorderThickness" Value="0" />
@@ -146,6 +148,7 @@
                         <Image Grid.Column="0" Width="16" Height="16" Source="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Tag}"/>
                         <ContentPresenter Grid.Column="1" x:Name="contentPresenter" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
                         <Button Grid.Column="2" Style="{DynamicResource Tab_Control_Item_Close_Btn}" Click="tab_Close_Btn_Click" />
+                        <Border x:Name="selectBorder" Height="4" Grid.ColumnSpan="3" CornerRadius="2" Background="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0" VerticalAlignment="Bottom"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <!--<MultiDataTrigger>
@@ -173,6 +176,7 @@
                                 <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
                             </MultiDataTrigger.Conditions>
                             <Setter Property="BorderThickness" TargetName="mainBorder" Value="0"/>
+                            <Setter Property="Height" TargetName="selectBorder" Value="0"/>
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -181,8 +185,16 @@
                             </MultiDataTrigger.Conditions>
                             <Setter Property="Panel.ZIndex" Value="1"/>
                             <Setter Property="Margin" Value="0"/>
-                            <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,0,0,1"/>
+                            <!--<Setter Property="BorderThickness" TargetName="mainBorder" Value="0,0,0,4"/>
+                            <Setter Property="CornerRadius" TargetName="mainBorder" Value="3"/>-->
+                            <Setter Property="Height" TargetName="selectBorder" Value="4"/>
                             <Setter Property="Background" TargetName="templateRoot" Value="{DynamicResource TabControl.TabItem.Select}"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding SelectedIndex, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}, Converter={StaticResource ConvertTabControlSelectAnimations}, ConverterParameter={RelativeSource AncestorType={x:Type TabControl}}}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Width" Value="32" TargetName="selectBorder" />
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -7,6 +7,7 @@
 
     <SolidColorBrush x:Key="Theme.Background"/>
     <SolidColorBrush x:Key="Theme.Surface"/>
+    <SolidColorBrush x:Key="Theme.SurfaceVariant"/>
     <SolidColorBrush x:Key="Theme.Error"/>
     
     
@@ -15,6 +16,7 @@
     
     <Color x:Key="Theme.BackgroundColor"/>
     <Color x:Key="Theme.SurfaceColor"/>
+    <Color x:Key="Theme.SurfaceVariantColor"/>
     <Color x:Key="Theme.SurfaceHoverColor"/>
     <Color x:Key="Theme.ErrorColor"/>
 </ResourceDictionary>

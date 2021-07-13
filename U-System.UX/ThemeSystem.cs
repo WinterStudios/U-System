@@ -42,6 +42,7 @@ namespace U_System.UX
 
                         BackgroundColor = "#FAFAFA",
                         SurfaceColor = "#EAEAEA",
+                        SurfaceVariantColor = "#E3E3E3",
                         SurfaceHoverColor = "#DEDEDE"
                     }
                 },
@@ -56,6 +57,7 @@ namespace U_System.UX
 
                         BackgroundColor = "#050505",
                         SurfaceColor = "#212121",
+                        SurfaceVariantColor = "#2A2A2A",
                         SurfaceHoverColor = "#323232"
                     }
                 }
@@ -73,6 +75,7 @@ namespace U_System.UX
 
             ThemeResourceDictionary["Theme.Background"] = (SolidColorBrush)new BrushConverter().ConvertFrom(theme.ThemeColorPallete.BackgroundColor);
             ThemeResourceDictionary["Theme.Surface"] = (SolidColorBrush)new BrushConverter().ConvertFrom(theme.ThemeColorPallete.SurfaceColor);
+            ThemeResourceDictionary["Theme.SurfaceVariant"] = (SolidColorBrush)new BrushConverter().ConvertFrom(theme.ThemeColorPallete.SurfaceVariantColor);
 
 
             ThemeResourceDictionary["Theme.PrimaryColor"] = (Color)ColorConverter.ConvertFromString(theme.ThemeColorPallete.PrimaryColor);
@@ -80,6 +83,7 @@ namespace U_System.UX
 
             ThemeResourceDictionary["Theme.BackgroundColor"] = (Color)ColorConverter.ConvertFromString(theme.ThemeColorPallete.BackgroundColor);
             ThemeResourceDictionary["Theme.SurfaceColor"] = (Color)ColorConverter.ConvertFromString(theme.ThemeColorPallete.SurfaceColor);
+            ThemeResourceDictionary["Theme.SurfaceVariantColor"] = (Color)ColorConverter.ConvertFromString(theme.ThemeColorPallete.SurfaceVariantColor);
             ThemeResourceDictionary["Theme.SurfaceHoverColor"] = (Color)ColorConverter.ConvertFromString(theme.ThemeColorPallete.SurfaceHoverColor);
 
             return theme;

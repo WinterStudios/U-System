@@ -39,6 +39,7 @@ namespace U_System.Core
             //W_TextBlock_APP_VERSION.Text = SettingsSystem.APP_VERSION;
             //MenuBar.MainMenu = this.W_MainMenuBar;
             Debug.Log.LogMessage("Set: TabSystem", typeof(MainWindow));
+            TabsSystem.Start();
             TabsSystem.UX_Control = this.W_TabControl;
             External.UI.TabSystem.SetTabController(TabsSystem.UX_Control);
             Debug.Log.LogMessage("Set: MenuSystem", typeof(MainWindow));

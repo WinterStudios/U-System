@@ -301,7 +301,7 @@ namespace U_System.Core.Plugin
                 PluginStorageData = string.Format("{0}Data\\{1}\\", AppContext.BaseDirectory, PluginInfo.GetType().Namespace)
             };
             Debug.Log.LogMessage(string.Format("{0} : Initialize Plugin", Plugins[pluginID].Name), typeof(PluginManager));
-            PluginInfo.Start();
+            Task.Run(() => PluginInfo.Start());
             Debug.Log.LogMessage(string.Format("{0} : Plugin Enable", Plugins[pluginID].Name), typeof(PluginManager));
             plugin.Working = false;
             Save();
