@@ -94,7 +94,9 @@ namespace U_System.Core
 
                 tab.Content = color;
                 tab.Header = "Color Theme";
-                W_TabControl.Items.Add(tab);
+                tab.Tag = 0d;
+                tab.Style = (Style)FindResource("TabItemStyle1");
+                W_TabControl.Items.Add(tab);                
                 //W_TabControl.SelectedItem = tab;
             }
         }
