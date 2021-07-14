@@ -24,7 +24,7 @@ namespace U_System.External.UI
 
 
 
-        public static void Add(TabItem tabItem, bool selectTab = true) => AddTab(tabItem, selectTab);
+        //public static void Add(TabItem tabItem, bool selectTab = true) => AddTab(tabItem, selectTab);
 
         private static void AddTab(TabItem tab, bool selectTab = true)
         {
@@ -60,21 +60,17 @@ namespace U_System.External.UI
                 TabItem tab = new TabItem();
                 tab.Content = content;
                 tab.Header = header;
-                tab.LostFocus += Tab_LostFocus;
-                
-                Add(tab);
+                Add(tab, selectTab);
             }
             return null;
         }
 
-        private static void Tab_LostFocus(object sender, System.Windows.RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static TabItem Add(TabItem tab)
+        internal static TabItem Add(TabItem tab, bool select)
         {
             TabController.Items.Add(tab);
+
+            if (select)
+                TabController.SelectedItem = tab;
             return tab;
         }
 

@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:U_System.Core.Styles"
                     x:Class="U_System.Core.Styles.TabControlStyles"
-                    xmlns:extensionTab="clr-namespace:U_System.Core.Extensions"
-                    >
+                    xmlns:extensionTab="clr-namespace:U_System.Core.Extensions" 
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
   
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/U-System.Core;component/Styles/Colores.xaml"/>
@@ -146,14 +146,17 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="32"/>
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="mainBorder" Grid.Column="0" Grid.ColumnSpan="3" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0"/>
-
+                        <Border x:Name="mainBorder" Grid.Column="0" Grid.ColumnSpan="3" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0"
+                                />
                         <Image Grid.Column="0" Width="16" Height="16" Source="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Tag}"/>
                         <ContentPresenter Grid.Column="1" x:Name="contentPresenter" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
                         <Button Grid.Column="2" Style="{DynamicResource Tab_Control_Item_Close_Btn}" Click="tab_Close_Btn_Click" />
-                        <Border x:Name="selectBorder" Height="4" Grid.ColumnSpan="3" CornerRadius="2" Background="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0" VerticalAlignment="Bottom" Tag="0.0">
+                        <Border x:Name="selectSubBorder" CornerRadius="2"  Background="{TemplateBinding BorderBrush}" VerticalAlignment="Bottom" Height="4" Grid.ColumnSpan="3">
+                            <Border.Tag>
+                                <sys:Double>0.0</sys:Double>
+                            </Border.Tag>
                             <Border.Width>
-                                <MultiBinding Converter="{StaticResource  ConvertMultiplyBinding}">
+                                <MultiBinding Converter="{StaticResource ConvertMultiplyBinding}">
                                     <Binding Path="ActualWidth" ElementName="mainBorder"/>
                                     <Binding Path="Tag" RelativeSource="{RelativeSource Self}" />
                                 </MultiBinding>
@@ -187,7 +190,7 @@
                                 <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
                             </MultiDataTrigger.Conditions>
                             <Setter Property="BorderThickness" TargetName="mainBorder" Value="0"/>
-                            <Setter Property="Height" TargetName="selectBorder" Value="0"/>
+
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -198,22 +201,30 @@
                             <Setter Property="Margin" Value="0"/>
                             <!--<Setter Property="BorderThickness" TargetName="mainBorder" Value="0,0,0,4"/>
                             <Setter Property="CornerRadius" TargetName="mainBorder" Value="3"/>-->
-                            <Setter Property="Height" TargetName="selectBorder" Value="4"/>
+                            <Setter Property="Height" TargetName="selectSubBorder" Value="4"/>
                             <Setter Property="Background" TargetName="templateRoot" Value="{DynamicResource TabControl.TabItem.Select}"/>
-                        </MultiDataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding SelectedIndex, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}, Converter={StaticResource ConvertTabControlSelectAnimations}, ConverterParameter={RelativeSource AncestorType={x:Type TabControl}}}" Value="1"/>
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="HorizontalAlignment" TargetName="selectBorder" Value="Stretch"/>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard x:Name="storyboard1">
+                                <BeginStoryboard x:Name="storyboard2">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0:0:1" To="1" Storyboard.TargetProperty="Width" Storyboard.TargetName="Tag"/>
+                                        <DoubleAnimation Duration="0:0:0.4" To="1" Storyboard.TargetProperty="Tag" Storyboard.TargetName="selectSubBorder">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseInOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </MultiDataTrigger.EnterActions>
-                            
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard x:Name="storyboard1">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.4" To="0" Storyboard.TargetProperty="Tag" Storyboard.TargetName="selectSubBorder">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseInOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

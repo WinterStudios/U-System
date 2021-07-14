@@ -79,25 +79,13 @@ namespace U_System.Core
             string tag = ((MenuItem)sender).Tag.ToString();
             if(tag == "PLUGIN_MANAGER")
             {
-                TabItem tab = new TabItem();
                 UX.Preferences.UX_Plugin pluginTab = new UX.Preferences.UX_Plugin();
-
-                tab.Content = pluginTab;
-                tab.Header = "Plugin Manager";
-                W_TabControl.Items.Add(tab);
-                //W_TabControl.SelectedItem = tab;
+                External.UI.TabSystem.Add(pluginTab, "Plugin Manager");
             }
             if(tag == "THEME_MANAGER")
             {
-                TabItem tab = new TabItem();
                 UX.Preferences.UX_ThemeManager color = new UX.Preferences.UX_ThemeManager();
-
-                tab.Content = color;
-                tab.Header = "Color Theme";
-                tab.Tag = 0d;
-                tab.Style = (Style)FindResource("TabItemStyle1");
-                W_TabControl.Items.Add(tab);                
-                //W_TabControl.SelectedItem = tab;
+                External.UI.TabSystem.Add(color, "Color Theme");
             }
         }
 
