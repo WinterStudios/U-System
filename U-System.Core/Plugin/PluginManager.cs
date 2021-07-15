@@ -174,10 +174,10 @@ namespace U_System.Core.Plugin
 
                 //Assembly.LoadFrom(Storage.PLUGINS.PLUGIN_DIRECTORY);  
 
-            string pluginLocation = plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name));
+            string pluginLocation = plugin.CurrentPluginRelease.PluginFilesLocation.Where(x => x.StartsWith(plugin.Name) && x.Contains(".dll")).FirstOrDefault();
 
             //byte[] pluginFileBytes = File.ReadAllBytes(plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name)));
-            FileStream fileStream = File.Open(Storage.PLUGINS.PLUGIN_DIRECTORY + plugin.CurrentPluginRelease.PluginFilesLocation.First(x => x.EndsWith(".dll") && x.Contains(plugin.Name)), FileMode.Open);
+            FileStream fileStream = File.Open(Storage.PLUGINS.PLUGIN_DIRECTORY + pluginLocation, FileMode.Open);
             
             //stream.Write(pluginFileBytes, 0, pluginFileBytes.Length);
 
@@ -301,7 +301,7 @@ namespace U_System.Core.Plugin
                 PluginStorageData = string.Format("{0}Data\\{1}\\", AppContext.BaseDirectory, PluginInfo.GetType().Namespace)
             };
             Debug.Log.LogMessage(string.Format("{0} : Initialize Plugin", Plugins[pluginID].Name), typeof(PluginManager));
-            Task.Run(() => PluginInfo.Start());
+            Task.Run(() => { try { PluginInfo.Start(); } catch (Exception ex) { Debug.Log.LogMessage(ex.Message, typeof(PluginInfo), Debug.LogMessageType.Error); } });
             Debug.Log.LogMessage(string.Format("{0} : Plugin Enable", Plugins[pluginID].Name), typeof(PluginManager));
             plugin.Working = false;
             Save();
